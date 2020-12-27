@@ -1,0 +1,30 @@
+version: '3.1'
+services:
+    zoneminder:
+        container_name: zoneminder
+        image: dlandon/zoneminder.master:latest
+        restart: unless-stopped
+        ports:
+            - 8443:443/tcp
+            - 9000:9000/tcp
+        network_mode: "bridge"
+        privileged: true
+        environment:
+            - TZ=America/New_York
+            - SHMEM=50%
+            - PUID=99
+            - PGID=100
+            - INSTALL_HOOK=0
+            - INSTALL_FACE=0
+            - INSTALL_TINY_YOLO3=0
+            - INSTALL_YOLO3=0
+            - INSTALL_TINY_YOLO4=0
+            - INSTALL_YOLO4=0
+            - MULTI_PORT_START=0
+            - MULTI_PORT_END=0
+        volumes:
+            - config:/config:rw
+            - data:/var/cache/zoneminder:rw
+volumes:
+    config:
+    data:
