@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+	
 
 # Es wird empfohlen root als Benutzer zu verwenden 
 Benutzer="root"
@@ -25,7 +25,8 @@ echo $(date -u) "FinalInstall.log anlegen"
 #
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "01 von 30: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
-                wget https://developer.download.nvidia.com/compute/cuda/$CUDA_Version/local_installers/$CUDA_Script
+                cd ~
+				wget https://developer.download.nvidia.com/compute/cuda/$CUDA_Version/local_installers/$CUDA_Script
 				chmod +x $CUDA_Script
                 ./$CUDA_Script --silent
 echo $(date -u) "01.1 von 30: Check auf installierten Treiber"  | tee -a  ~/FinalInstall.log
@@ -40,7 +41,7 @@ echo $(date -u) "01.2 von 30: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.lo
                 source ~/.bashrc
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "03 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "02 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
                 export DEBCONF_NONINTERACTIVE_SEEN="true"
                 export DEBIAN_FRONTEND="noninteractive"
                 export DISABLE_SSH="true"
@@ -69,30 +70,30 @@ echo $(date -u) "03 von 30: Umgebungsvariablen für die Zoneminder - Installatio
                 export MULTI_PORT_END="0" 
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "04 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
 
                 #mkdir /mnt/cache/appdata/Zoneminder
 
                 cd ~
                 #git clone https://github.com/dlandon/zoneminder.master-docker.git
-                cp -r zoneminder/init/. /etc/my_init.d/.                                
+                #cp -r zoneminder/init/. /etc/my_init.d/.                                
                 cp -r zoneminder/defaults/. /root/.
 
                 add-apt-repository -y ppa:iconnor/zoneminder-$ZM_VERS 
 	            LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php 
 	            add-apt-repository ppa:jonathonf/ffmpeg-4 
-	            apt-get update 
-	            apt-get -y upgrade -o Dpkg::Options::="--force-confold" 
-	            apt-get -y dist-upgrade -o Dpkg::Options::="--force-confold" 
-	            apt-get -y install apache2 mariadb-server 
-	            apt-get -y install ssmtp mailutils net-tools wget sudo make 
-	            apt-get -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd && \
-	            apt-get -y install libcrypt-mysql-perl libyaml-perl libjson-perl libavutil-dev ffmpeg && \
-	            apt-get -y install --no-install-recommends libvlc-dev libvlccore-dev vlc && \
-	            apt-get -y install zoneminder
+	            apt update 
+	            apt -y upgrade -o Dpkg::Options::="--force-confold" 
+	            apt -y dist-upgrade -o Dpkg::Options::="--force-confold" 
+	            apt -y install apache2 mariadb-server 
+	            apt -y install ssmtp mailutils net-tools wget sudo make 
+	            apt -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd && \
+	            apt -y install libcrypt-mysql-perl libyaml-perl libjson-perl libavutil-dev ffmpeg && \
+	            apt -y install --no-install-recommends libvlc-dev libvlccore-dev vlc && \
+	            apt -y install zoneminder
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "06 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
 
                 a2enmod proxy_fcgi setenvif	
                 a2enconf php7.4-fpm
@@ -112,7 +113,7 @@ echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installatio
                 perl -MCPAN -e "force install Net::MQTT::Simple::Auth"
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "07 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
 
                 mysql -uroot -D zm -e "DROP DATABASE zm"
                 cd /root 
@@ -129,7 +130,7 @@ echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installatio
                 rm mysql_defaults.sql
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "08 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
                 mv /root/zoneminder /etc/init.d/zoneminder
                 chmod +x /etc/init.d/zoneminder 
                 service mysql restart 
@@ -150,7 +151,7 @@ echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installatio
                 cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
 	
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "09 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
                 apt -y remove make
                 apt -y clean 
                 apt -y autoremove 
@@ -161,7 +162,7 @@ echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installatio
                 mkdir /var/cache/zoneminder
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: Uhrzeit setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "10 von 30: Uhrzeit setzen"  | tee -a  ~/FinalInstall.log
 	
                 if [[ $(cat /etc/timezone) != "$TZ" ]] ; then
                     echo "Setzen der Zeitzone auf: $TZ"
@@ -174,9 +175,9 @@ echo $(date -u) "05 von 30: Uhrzeit setzen"  | tee -a  ~/FinalInstall.log
                 sed -i "s|^date.timezone =.*$|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: Update der Repositories"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "11 von 30: Update der Repositories"  | tee -a  ~/FinalInstall.log
                 echo "Aktualiserungen werden durchegführt..." | tee -a  ~/FinalInstall.log
-                apt-get update 2>&1 | tee /tmp/test_update
+                apt update 2>&1 | tee /tmp/test_update
 
                 # Überprüfung auf Funtion der Updates.
                 if [ "`cat /tmp/test_update | grep 'Failed'`" = "" ]; then
@@ -190,7 +191,7 @@ echo $(date -u) "05 von 30: Update der Repositories"  | tee -a  ~/FinalInstall.l
                 fi
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: SSL-Zertifikate installieren"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "12 von 30: SSL-Zertifikate installieren"  | tee -a  ~/FinalInstall.log
                 if [[ -f /config/keys/cert.key && -f /config/keys/cert.crt ]]; then
                     echo "using existing keys in \"/config/keys\""
                     if [[ ! -f /config/keys/ServerName ]]; then
@@ -209,23 +210,26 @@ echo $(date -u) "05 von 30: SSL-Zertifikate installieren"  | tee -a  ~/FinalInst
                 chmod 777 /config/keys
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | tee -a  ~/FinalInstall.log
+echo $(date -u) "13 von 30: OpenCV Download und compilieren, dito YOLO etc."  | tee -a  ~/FinalInstall.log
  			    # Search for config files, if they don't exist, create the default ones
                 if [ ! -d /config/conf ]; then
-                	echo "Creating conf folder"
+                	echo "Conf-Ordner erstellen" | tee -a  ~/FinalInstall.log
                 	mkdir /config/conf
                 else
-                	echo "Using existing conf folder"
+                	echo "Vorhandenen conf-Ordner verwenden" | tee -a  ~/FinalInstall.log
                 fi
                 
                 if [ -f /root/zm.conf ]; then
-                	echo "Moving zm.conf to config folder"
+                	echo "Verschieben von zm.conf in den Ordner config" | tee -a  ~/FinalInstall.log
                 	mv /root/zm.conf /config/conf/zm.default
                 	cp /etc/zm/conf.d/README /config/conf/README
                 else
-                	echo "File zm.conf already moved"
+                	echo "Datei zm.conf bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
-                
+ 
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "14 von 30: Eventserver runterladen und installieren"  | tee -a  ~/FinalInstall.log
+  
                 # Get the latest ES bundle
                 cd /root
                 rm -rf zmeventnotification
@@ -234,12 +238,13 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 	tar -xf EventServer.tgz
                 	rm EventServer.tgz
                 else
-                	echo "Error: Cannot download the ES server bundle"
+                	echo "Fehler: ES - Server kann nicht runtergeladen werden." | tee -a  ~/FinalInstall.log
                 fi
                 
-                # Handle the zmeventnotification.ini file
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "15 von 30: Eventserver - Config"  | tee -a  ~/FinalInstall.log
                 if [ -f /root/zmeventnotification/zmeventnotification.ini ]; then
-                	echo "Moving zmeventnotification.ini"
+                	echo "zmeventnotification.ini verschieben" | tee -a  ~/FinalInstall.log
                 	cp /root/zmeventnotification/zmeventnotification.ini /config/zmeventnotification.ini.default
                 	if [ ! -f /config/zmeventnotification.ini ]; then
                 		mv /root/zmeventnotification/zmeventnotification.ini /config/zmeventnotification.ini
@@ -247,12 +252,13 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 		rm -rf /root/zmeventnotification/zmeventnotification.ini
                 	fi
                 else
-                	echo "File zmeventnotification.ini already moved"
+                	echo "Datei zmeventnotification.ini bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
-                
-                # Handle the secrets.ini file
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "16 von 30: Secrets.ini und OpenCV"  | tee -a  ~/FinalInstall.log
                 if [ -f /root/zmeventnotification/secrets.ini ]; then
-                	echo "Moving secrets.ini"
+                	echo "Verschieben von secrets.ini"  | tee -a  ~/FinalInstall.log
                 	cp /root/zmeventnotification/secrets.ini /config/secrets.ini.default
                 	if [ ! -f /config/secrets.ini ]; then
                 		mv /root/zmeventnotification/secrets.ini /config/secrets.ini
@@ -260,18 +266,18 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 		rm -rf /root/zmeventnotification/secrets.ini
                 	fi
                 else
-                	echo "File secrets.ini already moved"
+                	echo "Datei secrets.ini bereits verschoben"  | tee -a  ~/FinalInstall.log
                 fi
                 
                 # Create opencv folder if it doesn't exist
                 if [ ! -d /config/opencv ]; then
-                	echo "Creating opencv folder in config folder"
+                	echo "Erstellen des opencv-Ordners im config-Ordner" | tee -a  ~/FinalInstall.log
                 	mkdir /config/opencv
                 fi
                 
                 # Handle the opencv.sh file
                 if [ -f /root/zmeventnotification/opencv.sh ]; then
-                	echo "Moving opencv.sh"
+                	echo "opencv.sh verschieben" | tee -a  ~/FinalInstall.log
                 	cp /root/zmeventnotification/opencv.sh /config/opencv/opencv.sh.default
                 	if [ ! -f /config/opencv/opencv.sh ]; then
                 		mv /root/zmeventnotification/opencv.sh /config/opencv/opencv.sh
@@ -279,15 +285,15 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 		rm -rf /root/zmeventnotification/opencv.sh
                 	fi
                 else
-                	echo "File opencv.sh already moved"
+                	echo "Datei opencv.sh bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
                 
                 # Handle the debug_opencv.sh file
                 if [ -f /root/zmeventnotification/debug_opencv.sh ]; then
-                	echo "Moving debug_opencv.sh"
+                	echo "Verschieben von debug_opencv.sh" | tee -a  ~/FinalInstall.log
                 	mv /root/zmeventnotification/debug_opencv.sh /config/opencv/debug_opencv.sh
                 else
-                	echo "File debug_opencv.sh already moved"
+                	echo "Datei debug_opencv.sh bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
                 
                 if [ ! -f /config/opencv/opencv_ok ]; then
@@ -296,38 +302,38 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 
                 # Handle the zmeventnotification.pl
                 if [ -f /root/zmeventnotification/zmeventnotification.pl ]; then
-                	echo "Moving the event notification server"
+                	echo "Verschieben des Ereignisbenachrichtigungsservers" | tee -a  ~/FinalInstall.log
                 	mv /root/zmeventnotification/zmeventnotification.pl /usr/bin
                 	chmod +x /usr/bin/zmeventnotification.pl 2>/dev/null
                 else
-                	echo "Event notification server already moved"
+                	echo "Ereignisbenachrichtigungsserver bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
                 
                 # Handle the pushapi_pushover.py
                 if [ -f /root/zmeventnotification/pushapi_pushover.py ]; then
-                	echo "Moving the pushover api"
+                	echo "Verschieben der Pushover-Api" | tee -a  ~/FinalInstall.log
                 	mkdir -p /var/lib/zmeventnotification/bin/
                 	mv /root/zmeventnotification/pushapi_pushover.py /var/lib/zmeventnotification/bin/
                 	chmod +x /var/lib/zmeventnotification/bin/pushapi_pushover.py 2>/dev/null
                 else
-                	echo "Pushover api already moved"
+                	echo "Pushover api bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
                 
                 # Move ssmtp configuration if it doesn't exist
                 if [ ! -d /config/ssmtp ]; then
-                	echo "Moving ssmtp to config folder"
+                	echo "Verschieben von ssmtp in den Ordner config" | tee -a  ~/FinalInstall.log
                 	cp -p -R /etc/ssmtp/ /config/
                 else
-                	echo "Using existing ssmtp folder"
+                	echo "Vorhandenen ssmtp-Ordner verwenden" | tee -a  ~/FinalInstall.log
                 fi
                 
                 # Move mysql database if it doesn't exit
                 if [ ! -d /config/mysql/mysql ]; then
-                	echo "Moving mysql to config folder"
+                	echo "Verschieben von mysql in den config-Ordner" | tee -a  ~/FinalInstall.log
                 	rm -rf /config/mysql
                 	cp -p -R /var/lib/mysql /config/
                 else
-                	echo "Using existing mysql database folder"
+                	echo "Vorhandenen mysql-Datenbankordner verwenden" | tee -a  ~/FinalInstall.log
                 fi
                 
                 # files and directories no longer exposed at config.
@@ -339,7 +345,7 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 
                 # Create Control folder if it doesn't exist and copy files into image
                 if [ ! -d /config/control ]; then
-                	echo "Creating control folder in config folder"
+                	echo "Control-Ordner im Config-Ordner anlegen" | tee -a  ~/FinalInstall.log
                 	mkdir /config/control
                 else
                 	echo "Copy /config/control/ scripts to /usr/share/perl5/ZoneMinder/Control/"
@@ -414,88 +420,88 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 
                 # Create events folder
                 if [ ! -d /var/cache/zoneminder/events ]; then
-                	echo "Create events folder"
+                	echo "Ordner für Ereignisse erstellen" | tee -a  ~/FinalInstall.log
                 	mkdir /var/cache/zoneminder/events
                 	chown -R www-data:www-data /var/cache/zoneminder/events
                 	chmod -R 777 /var/cache/zoneminder/events
                 else
-                	echo "Using existing data directory for events"
+                	echo "Vorhandenes Datenverzeichnis für Ereignisse verwenden" | tee -a  ~/FinalInstall.log
                 
                 	# Check the ownership on the /var/cache/zoneminder/events directory
                 	if [ `stat -c '%U:%G' /var/cache/zoneminder/events` != 'www-data:www-data' ]; then
-                		echo "Correcting /var/cache/zoneminder/events ownership..."
+                		echo "Eigentümerschaft von /var/cache/zoneminder/events korrigieren..." | tee -a  ~/FinalInstall.log
                 		chown -R www-data:www-data /var/cache/zoneminder/events
                 	fi
                 
                 	# Check the permissions on the /var/cache/zoneminder/events directory
                 	if [ `stat -c '%a' /var/cache/zoneminder/events` != '777' ]; then
-                		echo "Correcting /var/cache/zoneminder/events permissions..."
+                		echo "Korrektur der /var/cache/zoneminder/events-Berechtigungen..." | tee -a  ~/FinalInstall.log
                 		chmod -R 777 /var/cache/zoneminder/events
                 	fi
                 fi
                 
                 # Create images folder
                 if [ ! -d /var/cache/zoneminder/images ]; then
-                	echo "Create images folder"
+                	echo "Bilderordner erstellen" | tee -a  ~/FinalInstall.log
                 	mkdir /var/cache/zoneminder/images
                 	chown -R www-data:www-data /var/cache/zoneminder/images
                 	chmod -R 777 /var/cache/zoneminder/images
                 else
-                	echo "Using existing data directory for images"
+                	echo "Vorhandenes Datenverzeichnis für Bilder verwenden" | tee -a  ~/FinalInstall.log
                 
                 	# Check the ownership on the /var/cache/zoneminder/images directory
                 	if [ `stat -c '%U:%G' /var/cache/zoneminder/images` != 'www-data:www-data' ]; then
-                		echo "Correcting /var/cache/zoneminder/images ownership..."
+                		echo "Eigentümerschaft von /var/cache/zoneminder/images korrigieren..." | tee -a  ~/FinalInstall.log
                 		chown -R www-data:www-data /var/cache/zoneminder/images
                 	fi
                 
                 	# Check the permissions on the /var/cache/zoneminder/images directory
                 	if [ `stat -c '%a' /var/cache/zoneminder/images` != '777' ]; then
-                		echo "Correcting /var/cache/zoneminder/images permissions..."
+                		echo "Korrektur der /var/cache/zoneminder/images-Berechtigungen..." | tee -a  ~/FinalInstall.log
                 		chmod -R 777 /var/cache/zoneminder/images
                 	fi
                 fi
                 
                 # Create temp folder
                 if [ ! -d /var/cache/zoneminder/temp ]; then
-                	echo "Create temp folder"
+                	echo "Temporären Ordner erstellen" | tee -a  ~/FinalInstall.log
                 	mkdir /var/cache/zoneminder/temp
                 	chown -R www-data:www-data /var/cache/zoneminder/temp
                 	chmod -R 777 /var/cache/zoneminder/temp
                 else
-                	echo "Using existing data directory for temp"
+                	echo "Vorhandenes Datenverzeichnis für temp verwenden" | tee -a  ~/FinalInstall.log
                 
                 	# Check the ownership on the /var/cache/zoneminder/temp directory
                 	if [ `stat -c '%U:%G' /var/cache/zoneminder/temp` != 'www-data:www-data' ]; then
-                		echo "Correcting /var/cache/zoneminder/temp ownership..."
+                		echo "Eigentümerschaft von /var/cache/zoneminder/temp korrigieren..."  | tee -a  ~/FinalInstall.log
                 		chown -R www-data:www-data /var/cache/zoneminder/temp
                 	fi
                 
                 	# Check the permissions on the /var/cache/zoneminder/temp directory
                 	if [ `stat -c '%a' /var/cache/zoneminder/temp` != '777' ]; then
-                		echo "Correcting /var/cache/zoneminder/temp permissions..."
+                		echo "Korrektur der /var/cache/zoneminder/temp-Berechtigungen..." | tee -a  ~/FinalInstall.log
                 		chmod -R 777 /var/cache/zoneminder/temp
                 	fi
                 fi
                 
                 # Create cache folder
                 if [ ! -d /var/cache/zoneminder/cache ]; then
-                	echo "Create cache folder"
+                	echo "Cache-Ordner erstellen" | tee -a  ~/FinalInstall.log
                 	mkdir /var/cache/zoneminder/cache
                 	chown -R www-data:www-data /var/cache/zoneminder/cache
                 	chmod -R 777 /var/cache/zoneminder/cache
                 else
-                	echo "Using existing data directory for cache"
+                	echo "Vorhandenes Datenverzeichnis für Cache verwenden" | tee -a  ~/FinalInstall.log
                 
                 	# Check the ownership on the /var/cache/zoneminder/cache directory
                 	if [ `stat -c '%U:%G' /var/cache/zoneminder/cache` != 'www-data:www-data' ]; then
-                		echo "Correcting /var/cache/zoneminder/cache ownership..."
+                		echo "Eigentümerschaft von /var/cache/zoneminder/cache korrigieren..." | tee -a  ~/FinalInstall.log
                 		chown -R www-data:www-data /var/cache/zoneminder/cache
                 	fi
                 
                 	# Check the permissions on the /var/cache/zoneminder/cache directory
                 	if [ `stat -c '%a' /var/cache/zoneminder/cache` != '777' ]; then
-                		echo "Correcting /var/cache/zoneminder/cache permissions..."
+                		echo "Korrektur der /var/cache/zoneminder/cache-Berechtigungen..." | tee -a  ~/FinalInstall.log
                 		chmod -R 777 /var/cache/zoneminder/cache
                 	fi
                 fi
@@ -514,7 +520,7 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 ln -sf /config/secrets.ini /etc/zm/
                 
                 # Fix memory issue
-                echo "Setting shared memory to : $SHMEM of `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"
+                echo "Setzen shared memory auf : $SHMEM of `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"  | tee -a  ~/FinalInstall.log
                 umount /dev/shm
                 mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
                 
@@ -525,7 +531,7 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 
                 if [ $((MULTI_PORT_START)) -gt 0 ] && [ $((MULTI_PORT_END)) -gt $((MULTI_PORT_START)) ]; then
                 
-                	echo "Setting ES multi-port range from ${MULTI_PORT_START} to ${MULTI_PORT_END}."
+                	echo "Einstellung ES-Multiport-Bereich von ${MULTI_PORT_START} bis ${MULTI_PORT_END}."  | tee -a  ~/FinalInstall.log
                 
                 	ORIG_VHOST="_default_:443"
                 
@@ -540,28 +546,27 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 	perl -pi -e "s/${ORIG_VHOST}/${NEW_VHOST}/ if (/<VirtualHost/);" /etc/apache2/sites-enabled/default-ssl.conf
                 else
                 	if [ $((MULTI_PORT_START)) -ne 0 ];then
-                		echo "Multi-port error start ${MULTI_PORT_START}, end ${MULTI_PORT_END}."
+                		echo "Multi-port error start ${MULTI_PORT_START}, end ${MULTI_PORT_END}."  | tee -a  ~/FinalInstall.log
                 	fi
                 fi
                 
-                
-                # Install hook packages, if enabled
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee -a  ~/FinalInstall.log
                 if [ "$INSTALL_HOOK" == "1" ]; then
-                	echo "Installing machine learning modules & hooks..."
+                	echo "Installieren von Machine-Learning-Modulen & Hooks beginnt..."  | tee -a  ~/FinalInstall.log
                 
                 	if [ ! -f /root/setup.py ]; then
                 		# If hook folder exists, copy files into image
                 		if [ ! -d /config/hook ]; then
-                			echo "Creating hook folder in config folder"
+                			echo "Hook-Ordner im config-Ordner erstellen" | tee -a  ~/FinalInstall.log
                 			mkdir /config/hook
                 		fi
                 
                 		# Python modules needed for hook processing
-                		apt-get -y install python3-pip cmake
-                		apt-get -y install libopenblas-dev liblapack-dev libblas-dev
-                
-                                #UW Fix
-                                pip3 install numpy scipy matplotlib ipython pandas sympy nose cython 
+                		apt -y install python3-pip cmake
+                		apt -y install libopenblas-dev liblapack-dev libblas-dev
+                        #UW Fix
+                        pip3 install numpy scipy matplotlib ipython pandas sympy nose cython 
                 
                 		# pip3 will take care of installing dependent packages
                 		pip3 install future
@@ -574,53 +579,53 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 	# Download models files
                 	if [ "$INSTALL_TINY_YOLOV3" == "1" ]; then
                 		if [ ! -d /config/hook/models/tinyyolov3 ]; then
-                			echo "Downloading tiny yolo models and configurations..."
+                			echo "Herunterladen von Tiny Yolo-Models und Konfigurationen..." | tee -a  ~/FinalInstall.log
                 			mkdir -p /config/hook/models/tinyyolov3
                 			wget https://pjreddie.com/media/files/yolov3-tiny.weights -O /config/hook/models/tinyyolov3/yolov3-tiny.weights
                 			wget https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov3-tiny.cfg -O /config/hook/models/tinyyolov3/yolov3-tiny.cfg
                 			wget https://raw.githubusercontent.com/pjreddie/darknet/master/data/coco.names -O /config/hook/models/tinyyolov3/coco.names
                 		else
-                			echo "Tiny Yolo V3 files have already been downloaded, skipping..."
+                			echo "Tiny Yolo V3-Dateien wurden bereits heruntergeladen, Skip...	" | tee -a  ~/FinalInstall.log
                 		fi
                 	fi
                 
                 	if [ "$INSTALL_YOLOV3" == "1" ]; then
                 		if [ ! -d /config/hook/models/yolov3 ]; then
-                			echo "Downloading yolo models and configurations..."
+                			echo "Herunterladen von Yolo-Modellen und Konfigurationen..." | tee -a  ~/FinalInstall.log
                 			mkdir -p /config/hook/models/yolov3
                 			wget https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov3.cfg -O /config/hook/models/yolov3/yolov3.cfg
                 			wget https://raw.githubusercontent.com/pjreddie/darknet/master/data/coco.names -O /config/hook/models/yolov3/coco.names
                 			wget https://pjreddie.com/media/files/yolov3.weights -O /config/hook/models/yolov3/yolov3.weights
                 		else
-                			echo "Yolo V3 files have already been downloaded, skipping..."
+                			echo "Yolo V3 files have already been downloaded, skipping..."  | tee -a  ~/FinalInstall.log
                 	    fi
                 	fi
                 
                 	if [ "$INSTALL_TINY_YOLOV4" == "1" ]; then
                 		if [ ! -d /config/hook/models/tinyyolov4 ]; then
-                			echo "Downloading tiny yolo models and configurations..."
+                			echo "Herunterladen von Tiny Yolo-Models und Konfigurationen..."  | tee -a  ~/FinalInstall.log
                 			mkdir -p /config/hook/models/tinyyolov4
                 			wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights -O /config/hook/models/tinyyolov4/yolov4-tiny.weights
                 			wget https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4-tiny.cfg -O /config/hook/models/tinyyolov4/yolov4-tiny.cfg
                 			wget https://raw.githubusercontent.com/pjreddie/darknet/master/data/coco.names -O /config/hook/models/tinyyolov4/coco.names
                 		else
-                			echo "Tiny Yolo V4 files have already been downloaded, skipping..."
+                			echo "Tiny Yolo V4-Dateien wurden bereits heruntergeladen, das Überspringen..."  | tee -a  ~/FinalInstall.log
                 		fi
                 	fi
                 
                 	if [ "$INSTALL_YOLOV4" == "1" ]; then
                 		if [ ! -d /config/hook/models/yolov4 ]; then
-                			echo "Downloading yolo models and configurations..."
+                			echo "Herunterladen von Yolo-Modellen und Konfigurationen..."  | tee -a  ~/FinalInstall.log
                 			mkdir -p /config/hook/models/yolov4
                 			wget https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4.cfg -O /config/hook/models/yolov4/yolov4.cfg
                 			wget https://raw.githubusercontent.com/pjreddie/darknet/master/data/coco.names -O /config/hook/models/yolov4/coco.names
                 			wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights -O /config/hook/models/yolov4/yolov4.weights
                 		else
-                			echo "Yolo V4 files have already been downloaded, skipping..."
+                			echo "Yolo V4-Dateien wurden bereits heruntergeladen, Überspringen..."  | tee -a  ~/FinalInstall.log
                 	    fi
                 	fi
                 
-                	# Handle the objectconfig.ini file
+                	# Umgang mit der Datei objectconfig.ini
                 	if [ -f /root/zmeventnotification/objectconfig.ini ]; then
                 		echo "Moving objectconfig.ini"
                 		cp /root/zmeventnotification/objectconfig.ini /config/hook/objectconfig.ini.default
@@ -630,49 +635,49 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 			rm -rf /root/zmeventnotification/objectconfig.ini
                 		fi
                 	else
-                		echo "File objectconfig.ini already moved"
+                		echo "Datei objectconfig.ini bereits verschoben"
                 	fi
                 
                 	# Handle the config_upgrade script
                 	if [ -f /root/zmeventnotification/config_upgrade.py ]; then
-                		echo "Moving config_upgrade.py"
+                		echo "Verschieben von config_upgrade.py"
                 		mv /root/zmeventnotification/config_upgrade.py /config/hook/config_upgrade.py
                 		mv /root/zmeventnotification/config_upgrade.sh /config/hook/config_upgrade.sh
                 		chmod +x /config/hook/config_upgrade.*
                 	else
-                		echo "config_upgrade.py script not found"
+                		echo "Skript config_upgrade.py nicht gefunden"
                 	fi
                 
                 	# Handle the zm_event_start.sh file
                 	if [ -f /root/zmeventnotification/zm_event_start.sh ]; then
-                		echo "Moving zm_event_start.sh"
+                		echo "Verschieben von zm_event_start.sh"
                 		mv /root/zmeventnotification/zm_event_start.sh /config/hook/zm_event_start.sh
                 	else
-                		echo "File zm_event_start.sh already moved"
+                		echo "Datei zm_event_start.sh bereits verschoben"
                 	fi
                 
                 	# Handle the zm_event_end.sh file
                 	if [ -f /root/zmeventnotification/zm_event_end.sh ]; then
-                		echo "Moving zm_event_end.sh"
+                		echo "Verschieben von zm_event_end.sh"
                 		mv /root/zmeventnotification/zm_event_end.sh /config/hook/zm_event_end.sh
                 	else
-                		echo "File zm_event_end.sh already moved"
+                		echo "Datei zm_event_end.sh bereits verschoben"
                 	fi
                 
                 	# Handle the zm_detect.py file
                 	if [ -f /root/zmeventnotification/zm_detect.py ]; then
-                		echo "Moving zm_detect.py"
+                		echo "Verschieben von zm_detect.py"
                 		mv /root/zmeventnotification/zm_detect.py /config/hook/zm_detect.py
                 	else
-                		echo "File zm_detect.py already moved"
+                		echo "Datei zm_detect.py bereits verschoben"
                 	fi
                 
                 	# Handle the zm_train_faces.py file
                 	if [ -f /root/zmeventnotification/zm_train_faces.py ]; then
-                		echo "Moving zm_train_faces.py"
+                		echo "Verschieben von zm_train_faces.py"
                 		mv /root/zmeventnotification/zm_train_faces.py /config/hook/zm_train_faces.py
                 	else
-                		echo "File zm_train_faces.py already moved"
+                		echo "Datei zm_train_faces.py bereits verschoben"
                 	fi
                 
                 	# Symbolic link for models in /config
@@ -697,7 +702,7 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 
                 	# Create misc folder if it doesn't exist
                 	if [ ! -d /config/hook/misc ]; then
-                		echo "Creating hook/misc folder in config folder"
+                		echo "Ordner hook/misc im config-Ordner anlegen"
                 		mkdir -p /config/hook/misc
                 	fi
                 
@@ -708,7 +713,7 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 
                 	# Create coral_edgetpu folder if it doesn't exist
                 	if [ ! -d /config/hook/coral_edgetpu ]; then
-                		echo "Creating hook/coral_edgetpu folder in config folder"
+                		echo "Ordner hook/coral_edgetpu im Ordner config erstellen"
                 		mkdir -p /config/hook/coral_edgetpu
                 	fi
                 
@@ -724,19 +729,19 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 	if [ "$INSTALL_FACE" == "1" ] && [ -f /root/zmeventnotification/setup.py ]; then
                 		# Create known_faces folder if it doesn't exist
                 		if [ ! -d /config/hook/known_faces ]; then
-                			echo "Creating hook/known_faces folder in config folder"
+                			echo "Ordner hook/known_faces im Ordner config anlegen"
                 			mkdir -p /config/hook/known_faces
                 		fi
                 
                 		# Create known_faces folder if it doesn't exist
                 		if [ ! -d /config/hook/known_faces ]; then
-                			echo "Creating hook/known_faces folder in config folder"
+                			echo "Ordner hook/known_faces im Ordner config anlegen"
                 			mkdir -p /config/hook/known_faces
                 		fi
                 
                 		# Create unknown_faces folder if it doesn't exist
                 		if [ ! -d /config/hook/unknown_faces ]; then
-                			echo "Creating hook/unknown_faces folder in config folder"
+                			echo "Ordner hook/unknown_faces im Ordner config anlegen"
                 			mkdir -p /config/hook/unknown_faces
                 		fi
                 
@@ -748,10 +753,10 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 	chown -R $PUID:$PGID /config/hook
                 	chmod -R 777 /config/hook
                 
-                	echo "Hook installation completed"
+                	echo "Hook - Installation abgeschlossen"
                 
                 	# Compile opencv
-                	echo "Compiling opencv - this will take a while..."
+                	echo "Kompilieren von opencv - das wird eine Weile dauern..."  | tee -a  ~/FinalInstall.log
                 	if [ -f /config/opencv/opencv_ok ] && [ `cat /config/opencv/opencv_ok` = 'yes' ]; then
                 		if [ ! -f /root/setup.py ]; then
                 			if [ -x /config/opencv/opencv.sh ]; then
@@ -768,7 +773,7 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 	mv /root/zmeventnotification/setup.py /root/setup.py
                 fi
                 
-                echo "Starting services..."
+                echo "Dienste starten..."  | tee -a  ~/FinalInstall.log
                 service apache2 start
                 if [ "$NO_START_ZM" != "1" ]; then
                 	service mysql start
@@ -779,6 +784,6 @@ echo $(date -u) "05 von 30: OpenCV Download und compilieren, dito YOLO etc."  | 
                 
                 	service zoneminder start
                 else
-                	echo "MySql and Zoneminder not started."
+                	echo "WARNUNG: MySql und Zoneminder nicht gestartet."
                 fi
                 
