@@ -19,29 +19,6 @@ echo $(date -u) "Installation.log anlegen"
 # Ubuntu 18.04 notwendig
 #
 #
-
-sudo su
-lshw -C display
-uname -m && cat /etc/*release
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
-echo $(date -u) "01 von 30: System - Update & Upgrade"  | tee -a  ~/Installation.log
-                apt -y update
-				apt -y dist-upgrade
-				
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
-echo $(date -u) "02 von 30: Diverse Pakete installieren wie Compiler, Headers usw., welche für CUDA benötigt werden"  | tee -a  ~/Installation.log
-                apt -y install linux-headers-$(uname -r)
-                apt -y install gcc make nano
-
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
-echo $(date -u) "03 von 30: Nouveau - Grafiktreiber ausschaltenm und reboot"  | tee -a  ~/Installation.log
-                sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
-                sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
-                update-initramfs -u
-
-                reboot
-
-sudo su
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
 echo $(date -u) "04 von 30: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/Installation.log
                 wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
