@@ -23,6 +23,13 @@ echo $(date -u) "FinalInstall.log anlegen"
 # Ubuntu 18.04 notwendig
 #
 #
+echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
+echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV und YOLO. By WIEGEHTKI.DE                                                                 #" | tee -a  ~/Installation.log
+echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #" | tee -a  ~/Installation.log
+echo $(date -u) "#                                                                                                                                   #" | tee -a  ~/Installation.log
+echo $(date -u) "# V0.0.9 (Rev a), 28.12.2020                                                                                                        #" | tee -a  ~/Installation.log
+echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
+
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "01 von 30: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
                 cd ~
