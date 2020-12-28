@@ -1,0 +1,179 @@
+#!/usr/bin/env bash
+
+# Es wird empfohlen root als Benutzer zu verwenden 
+Benutzer="root"
+
+
+if [ "$(whoami)" != $Benutzer ]; then
+        echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
+        exit 255
+fi
+
+echo $(date -u) "Test auf bestehende Installation.log"
+                 test -f ~/Installation.log && rm ~/Installation.log
+
+echo $(date -u) "Installation.log anlegen"
+                 touch ~/Installation.log
+				 
+####################################################################################################################
+# Ubuntu 18.04 notwendig
+#
+#
+
+sudo su
+lshw -C display
+uname -m && cat /etc/*release
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "01 von 30: System - Update & Upgrade"  | tee -a  ~/Installation.log
+                apt -y update
+				apt -y dist-upgrade
+				
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "02 von 30: Diverse Pakete installieren wie Compiler, Headers usw., welche für CUDA benötigt werden"  | tee -a  ~/Installation.log
+                apt -y install linux-headers-$(uname -r)
+                apt -y install gcc make nano
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "03 von 30: Nouveau - Grafiktreiber ausschaltenm und reboot"  | tee -a  ~/Installation.log
+                sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+                sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+                update-initramfs -u
+
+                reboot
+
+sudo su
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "04 von 30: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/Installation.log
+                wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
+                sudo sh cuda_11.2.0_460.27.04_linux.run
+echo $(date -u) "04.1 von 30: CUDA Umgebung setzen"  | tee -a  ~/Installation.log
+                echo /usr/local/cuda-11.2/lib64 >>  /etc/ld.so.conf
+                ldconfig
+                echo 'export PATH=/usr/local/cuda-11.2/bin:$PATH' >> ~/.bashrc
+                echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+                echo 'cd ~' >> ~/.bashrc
+                source ~/.bashrc
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/Installation.log
+                export DEBCONF_NONINTERACTIVE_SEEN="true"
+                export DEBIAN_FRONTEND="noninteractive"
+                export DISABLE_SSH="true"
+                export HOME="/root"
+                export LC_ALL="C.UTF-8"
+                export LANG="en_US.UTF-8"
+                export LANGUAGE="en_US.UTF-8"
+                export TZ="Etc/UTC"
+                export TERM="xterm"
+                export PHP_VERS="7.4"
+                export ZM_VERS="master"
+                export SHMEM="50%"
+                export PUID="99"
+                export PGID="100"
+                export TZ="Europe/Berlin" 
+                export SHMEM="50%" 
+                export PUID="99" 
+                export PGID="100" 
+                export INSTALL_HOOK="1" 
+                export INSTALL_FACE="1" 
+                export INSTALL_TINY_YOLOV3="1" 
+                export INSTALL_YOLOV3="1" 
+                export INSTALL_TINY_YOLOV4="1" 
+                export INSTALL_YOLOV4="1" 
+                export MULTI_PORT_START="10" 
+                export MULTI_PORT_END="0" 
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/Installation.log
+
+                #mkdir /mnt/cache/appdata/Zoneminder
+
+                cd ~
+                git clone https://github.com/dlandon/zoneminder.master-docker.git
+                cp -r zoneminder.master-docker/init/. /etc/my_init.d/.                                
+                cp -r zoneminder.master-docker/defaults/. /root/.
+
+                add-apt-repository -y ppa:iconnor/zoneminder-$ZM_VERS 
+	            LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php 
+	            add-apt-repository ppa:jonathonf/ffmpeg-4 
+	            apt-get update 
+	            apt-get -y upgrade -o Dpkg::Options::="--force-confold" 
+	            apt-get -y dist-upgrade -o Dpkg::Options::="--force-confold" 
+	            apt-get -y install apache2 mariadb-server 
+	            apt-get -y install ssmtp mailutils net-tools wget sudo make 
+	            apt-get -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd && \
+	            apt-get -y install libcrypt-mysql-perl libyaml-perl libjson-perl libavutil-dev ffmpeg && \
+	            apt-get -y install --no-install-recommends libvlc-dev libvlccore-dev vlc && \
+	            apt-get -y install zoneminder
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/Installation.log
+
+                a2enmod proxy_fcgi setenvif	
+                a2enconf php7.4-fpm
+                systemctl reload apache2
+
+                rm /etc/mysql/my.cnf 
+	            cp /etc/mysql/mariadb.conf.d/50-server.cnf /etc/mysql/my.cnf 
+	            adduser www-data video 
+	            a2enmod php$PHP_VERS proxy_fcgi ssl rewrite expires headers 
+	            a2enconf php$PHP_VERS-fpm zoneminder 
+	            echo "extension=apcu.so" > /etc/php/$PHP_VERS/mods-available/apcu.ini 
+	            echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini 
+	            perl -MCPAN -e "force install Net::WebSocket::Server" 
+	            perl -MCPAN -e "force install LWP::Protocol::https" 
+	            perl -MCPAN -e "force install Config::IniFiles" 
+                perl -MCPAN -e "force install Net::MQTT::Simple" 
+                perl -MCPAN -e "force install Net::MQTT::Simple::Auth"
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/Installation.log
+
+                mysql -uroot -D zm -e "DROP DATABASE zm"
+                cd /root 
+                chown -R www-data:www-data /usr/share/zoneminder/ 
+                echo "ServerName localhost" >> /etc/apache2/apache2.conf 
+                sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini 
+                service mysql start 
+                mysql -uroot < /usr/share/zoneminder/db/zm_create.sql 
+                mysql -uroot -e "grant all on zm.* to 'zmuser'@localhost identified by 'zmpass';" 
+                mysqladmin -uroot reload 
+                mysql -sfu root < "/root/defaults/mysql_secure_installation.sql" 
+                rm mysql_secure_installation.sql 
+                mysql -sfu root < "mysql_defaults.sql" 
+                rm mysql_defaults.sql
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/Installation.log
+                mv /root/zoneminder /etc/init.d/zoneminder
+                chmod +x /etc/init.d/zoneminder 
+                service mysql restart 
+                sleep 5 
+                service apache2 restart 
+                service zoneminder start
+		
+                systemd-tmpfiles --create zoneminder.conf 
+                mv /root/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
+                mkdir /etc/apache2/ssl/ 
+                mkdir -p /var/lib/zmeventnotification/images 
+                chown -R www-data:www-data /var/lib/zmeventnotification/ 
+                chmod -R +x /etc/my_init.d/ 
+                cp -p /etc/zm/zm.conf /root/zm.conf 
+                echo $'#!/bin/sh\n\n/usr/bin/zmaudit.pl -f' >> /etc/cron.weekly/zmaudit 
+                chmod +x /etc/cron.weekly/zmaudit 
+                cp /etc/apache2/ports.conf /etc/apache2/ports.conf.default 
+                cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
+	
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/Installation.log
+                apt -y remove make
+                apt -y clean 
+                apt -y autoremove 
+                rm -rf /tmp/* /var/tmp/* 
+                chmod +x /etc/my_init.d/*.sh
+
+                mkdir /config
+                mkdir /var/cache/zoneminder
+	
+	
+	

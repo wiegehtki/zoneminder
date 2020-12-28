@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+# Es wird empfohlen root als Benutzer zu verwenden 
+Benutzer="root"
+
+
+if [ "$(whoami)" != $Benutzer ]; then
+        echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
+        exit 255
+fi
+
+####################################################################################################################
+# Ubuntu 18.04 notwendig
+#
+#
+
+sudo su
+lshw -C display
+uname -m && cat /etc/*release
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+
+apt -y install linux-headers-$(uname -r)
+apt -y install gcc make nano
+
+sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+update-initramfs -u
+
+reboot
+
+sudo su
+
+wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
+sudo sh cuda_11.2.0_460.27.04_linux.run
+
+echo /usr/local/cuda-11.2/lib64 >>  /etc/ld.so.conf
+ldconfig
+
+echo 'export PATH=/usr/local/cuda-11.2/bin:$PATH' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+echo 'cd ~' >> ~/.bashrc
+source ~/.bashrc
+
+
+export DEBCONF_NONINTERACTIVE_SEEN="true"
+export DEBIAN_FRONTEND="noninteractive"
+export DISABLE_SSH="true"
+export HOME="/root"
+export LC_ALL="C.UTF-8"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+export TZ="Etc/UTC"
+export TERM="xterm"
+export PHP_VERS="7.4"
+export ZM_VERS="master"
+export SHMEM="50%"
+export PUID="99"
+export PGID="100"
+
+export TZ="Europe/Berlin" 
+export SHMEM="50%" 
+export PUID="99" 
+export PGID="100" 
+export INSTALL_HOOK="1" 
+export INSTALL_FACE="1" 
+export INSTALL_TINY_YOLOV3="1" 
+export INSTALL_YOLOV3="1" 
+export INSTALL_TINY_YOLOV4="1" 
+export INSTALL_YOLOV4="1" 
+export MULTI_PORT_START="10" 
+export MULTI_PORT_END="0" 
+
+mkdir /mnt/cache/appdata/Zoneminder
+
+cd ~
+git clone https://github.com/dlandon/zoneminder.master-docker.git
+cp -r zoneminder.master-docker/init/ /etc/my_init.d/
+cp -r zoneminder.master-docker/defaults/ /root/
+
+add-apt-repository -y ppa:iconnor/zoneminder-$ZM_VERS && \
+	LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php && \
+	add-apt-repository ppa:jonathonf/ffmpeg-4 && \
+	apt-get update && \
+	apt-get -y upgrade -o Dpkg::Options::="--force-confold" && \
+	apt-get -y dist-upgrade -o Dpkg::Options::="--force-confold" && \
+	apt-get -y install apache2 mariadb-server && \
+	apt-get -y install ssmtp mailutils net-tools wget sudo make && \
+	apt-get -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd && \
+	apt-get -y install libcrypt-mysql-perl libyaml-perl libjson-perl libavutil-dev ffmpeg && \
+	apt-get -y install --no-install-recommends libvlc-dev libvlccore-dev vlc && \
+	apt-get -y install zoneminder
+	

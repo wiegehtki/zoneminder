@@ -340,6 +340,7 @@ else
 	fi
 fi
 
+
 # Install hook packages, if enabled
 if [ "$INSTALL_HOOK" == "1" ]; then
 	echo "Installing machine learning modules & hooks..."
@@ -354,6 +355,9 @@ if [ "$INSTALL_HOOK" == "1" ]; then
 		# Python modules needed for hook processing
 		apt-get -y install python3-pip cmake
 		apt-get -y install libopenblas-dev liblapack-dev libblas-dev
+
+                #UW Fix
+                pip3 install numpy scipy matplotlib ipython pandas sympy nose cython 
 
 		# pip3 will take care of installing dependent packages
 		pip3 install future
