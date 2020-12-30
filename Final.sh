@@ -120,7 +120,8 @@ echo $(date -u) "06 von 30: Umgebungsvariablen für die Zoneminder - Installatio
      a2enconf php$PHP_VERS-fpm zoneminder
      echo "extension=apcu.so" > /etc/php/$PHP_VERS/mods-available/apcu.ini
      echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
-     perl -MCPAN -e "force install Net::WebSocket::Server"
+     export PERL_MM_USE_DEFAULT=1 #Fragen mit yes beantworten
+	 perl -MCPAN -e "force install Net::WebSocket::Server"
      perl -MCPAN -e "force install LWP::Protocol::https"
      perl -MCPAN -e "force install Config::IniFiles"
      perl -MCPAN -e "force install Net::MQTT::Simple"
