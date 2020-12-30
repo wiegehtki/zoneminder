@@ -43,7 +43,7 @@ use Symbol qw(qualify_to_ref);
 use IO::Select;
 
 ####################################
-my $app_version = '6.0.5';
+my $app_version = '6.0.6';
 ####################################
 
 # do this before any log init etc.
@@ -72,7 +72,7 @@ if ( !try_use('JSON') ) {
 }
 
 # debugging only.
-use Data::Dumper;
+#use Data::Dumper;
 
 # ==========================================================================
 #
@@ -104,6 +104,7 @@ use Data::Dumper;
 use constant {
   DEFAULT_CONFIG_FILE        => '/etc/zm/zmeventnotification.ini',
   DEFAULT_PORT               => 9000,
+  DEFAULT_ADDRESS            => '[::]',
   DEFAULT_AUTH_ENABLE        => 'yes',
   DEFAULT_AUTH_TIMEOUT       => 20,
   DEFAULT_FCM_ENABLE         => 'yes',
@@ -193,6 +194,7 @@ my $escontrol_interface_password;
 my $escontrol_interface_file;
 
 my $port;
+my $address;
 
 my $auth_enabled;
 my $auth_timeout;
@@ -329,6 +331,7 @@ GetOptions(
   'version'      => \$version,
   'config=s'     => \$config_file,
   'check-config' => \$check_config,
+  'debug'        => \$console_logs
 );
 
 if ($version) {
@@ -491,6 +494,7 @@ sub loadEsConfigSettings {
     DEFAULT_BASE_DATA_PATH );
 
   $port    = config_get_val( $config, 'network', 'port',    DEFAULT_PORT );
+  $address = config_get_val( $config, 'network', 'address', DEFAULT_ADDRESS );
   $auth_enabled =
     config_get_val( $config, 'auth', 'enable', DEFAULT_AUTH_ENABLE );
   $auth_timeout =
@@ -534,7 +538,7 @@ sub loadEsConfigSettings {
   $ssl_cert_file = config_get_val( $config, 'ssl', 'cert' );
   $ssl_key_file  = config_get_val( $config, 'ssl', 'key' );
   $console_logs = config_get_val( $config, 'customize', 'console_logs',
-    DEFAULT_CUSTOMIZE_VERBOSE );
+    DEFAULT_CUSTOMIZE_VERBOSE ) if (!$console_logs);
   $es_debug_level = config_get_val( $config, 'customize', 'es_debug_level',
     DEFAULT_CUSTOMIZE_ES_DEBUG_LEVEL );
   $event_check_interval =
@@ -690,6 +694,7 @@ Admin interface password.............. ${\(present_or_not($escontrol_interface_p
 Admin interface persistence file ..... ${\(value_or_undefined($escontrol_interface_file))}
 
 Port ................................. ${\(value_or_undefined($port))}
+Address .............................. ${\(value_or_undefined($address))}
 Event check interval ................. ${\(value_or_undefined($event_check_interval))}
 Monitor reload interval .............. ${\(value_or_undefined($monitor_reload_interval))}
 Skipped monitors...................... ${\(value_or_undefined($skip_monitors))}
@@ -951,19 +956,21 @@ sub printDebug {
   my $str   = shift;
   my $level = shift;
   $level = $es_debug_level if not defined $level;
-  return if $es_debug_level < $level;
   my $now = strftime( '%Y-%m-%d,%H:%M:%S', localtime );
   $str = $prefix . ' ' . $str;
-  print( "CONSOLE DBG-$level:", $now, " ", $str, "\n" ) if $console_logs;
-
-  Debug($str);
+  if ($es_debug_level >= $level) {
+    print( "DBG-$level:", $now, " ", $str, "\n" ) if $console_logs;
+    Debug($str) ;
+  }
+  
+  
 }
 
 sub printInfo {
   my $str = shift;
   my $now = strftime( '%Y-%m-%d,%H:%M:%S', localtime );
   $str = $prefix . ' ' . $str;
-  print( 'CONSOLE INF:', $now, " ", $str, "\n" ) if $console_logs;
+  print( 'INF:', $now, " ", $str, "\n" ) if $console_logs;
 
   Info($str);
 }
@@ -972,7 +979,7 @@ sub printWarning {
   my $str = shift;
   my $now = strftime( '%Y-%m-%d,%H:%M:%S', localtime );
   $str = $prefix . ' ' . $str;
-  print( 'CONSOLE WAR:', $now, " ", $str, "\n" ) if $console_logs;
+  print( 'WAR:', $now, " ", $str, "\n" ) if $console_logs;
   Warning($str);
 }
 
@@ -980,7 +987,7 @@ sub printError {
   my $str = shift;
   my $now = strftime( '%Y-%m-%d,%H:%M:%S', localtime );
   $str = $prefix . ' ' . $str;
-  print( 'CONSOLE ERR:', $now, " ", $str, "\n" ) if $console_logs;
+  print( 'ERR:', $now, " ", $str, "\n" ) if $console_logs;
   Error($str);
 }
 
@@ -1620,7 +1627,7 @@ sub validateAuth {
         # perl bcrypt libs can't handle $2b$ or $2y$
         $saved_pass =~ s/^\$2.\$/\$2a\$/;
         my $new_hash = Crypt::Eksblowfish::Bcrypt::bcrypt( $p, $saved_pass );
-        printDebug( "Comparing using bcrypt $new_hash to $saved_pass", 2 );
+        printDebug( "Comparing using bcrypt", 2 );
         return $new_hash eq $saved_pass;
       }
     }
@@ -1945,31 +1952,19 @@ sub sendOverFCMV1 {
 
   if ( $res->is_success ) {
     $pcnt++;
-    $msg = $res->decoded_content;
     printDebug(
-      'fcmv1: FCM push message returned a 200 with body ' . $res->content, 1 );
-    eval { $json_string = decode_json($msg); };
-    if ($@) {
-
-      Error("fcmv1: Failed decoding sendFCM Response: $@");
-      return;
+      'fcmv1: FCM push message returned a 200 with body ' . $res->decoded_content, 1 );
+  } else {
+    printDebug ('fcmv1: FCM push message error '.$res->decoded_content,1);
+    if ( (index( $res->decoded_content, 'not a valid FCM' ) != -1) ||
+          (index( $res->decoded_content, 'entity was not found') != -1)) {
+      printDebug( 'fcmv1: Removing this token as FCM doesn\'t recognize it',
+        1 );
+      deleteFCMToken( $obj->{token} );
     }
-    if ( $json_string->{failure} eq 1 ) {
-      my $reason = $json_string->{results}[0]->{Error};
-      Error( 'fcmv1: Error sending FCM for token:' . $obj->{token} );
-      Error( 'fcmv1: Error value =' . $reason );
-      if ( index( $reason, 'not a valid FCM' ) != -1 ) {
-        printDebug( 'fcmv1: Removing this token as FCM doesn\'t recognize it',
-          1 );
-        deleteFCMToken( $obj->{token} );
-      }
 
-    }
   }
-  else {
-    printError( 'fcmv1: FCM push message Error:' . $res->status_line );
-  }
-
+    
   # send supplementary event data over websocket, same SSL state issue
   # so use a parent pipe
   if ( $obj->{state} == VALID_CONNECTION && exists $obj->{conn} ) {
@@ -2167,7 +2162,7 @@ sub sendOverFCMLegacy {
   $djson =~ s/pass(word)?=(.*?)($|&)/pass$1=xxx$3/g;
 
   printDebug(
-    "Final JSON being sent is: $djson to token: ..."
+    "legacy: Final JSON being sent is: $djson to token: ..."
       . substr( $obj->{token}, -6 ),
     2
   );
@@ -2458,7 +2453,7 @@ sub checkConnection {
 
   printDebug(
     "After tick: TOTAL: $ac,  ES_CONTROL: $escontrol_conn, FCM+WEB: $fcm_conn, FCM: $fcm_no_conn, WEB: $web_conn, MQTT:$mqtt_conn, invalid WEB: $web_no_conn, PENDING: $pend_conn",
-    3
+    2
   );
 
 }
@@ -2565,7 +2560,10 @@ sub processIncomingMessage {
 
     # This sub type is when a device token is registered
     if ( $json_string->{data}->{type} eq 'token' ) {
-
+      if (!defined($json_string->{data}->{token}) || ($json_string->{data}->{token} eq "")) {
+        printDebug ("Ignoring token command, I got ".encode_json($json_string));
+        return;
+      }
       # a token must have a platform
       if ( !$json_string->{data}->{platform} ) {
         my $str = encode_json(
@@ -2586,6 +2584,10 @@ sub processIncomingMessage {
       my $token_matched = 0;
       my $stored_invocations = undef;
       my $stored_last_sent = undef;
+
+
+      #print Dumper(\@active_connections);
+
       foreach (@active_connections) {
 
         if ( $_->{token} eq $json_string->{data}->{token} ) {
@@ -2601,7 +2603,12 @@ sub processIncomingMessage {
               || $_->{conn}->port() ne $conn->port() )
             )
           {
-            printDebug( 'JOB: token matched but connection did not', 2 );
+            my $existing_token = substr( $_->{token}, -10 );
+            my $new_token = substr( $json_string->{data}->{token}, -10 );
+            my $existing_conn = $_->{conn} ? $_->{conn}->ip().':'.$_->{conn}->port() : 'undefined';
+            my $new_conn = $conn ? $conn->ip().':'.$conn->port() : 'undefined';
+            
+            printDebug( "JOB: new token matched existing token: ($new_token <==> $existing_token) but connection did not ($new_conn <==> $existing_conn)", 2 );
             printDebug(
               'JOB: Duplicate token found: marking ...'
                 . substr( $_->{token}, -10 )
@@ -2678,30 +2685,28 @@ sub processIncomingMessage {
           && ( $_->{conn}->port() eq $conn->port() )
           && ( $_->{token} ne $json_string->{data}->{token} ) )
         {
+          my $existing_token = substr( $_->{token}, -10 );
+          my $new_token = substr( $json_string->{data}->{token}, -10 );
+          my $existing_conn = $_->{conn} ? $_->{conn}->ip().':'.$_->{conn}->port() : 'undefined';
+          my $new_conn = $conn ? $conn->ip().':'.$conn->port() : 'undefined';
+            
           printDebug(
-            'JOB: connection matched but token did not. first registration?',
+            "JOB: connection matched ($new_conn <==> $existing_conn) but token did not ($new_token <==> $existing_token). first registration?",
             2 );
+        
           $_->{type}     = FCM;
           $_->{token}    = $json_string->{data}->{token};
           $_->{platform} = $json_string->{data}->{platform};
-          $_->{monlist}  = $json_string->{data}->{monlist};
-          $_->{intlist}  = $json_string->{data}->{intlist};
-          if ( exists( $json_string->{data}->{monlist} )
-            && ( $json_string->{data}->{monlist} ne '' ) )
-          {
-            $_->{monlist} = $json_string->{data}->{monlist};
-          }
-          else {
-            $_->{monlist} = "-1";
-          }
-          if ( exists( $json_string->{data}->{intlist} )
-            && ( $json_string->{data}->{intlist} ne '' ) )
-          {
-            $_->{intlist} = $json_string->{data}->{intlist};
-          }
-          else {
-            $_->{intlist} = '-1';
-          }
+
+
+          $_->{monlist}  = $json_string->{data}->{monlist}
+            if (($json_string->{data}->{monlist}) && ($json_string->{data}->{monlist} ne '-1'));
+            
+
+          $_->{intlist}  = $json_string->{data}->{intlist}
+                      if (($json_string->{data}->{intlist}) && ($json_string->{data}->{intlist} ne '-1'));
+
+         
           $_->{pushstate} = $json_string->{data}->{state};
           $_->{invocations} = defined ($stored_invocations) ? $stored_invocations:{count=>0, at=>(localtime)[4]};
           #print ("REMOVE applied:". Dumper($_->{invocations}));
@@ -3321,7 +3326,9 @@ sub sendEvent {
 
   if ( $ac->{type} == FCM
     && $ac->{pushstate} ne 'disabled'
-    && $ac->{state} != PENDING_AUTH )
+    && $ac->{state} != PENDING_AUTH 
+    && $ac->{state} != PENDING_DELETE 
+    )
   {
 
     # only send if fcm is an allowed channel
@@ -4296,6 +4303,7 @@ sub initSocketServer {
       $ssl_server = IO::Socket::SSL->new(
         Listen        => 10,
         LocalPort     => $port,
+        LocalAddr     => $address,
         Proto         => 'tcp',
         Reuse         => 1,
         ReuseAddr     => 1,

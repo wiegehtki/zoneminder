@@ -2,8 +2,8 @@
 
 # Es wird empfohlen root als Benutzer zu verwenden 
 Benutzer="root"
-CUDA_Version=11.2.0
-CUDA_Script=cuda_11.2.0_460.27.04_linux.run
+CUDA_Version=10.1.0
+CUDA_Script=cuda_10.1.0_460.27.04_linux.run
 CUDA_Pfad=/usr/local/cuda-11.2
 
 
@@ -239,9 +239,8 @@ echo $(date -u) "14 von 30: Eventserver runterladen und installieren"  | tee -a 
   
                 # Get the latest ES bundle
                 cd /root
-                rm -rf zmeventnotification
-                wget -q https://github.com/dlandon/zoneminder.master-docker/raw/master/zmeventnotification/EventServer.tgz
-                if [ -f EventServer.tgz ]; then
+                cp /root/zoneminder/zmeventnotification/EventServer.tgz .
+				if [ -f EventServer.tgz ]; then
                 	tar -xf EventServer.tgz
                 	rm EventServer.tgz
                 else
@@ -793,4 +792,11 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 else
                 	echo "WARNUNG: MySql und Zoneminder nicht gestartet."
                 fi
+				
+				
+				
+				
+				nano /etc/zm/secrets.ini
+				nano /etc/zm/zmeventnotification.ini
+				
                 
