@@ -28,20 +28,23 @@ cd ~/opencv
 mkdir build
 cd build
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
-	-D CMAKE_INSTALL_PREFIX=/usr/local \
-	-D WITH_CUDA=ON \
-	-D CUDA_ARCH_PTX="" \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D WITH_CUDA=ON \
+    -D CUDA_ARCH_PTX="" \
     -D WITH_CUBLAS=1 \
-	-D ENABLE_FAST_MATH=1 \
+    -D ENABLE_FAST_MATH=1 \
     -D CUDA_FAST_MATH=1 \
-	-D INSTALL_PYTHON_EXAMPLES=OFF \
-	-D INSTALL_C_EXAMPLES=OFF \
-	-D OPENCV_ENABLE_NONFREE=ON \
-	-D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
-	-D HAVE_opencv_python3=ON \
-	-D PYTHON_EXECUTABLE=/usr/bin/python3 \
-	-D PYTHON2_EXECUTABLE=/usr/bin/python2 \
-	-D BUILD_EXAMPLES=OFF .. >/dev/null
+    -D INSTALL_PYTHON_EXAMPLES=OFF \
+    -D INSTALL_C_EXAMPLES=OFF \
+    -D OPENCV_ENABLE_NONFREE=ON \
+    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+    -D HAVE_opencv_python3=ON \
+    -D PYTHON_EXECUTABLE=/usr/bin/python3 \
+    -D PYTHON2_EXECUTABLE=/usr/bin/python2 \
+    -D BUILD_EXAMPLES=OFF 
+    -D PYTHON_DEFAULT_EXECUTABLE=$(which python3) .. 
+	#>/dev/null
+
 
 make -j$(nproc)
 

@@ -760,7 +760,7 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
          if [ -f /config/opencv/opencv_ok ] && [ `cat /config/opencv/opencv_ok` = 'yes' ]; then
              if [ ! -f /root/setup.py ]; then
                  if [ -x /config/opencv/opencv.sh ]; then
-          /config/opencv/opencv.sh quiet >/dev/null
+			        quiet >/dev/null
                  fi
              fi
          else
