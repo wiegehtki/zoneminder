@@ -61,9 +61,10 @@ echo $(date -u) "03 von 04 Diverse Pakete installieren wie Compiler, Headers usw
 				
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
-echo $(date -u) "04 von 04: Nouveau - Grafiktreiber ausschalten und reboot"  | tee -a  ~/Installation.log
+echo $(date -u) "04 von 04: Nouveau - Grafiktreiber ausschalten, .bashrc anpassen und reboot"  | tee -a  ~/Installation.log
                 sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
                 sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+				sudo echo "cd ~/" >> /root/.bashrc
                 update-initramfs -u
 
                 #reboot

@@ -89,7 +89,8 @@ echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installatio
                 fi
                 #git clone https://github.com/dlandon/zoneminder.master-docker.git
                 #cp -r zoneminder/init/. /etc/my_init.d/.
-               				
+               	
+                mv zoneminder/defaults/zoneminder /etc/init.d/zoneminder				
 				cp -r zoneminder/defaults/. /root/.
 
                 add-apt-repository -y ppa:iconnor/zoneminder-$ZM_VERS
@@ -144,7 +145,7 @@ echo $(date -u) "07 von 30: Umgebungsvariablen für die Zoneminder - Installatio
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "08 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
-                mv /root/zoneminder /etc/init.d/zoneminder
+                #mv /root/zoneminder /etc/init.d/zoneminder
                 chmod +x /etc/init.d/zoneminder
                 service mysql restart
                 sleep 5
