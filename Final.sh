@@ -89,8 +89,8 @@ echo $(date -u) "05 von 30: Umgebungsvariablen für die Zoneminder - Installatio
      fi
      #git clone https://github.com/dlandon/zoneminder.master-docker.git
      #cp -r zoneminder/init/. /etc/my_init.d/.
-    
-     mv zoneminder/defaults/zoneminder /etc/init.d/zoneminder     
+
+     mv zoneminder/defaults/zoneminder /etc/init.d/zoneminder
      cp -r zoneminder/defaults/. /root/.
 
      add-apt-repository -y ppa:iconnor/zoneminder-$ZM_VERS
@@ -131,8 +131,8 @@ echo $(date -u) "...............................................................
 echo $(date -u) "07 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
 
      mysql -uroot -D zm -e "DROP DATABASE zm"
-     cd /root 
-     chown -R www-data:www-data /usr/share/zoneminder/ 
+     cd /root
+     chown -R www-data:www-data /usr/share/zoneminder/
      echo "ServerName localhost" >> /etc/apache2/apache2.conf
      sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini
      service mysql start
@@ -167,9 +167,9 @@ echo $(date -u) "08 von 30: Umgebungsvariablen für die Zoneminder - Installatio
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "09 von 30: Umgebungsvariablen für die Zoneminder - Installation setzen"  | tee -a  ~/FinalInstall.log
      apt -y remove make
-     apt -y clean 
-     apt -y autoremove 
-     rm -rf /tmp/* /var/tmp/* 
+     apt -y clean
+     apt -y autoremove
+     rm -rf /tmp/* /var/tmp/*
      #chmod +x /etc/my_init.d/*.sh
 
      mkdir /config
@@ -384,7 +384,7 @@ echo $(date -u) "16 von 30: Secrets.ini und OpenCV"  | tee -a  ~/FinalInstall.lo
      ln -sf /config/push/tokens.txt /var/lib/zmeventnotification/push/tokens.txt
 
      # ssmtp
-     rm -r /etc/ssmtp 
+     rm -r /etc/ssmtp
      ln -s /config/ssmtp /etc/ssmtp
 
      # mysql
