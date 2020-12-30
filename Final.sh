@@ -242,6 +242,7 @@ echo $(date -u) "14 von 30: Eventserver runterladen und installieren"  | tee -a 
                 cp /root/zoneminder/zmeventnotification/EventServer.zip .
 				if [ -f EventServer.zip ]; then
                 	unzip EventServer.zip
+					chmod -R +x /root/EventServer/*
                 	rm EventServer.zip
                 else
                 	echo "Fehler: ES - Server kann nicht runtergeladen werden." | tee -a  ~/FinalInstall.log
