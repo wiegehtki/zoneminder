@@ -239,23 +239,23 @@ echo $(date -u) "14 von 30: Eventserver runterladen und installieren"  | tee -a 
   
                 # Get the latest ES bundle
                 cd /root
-                cp /root/zoneminder/zmeventnotification/EventServer.tgz .
-				if [ -f EventServer.tgz ]; then
-                	tar -xf EventServer.tgz
-                	rm EventServer.tgz
+                cp /root/zoneminder/zmeventnotification/EventServer.zip .
+				if [ -f EventServer.zip ]; then
+                	unzip EventServer.zip
+                	rm EventServer.zip
                 else
                 	echo "Fehler: ES - Server kann nicht runtergeladen werden." | tee -a  ~/FinalInstall.log
                 fi
                 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "15 von 30: Eventserver - Config"  | tee -a  ~/FinalInstall.log
-                if [ -f /root/zmeventnotification/zmeventnotification.ini ]; then
+                if [ -f /root/EventServer/zmeventnotification.ini ]; then
                 	echo "zmeventnotification.ini verschieben" | tee -a  ~/FinalInstall.log
-                	cp /root/zmeventnotification/zmeventnotification.ini /config/zmeventnotification.ini.default
+                	cp /root/EventServer/zmeventnotification.ini /config/zmeventnotification.ini.default
                 	if [ ! -f /config/zmeventnotification.ini ]; then
-                		mv /root/zmeventnotification/zmeventnotification.ini /config/zmeventnotification.ini
+                		mv /root/EventServer/zmeventnotification.ini /config/zmeventnotification.ini
                 	else
-                		rm -rf /root/zmeventnotification/zmeventnotification.ini
+                		rm -rf /root/EventServer/zmeventnotification.ini
                 	fi
                 else
                 	echo "Datei zmeventnotification.ini bereits verschoben" | tee -a  ~/FinalInstall.log
@@ -263,13 +263,13 @@ echo $(date -u) "15 von 30: Eventserver - Config"  | tee -a  ~/FinalInstall.log
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "16 von 30: Secrets.ini und OpenCV"  | tee -a  ~/FinalInstall.log
-                if [ -f /root/zmeventnotification/secrets.ini ]; then
+                if [ -f /root/EventServer/secrets.ini ]; then
                 	echo "Verschieben von secrets.ini"  | tee -a  ~/FinalInstall.log
-                	cp /root/zmeventnotification/secrets.ini /config/secrets.ini.default
+                	cp /root/EventServer/secrets.ini /config/secrets.ini.default
                 	if [ ! -f /config/secrets.ini ]; then
-                		mv /root/zmeventnotification/secrets.ini /config/secrets.ini
+                		mv /root/EventServer/secrets.ini /config/secrets.ini
                 	else
-                		rm -rf /root/zmeventnotification/secrets.ini
+                		rm -rf /root/EventServer/secrets.ini
                 	fi
                 else
                 	echo "Datei secrets.ini bereits verschoben"  | tee -a  ~/FinalInstall.log
@@ -282,22 +282,22 @@ echo $(date -u) "16 von 30: Secrets.ini und OpenCV"  | tee -a  ~/FinalInstall.lo
                 fi
                 
                 # Handle the opencv.sh file
-                if [ -f /root/zmeventnotification/opencv.sh ]; then
+                if [ -f /root/EventServer/opencv.sh ]; then
                 	echo "opencv.sh verschieben" | tee -a  ~/FinalInstall.log
-                	cp /root/zmeventnotification/opencv.sh /config/opencv/opencv.sh.default
+                	cp /root/EventServer/opencv.sh /config/opencv/opencv.sh.default
                 	if [ ! -f /config/opencv/opencv.sh ]; then
-                		mv /root/zmeventnotification/opencv.sh /config/opencv/opencv.sh
+                		mv /root/EventServer/opencv.sh /config/opencv/opencv.sh
                 	else
-                		rm -rf /root/zmeventnotification/opencv.sh
+                		rm -rf /root/EventServer/opencv.sh
                 	fi
                 else
                 	echo "Datei opencv.sh bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
                 
                 # Handle the debug_opencv.sh file
-                if [ -f /root/zmeventnotification/debug_opencv.sh ]; then
+                if [ -f /root/EventServer/debug_opencv.sh ]; then
                 	echo "Verschieben von debug_opencv.sh" | tee -a  ~/FinalInstall.log
-                	mv /root/zmeventnotification/debug_opencv.sh /config/opencv/debug_opencv.sh
+                	mv /root/EventServer/debug_opencv.sh /config/opencv/debug_opencv.sh
                 else
                 	echo "Datei debug_opencv.sh bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
@@ -307,19 +307,19 @@ echo $(date -u) "16 von 30: Secrets.ini und OpenCV"  | tee -a  ~/FinalInstall.lo
                 fi
                 
                 # Handle the zmeventnotification.pl
-                if [ -f /root/zmeventnotification/zmeventnotification.pl ]; then
+                if [ -f /root/EventServer/zmeventnotification.pl ]; then
                 	echo "Verschieben des Ereignisbenachrichtigungsservers" | tee -a  ~/FinalInstall.log
-                	mv /root/zmeventnotification/zmeventnotification.pl /usr/bin
+                	mv /root/EventServer/zmeventnotification.pl /usr/bin
                 	chmod +x /usr/bin/zmeventnotification.pl 2>/dev/null
                 else
                 	echo "Ereignisbenachrichtigungsserver bereits verschoben" | tee -a  ~/FinalInstall.log
                 fi
                 
                 # Handle the pushapi_pushover.py
-                if [ -f /root/zmeventnotification/pushapi_pushover.py ]; then
+                if [ -f /root/EventServer/pushapi_plugins/pushapi_pushover.py ]; then
                 	echo "Verschieben der Pushover-Api" | tee -a  ~/FinalInstall.log
                 	mkdir -p /var/lib/zmeventnotification/bin/
-                	mv /root/zmeventnotification/pushapi_pushover.py /var/lib/zmeventnotification/bin/
+                	mv /root/EventServer/pushapi_plugins/pushapi_pushover.py /var/lib/zmeventnotification/bin/
                 	chmod +x /var/lib/zmeventnotification/bin/pushapi_pushover.py 2>/dev/null
                 else
                 	echo "Pushover api bereits verschoben" | tee -a  ~/FinalInstall.log
@@ -362,13 +362,13 @@ echo $(date -u) "16 von 30: Secrets.ini und OpenCV"  | tee -a  ~/FinalInstall.lo
                 
                 # Copy conf files if there are any
                 if [ -d /config/conf ]; then
-                	echo "Copy /config/conf/ scripts to /etc/zm/conf.d/"
+                	echo "Copy /config/conf/ scripts to /etc/zm/conf.d/"  | tee -a  ~/FinalInstall.log
                 	cp /config/conf/*.conf /etc/zm/conf.d/ 2>/dev/null
                 	chown root:root /etc/zm/conf.d* 2>/dev/null
                 	chmod 640 /etc/conf.d/* 2>/dev/null
                 fi
                 
-                echo "Creating symbolink links"
+                echo "Creating symbolink links"  | tee -a  ~/FinalInstall.log
                 # security certificate keys
                 rm -rf /etc/apache2/ssl/zoneminder.crt
                 ln -sf /config/keys/cert.crt /etc/apache2/ssl/zoneminder.crt
@@ -579,7 +579,7 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 		pip3 install /root/zmeventnotification
                 
                 		cd ~
-                	    rm -rf /root/zmeventnotification/zmes_hook_helpers
+                	    rm -rf /root/EventServer/hook/zmes_hook_helpers/zmes_hook_helpers
                 	fi
                 
                 	# Download models files
@@ -632,58 +632,58 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 	fi
                 
                 	# Umgang mit der Datei objectconfig.ini
-                	if [ -f /root/zmeventnotification/objectconfig.ini ]; then
-                		echo "Moving objectconfig.ini"
-                		cp /root/zmeventnotification/objectconfig.ini /config/hook/objectconfig.ini.default
+                	if [ -f /root/EventServer/hook/objectconfig.ini ]; then
+                		echo "Moving objectconfig.ini"  | tee -a  ~/FinalInstall.log
+                		cp /root/EventServer/hook/objectconfig.ini /config/hook/objectconfig.ini.default
                 		if [ ! -f /config/hook/objectconfig.ini ]; then
-                			mv /root/zmeventnotification/objectconfig.ini /config/hook/objectconfig.ini
+                			mv /root/EventServer/hook/objectconfig.ini /config/hook/objectconfig.ini
                 		else
-                			rm -rf /root/zmeventnotification/objectconfig.ini
+                			rm -rf /root/EventServer/hook/objectconfig.ini
                 		fi
                 	else
-                		echo "Datei objectconfig.ini bereits verschoben"
+                		echo "Datei objectconfig.ini bereits verschoben"  | tee -a  ~/FinalInstall.log
                 	fi
                 
                 	# Handle the config_upgrade script
-                	if [ -f /root/zmeventnotification/config_upgrade.py ]; then
-                		echo "Verschieben von config_upgrade.py"
-                		mv /root/zmeventnotification/config_upgrade.py /config/hook/config_upgrade.py
-                		mv /root/zmeventnotification/config_upgrade.sh /config/hook/config_upgrade.sh
+                	if [ -f /root/EventServer/hook/config_upgrade.py ]; then
+                		echo "Verschieben von config_upgrade.py"  | tee -a  ~/FinalInstall.log
+                		mv /root/EventServer/hook/config_upgrade.py /config/hook/config_upgrade.py
+                		mv /root/EventServer/hook/config_upgrade.sh /config/hook/config_upgrade.sh
                 		chmod +x /config/hook/config_upgrade.*
                 	else
-                		echo "Skript config_upgrade.py nicht gefunden"
+                		echo "Skript config_upgrade.py nicht gefunden"  | tee -a  ~/FinalInstall.log
                 	fi
                 
                 	# Handle the zm_event_start.sh file
-                	if [ -f /root/zmeventnotification/zm_event_start.sh ]; then
-                		echo "Verschieben von zm_event_start.sh"
-                		mv /root/zmeventnotification/zm_event_start.sh /config/hook/zm_event_start.sh
+                	if [ -f /root/EventServer/hook/zm_event_start.sh ]; then
+                		echo "Verschieben von zm_event_start.sh"  | tee -a  ~/FinalInstall.log
+                		mv /root/EventServer/hook/zm_event_start.sh /config/hook/zm_event_start.sh
                 	else
-                		echo "Datei zm_event_start.sh bereits verschoben"
+                		echo "Datei zm_event_start.sh bereits verschoben"  | tee -a  ~/FinalInstall.log
                 	fi
                 
                 	# Handle the zm_event_end.sh file
-                	if [ -f /root/zmeventnotification/zm_event_end.sh ]; then
-                		echo "Verschieben von zm_event_end.sh"
-                		mv /root/zmeventnotification/zm_event_end.sh /config/hook/zm_event_end.sh
+                	if [ -f /root/EventServer/hook/zm_event_end.sh ]; then
+                		echo "Verschieben von zm_event_end.sh"  | tee -a  ~/FinalInstall.log
+                		mv /root/EventServer/hook/zm_event_end.sh /config/hook/zm_event_end.sh
                 	else
-                		echo "Datei zm_event_end.sh bereits verschoben"
+                		echo "Datei zm_event_end.sh bereits verschoben"  | tee -a  ~/FinalInstall.log
                 	fi
                 
                 	# Handle the zm_detect.py file
-                	if [ -f /root/zmeventnotification/zm_detect.py ]; then
-                		echo "Verschieben von zm_detect.py"
-                		mv /root/zmeventnotification/zm_detect.py /config/hook/zm_detect.py
+                	if [ -f /root/EventServer/hook/zm_detect.py ]; then
+                		echo "Verschieben von zm_detect.py"  | tee -a  ~/FinalInstall.log
+                		mv /root/EventServer/hook/zm_detect.py /config/hook/zm_detect.py
                 	else
-                		echo "Datei zm_detect.py bereits verschoben"
+                		echo "Datei zm_detect.py bereits verschoben"  | tee -a  ~/FinalInstall.log
                 	fi
                 
                 	# Handle the zm_train_faces.py file
-                	if [ -f /root/zmeventnotification/zm_train_faces.py ]; then
-                		echo "Verschieben von zm_train_faces.py"
-                		mv /root/zmeventnotification/zm_train_faces.py /config/hook/zm_train_faces.py
+                	if [ -f /root/EventServer/hook/zm_train_faces.py ]; then
+                		echo "Verschieben von zm_train_faces.py"  | tee -a  ~/FinalInstall.log
+                		mv /root/EventServer/hook/zm_train_faces.py /config/hook/zm_train_faces.py
                 	else
-                		echo "Datei zm_train_faces.py bereits verschoben"
+                		echo "Datei zm_train_faces.py bereits verschoben"  | tee -a  ~/FinalInstall.log
                 	fi
                 
                 	# Symbolic link for models in /config
@@ -708,7 +708,7 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 
                 	# Create misc folder if it doesn't exist
                 	if [ ! -d /config/hook/misc ]; then
-                		echo "Ordner hook/misc im config-Ordner anlegen"
+                		echo "Ordner hook/misc im config-Ordner anlegen"  | tee -a  ~/FinalInstall.log
                 		mkdir -p /config/hook/misc
                 	fi
                 
@@ -719,7 +719,7 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 
                 	# Create coral_edgetpu folder if it doesn't exist
                 	if [ ! -d /config/hook/coral_edgetpu ]; then
-                		echo "Ordner hook/coral_edgetpu im Ordner config erstellen"
+                		echo "Ordner hook/coral_edgetpu im Ordner config erstellen"  | tee -a  ~/FinalInstall.log
                 		mkdir -p /config/hook/coral_edgetpu
                 	fi
                 
@@ -732,22 +732,22 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 	chmod +x /var/lib/zmeventnotification/bin/*
                 	ln -sf /config/hook/objectconfig.ini /etc/zm/
                 
-                	if [ "$INSTALL_FACE" == "1" ] && [ -f /root/zmeventnotification/setup.py ]; then
+                	if [ "$INSTALL_FACE" == "1" ] && [ -f /root/EventServer/hook/setup.py ]; then
                 		# Create known_faces folder if it doesn't exist
                 		if [ ! -d /config/hook/known_faces ]; then
-                			echo "Ordner hook/known_faces im Ordner config anlegen"
+                			echo "Ordner hook/known_faces im Ordner config anlegen"  | tee -a  ~/FinalInstall.log
                 			mkdir -p /config/hook/known_faces
                 		fi
                 
                 		# Create known_faces folder if it doesn't exist
                 		if [ ! -d /config/hook/known_faces ]; then
-                			echo "Ordner hook/known_faces im Ordner config anlegen"
+                			echo "Ordner hook/known_faces im Ordner config anlegen"  | tee -a  ~/FinalInstall.log
                 			mkdir -p /config/hook/known_faces
                 		fi
                 
                 		# Create unknown_faces folder if it doesn't exist
                 		if [ ! -d /config/hook/unknown_faces ]; then
-                			echo "Ordner hook/unknown_faces im Ordner config anlegen"
+                			echo "Ordner hook/unknown_faces im Ordner config anlegen"  | tee -a  ~/FinalInstall.log
                 			mkdir -p /config/hook/unknown_faces
                 		fi
                 
@@ -759,7 +759,7 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 	chown -R $PUID:$PGID /config/hook
                 	chmod -R 777 /config/hook
                 
-                	echo "Hook - Installation abgeschlossen"
+                	echo "Hook - Installation abgeschlossen"  | tee -a  ~/FinalInstall.log
                 
                 	# Compile opencv
                 	echo "Kompilieren von opencv - das wird eine Weile dauern..."  | tee -a  ~/FinalInstall.log
@@ -776,7 +776,7 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 		fi
                 	fi
                 
-                	mv /root/zmeventnotification/setup.py /root/setup.py
+                	mv /root/EventServer/hook/setup.py /root/setup.py
                 fi
                 
                 echo "Dienste starten..."  | tee -a  ~/FinalInstall.log
@@ -790,13 +790,13 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
                 
                 	service zoneminder start
                 else
-                	echo "WARNUNG: MySql und Zoneminder nicht gestartet."
+                	echo "WARNUNG: MySql und Zoneminder nicht gestartet."  | tee -a  ~/FinalInstall.log
                 fi
 				
 				
 				
 				
-				nano /etc/zm/secrets.ini
-				nano /etc/zm/zmeventnotification.ini
+				#nano /etc/zm/secrets.ini
+				#nano /etc/zm/zmeventnotification.ini
 				
                 
