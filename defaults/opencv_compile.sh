@@ -4,7 +4,7 @@
 # Script to compile opencv without gpu support.
 #
 #
-OPENCV_VER=4.5.0
+OPENCV_VER=4.4.0
 OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
 OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
 #
@@ -29,6 +29,11 @@ mkdir build
 cd build
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
 	-D CMAKE_INSTALL_PREFIX=/usr/local \
+	-D WITH_CUDA=ON \
+	-D CUDA_ARCH_PTX="" \
+    -D WITH_CUBLAS=1 \
+	-D ENABLE_FAST_MATH=1 \
+    -D CUDA_FAST_MATH=1 \
 	-D INSTALL_PYTHON_EXAMPLES=OFF \
 	-D INSTALL_C_EXAMPLES=OFF \
 	-D OPENCV_ENABLE_NONFREE=ON \
