@@ -753,7 +753,9 @@ echo $(date -u) "15 von 30: Hook - Installation inklusive YOLO - Models"  | tee 
 
                 	# Compile opencv
                 	echo "Kompilieren von opencv - das wird eine Weile dauern..."  | tee -a  ~/FinalInstall.log
-                	if [ -f /config/opencv/opencv_ok ] && [ `cat /config/opencv/opencv_ok` = 'yes' ]; then
+                	rm  /usr/bin/python
+					ln -s python3.6 /usr/bin/python
+					if [ -f /config/opencv/opencv_ok ] && [ `cat /config/opencv/opencv_ok` = 'yes' ]; then
                 		if [ ! -f /root/setup.py ]; then
                 			if [ -x /config/opencv/opencv.sh ]; then
                 				/config/opencv/opencv.sh quiet >/dev/null
