@@ -1,0 +1,420 @@
+    1  apt -y update
+    2  apt -y dist-upgrade
+    3  sudo apt-get install tasksel
+    4  sudo tasksel install lamp-server
+    5  sudo -i
+    6  add-apt-repository ppa:iconnor/zoneminder-1.34
+    7  apt-get update
+    8  apt-get upgrade
+    9  rm /etc/mysql/my.cnf 
+   10  cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
+   11  nano /etc/mysql/my.cnf
+   12  systemctl restart mysql
+   13  apt-get install zoneminder
+   14  mysql -uroot -p < /usr/share/zoneminder/db/zm_create.sql
+   15  mysql -uroot -p -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
+   16  chmod 740 /etc/zm/zm.conf
+   17  chown root:www-data /etc/zm/zm.conf
+   18  chown -R www-data:www-data /usr/share/zoneminder/
+   19  a2enmod cgi
+   20  a2enmod rewrite
+   21  a2enconf zoneminder
+   22  a2enmod expires
+   23  a2enmod headers
+   24  systemctl enable zoneminder
+   25  systemctl start zoneminder
+   26  nano /etc/php/7.2/apache2/php.ini
+   27  systemctl reload apache2
+   28  cat /etc/zm/zm.conf
+   29  reboot
+   30  cd ~
+   31  a2enmod mod_cgi
+   32  find / -name php.ini
+   33  nano /etc/php/7.2/cli/php.ini
+   34  nanop /etc/php/7.2/apache2/php.ini
+   35  nano /etc/php/7.2/apache2/php.ini
+   36  git clone https://github.com/wiegehtki/zoneminder.git
+   37  ls
+   38  cd zoneminder/
+   39  ls
+   40  cp zmeventnotification/EventServer.zip ~/
+   41  cd ~
+   42  ls
+   43  chmod +x *
+   44  ls
+   45  unzip EventServer.zip 
+   46  cd EventServer
+   47  ls
+   48  chmod -r +x *
+   49  chmod -R +x *
+   50  ls
+   51  ./install.sh 
+   52  apt -y install python3-pip cmake
+   53  pip3 install numpy scipy matplotlib ipython pandas sympy nose cython
+   54  pip3 install future
+   55  ls
+   56  cd ..
+   57  ls
+   58  cd EventServer
+   59  ./install.sh 
+   60  ls
+   61  cat opencv.sh 
+   62  ls
+   63  cd ..
+   64  cd zoneminder/
+   65  ls
+   66  cd defaults/
+   67  ls
+   68  cat opencv_compile.sh 
+   69  cp opencv_compile.sh ~
+   70  cd ~
+   71  ls -la
+   72  chmod +x *
+   73  nano opencv_compile.sh 
+   74  ./opencv_compile.sh 
+   75  cp zoneminder/defaults/opencv_compile.sh .
+   76  chmod +x *
+   77  cat opencv_compile.sh 
+   78  cmake
+   79  make install
+   80  nano opencv_compile.sh 
+   81  ./opencv_compile.sh 
+   82  nano opencv_compile.sh 
+   83  ./opencv_compile.sh 
+   84  apt -y install linux-headers-$(uname -r)
+   85  sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+   86  reboot
+   87  nano uw.sh
+   88  chmod +x uw.sh 
+   89  ./uw.sh 
+   90  nano uw.sh 
+   91  ./uw.sh 
+   92  nano uw.sh 
+   93  ./uw.sh 
+   94  nano uw.sh 
+   95  wget https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
+   96  chmod +x cuda_10.1.105_418.39_linux.run 
+   97  ./cuda_10.1.105_418.39_linux.run --silent
+   98  reboot
+   99  ls
+  100  ./opencv_compile.sh 
+  101  at opencv_compile.sh 
+  102  cat opencv_compile.sh 
+  103  nano opencv_compile.sh 
+  104  at opencv_compile.sh 
+  105  ./opencv_compile.sh 
+  106  ls 
+  107  ls
+  108  python
+  109  python3
+  110  ls
+  111  cd EventServer/
+  112  ls
+  113  ./install.sh 
+  114  nano install.sh 
+  115  cat README.md 
+  116  nano README.md 
+  117  cd ..
+  118  ls
+  119  git clone https://github.com/pliablepixels/zmeventnotification.git
+  120  cd zmeventnotification
+  121  git fetch --tags
+  122  git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+  123  git fetch --tags
+  124  git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+  125  notepad zmeventnotification.ini 
+  126  nano zmeventnotification.ini 
+  127  perl -MCPAN -e "Module::Name"
+  128  sudo perl -MCPAN -e "install Crypt::MySQL"
+  129  perl -MCPAN -e "Module::Name"
+  130  sudo perl -MCPAN -e shell
+  131  sudo apt-get install libcrypt-mysql-perl
+  132  sudo apt-get install libyaml-perl
+  133  sudo apt-get install -y libyaml-perl
+  134  sudo apt-get -y install libyaml-perl
+  135  sudo apt-get -y install make
+  136  sudo perl -MCPAN -e "install Net::WebSocket::Server"
+  137  sudo apt-get install libjson-perl
+  138  perl -MCPAN -e "install LWP::Protocol::https"
+  139  perl -MCPAN -e "install Net::MQTT::Simple"
+  140  ls -la /etc/zm/apache2/ssl/
+  141  sudo openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -keyout /etc/zm/apache2/ssl/zoneminder.key -out /etc/zm/apache2/ssl/zoneminder.crt
+  142  mkdir /etc/apache2/ssl/
+  143  ls -la /etc/zm/apache2/ssl/
+  144  ls /etc/apache2/ssl -la
+  145  ls /etc/apache2/sites-enabled/ -la
+  146  mkdir /etc/zm/apache2/ssl/
+  147  mkdir /etc/zm/apache2
+  148  mkdir /etc/zm/apache2/ssl/
+  149  apt -y install letsencrypt
+  150  certbot
+  151  certbot certonly
+  152  cp /home/uwuertz/Zertifikate/. /etc/zm/apache2/ssl/.
+  153  cp /home/uwuertz/Zertifikate/. /etc/zm/apache2/ssl/. -r
+  154  cp /home/uwuertz/Zertifikate/. /etc/apache2/ssl/. -r
+  155  nano zmeventnotification.ini 
+  156  ls
+  157  nano secrets.ini 
+  158  ls *ini
+  159  nano /etc/zm/zm.conf 
+  160  ./install.sh 
+  161  sudo -H pip3 uninstall dlib
+  162  sudo -H pip3 uninstall face-recognition
+  163  sudo apt-get install libopenblas-dev liblapack-dev libblas-dev # this is the important part
+  164  sudo apt-get install libopenblas-dev liblapack-dev libblas-dev  # not mandatory, but gives a good speed boost!
+  165  sudo -H pip3 uninstall dlib
+  166  sudo -H pip3 uninstall face-recognition
+  167  sudo apt-get install libopenblas-dev liblapack-dev libblas-dev # this is the important part
+  168  sudo -H pip3 install dlib --verbose --no-cache-dir # make sure it finds openblas
+  169  sudo -H pip3 install face_recognition
+  170  ls
+  171  nano /etc/zm/objectconfig.ini
+  172  nano /etc/zm/secrets.ini 
+  173  cp secrets.ini /etc/zm/secrets.ini 
+  174  nano /etc/zm/secrets.ini 
+  175  cp zmeventnotification.ini /etc/zm/.
+  176  ls
+  177  nano /etc/apache2/sites-enabled/default-ssl.conf
+  178  ls
+  179  cd ..
+  180  ls
+  181  cd zoneminder/
+  182  ls
+  183  cd defauls
+  184  ls
+  185  ls defaults
+  186  cd defaults
+  187  nano default-ssl.conf 
+  188  mv default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
+  189  nano /etc/apache2/ports.conf 
+  190  cp /etc/apache2/ports.conf /etc/apache2/ports.conf.default
+  191  a2enmod ssl
+  192  ls /
+  193  reboot
+  194  nano /etc/mysql/my.cnf
+  195  reboot
+  196  date
+  197  utp
+  198  timedatectl list-timezones
+  199  sudo timedatectl set-timezone Europe/Berlin
+  200  date
+  201  reboot
+  202  cat /var/log/apache2/error.log 
+  203  sudo apt update
+  204  sudo apt install ntp
+  205  ntpq -p
+  206  date
+  207  timedatectl
+  208  ps -aux
+  209  cat /var/log/apache2/error.log 
+  210  nano /etc/apache2/sites-available/
+  211  nano /etc/apache2/sites-available/default-ssl.conf 
+  212  reboot
+  213  cat /var/log/apache2/error.log 
+  214  sudo apache2ctl configtest
+  215  nano /etc/apache2/apache2.conf 
+  216  sudo apache2ctl -S
+  217  sudo nano /etc/apache2/apache2.conf
+  218  systemctl restart apache2
+  219  apachectl configtest
+  220  sudo nano /etc/apache2/apache2.conf
+  221  apachectl configtest
+  222  sudo nano /etc/apache2/apache2.conf
+  223  apachectl configtest
+  224  systemctl restart apache2
+  225  cat /var/log/apache2/error.log 
+  226  echo > /var/log/apache2/error.log
+  227  systemctl restart apache2
+  228  cat /var/log/apache2/error.log 
+  229  nano /etc/hosts
+  230  sudo nano /etc/apache2/apache2.conf
+  231  systemctl restart apache2
+  232  echo > /var/log/apache2/error.log
+  233  systemctl restart apache2
+  234  sudo nano /etc/apache2/apache2.conf
+  235  nano /etc/hosts
+  236  echo > /var/log/apache2/error.log
+  237  systemctl restart apache2
+  238  cat /var/log/apac
+  239  ls /var/log/
+  240  ls /var/log/zm/
+  241  cat /var/log/zm/error.log 
+  242  echo > /var/log/zm/error.log 
+  243  cat /var/log/zm/error.log 
+  244  cat /var/log/apache2/error.log 
+  245  cat /var/log/syslog 
+  246  nano /etc/my.cnf
+  247  nano /etc/mysql/my.cnf
+  248  reboot
+  249  sudo -u www-data /usr/bin/zmeventnotification.pl --debug
+  250  nano /etc/zm/objectconfig.ini
+  251  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 3 1
+  252  nano /var/lib/zmeventnotification/bin/zm_event_start.sh
+  253  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 1 3
+  254  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 1 1
+  255  nano /var/lib/zmeventnotification/bin/zm_event_start.sh
+  256  ls -la /var/lib/zmeventnotification/images
+  257  cp /var/lib/zmeventnotification/images/. /home/uwuertz/
+  258  cp /var/lib/zmeventnotification/images/. /home/uwuertz/ -r
+  259  chown uwuertz:uwuertz /home/uwuertz/*jpg
+  260  ls -la /home/uwuertz/
+  261  chmod 777 /home/uwuertz/*jpg
+  262  find / -name yolo3.cfg
+  263  find / -name yolov3.cfg
+  264  ls -la /var/lib/zmeventnotification/models/yolov3/
+  265  ls -la /var/lib/zmeventnotification/models
+  266  nano /etc/zm/objectconfig.ini
+  267  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 1 1
+  268  wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/8.0.5/10.1_20201106/cudnn-10.1-linux-x64-v8.0.5.39.tgz
+  269  cp /home/uwuertz/cudnn-10.1-linux-x64-v8.0.5.39.solitairetheme8 cudnn-10.1-linux-x64-v8.0.5.39.tgz
+  270  tar -xzvf cudnn-10.1-linux-x64-v8.0.5.39.tgz 
+  271  sudo cp cuda/include/cudnn*.h /usr/local/cuda/include
+  272  sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+  273  sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+  274  ls
+  275  cat opencv_compile.sh 
+  276  nano opencv_compile.sh 
+  277  find / -name cvconfig.h
+  278  nano /root/opencv/build/opencv2/cvconfig.h
+  279  nano opencv_compile.sh 
+  280  ./opencv_compile.sh 
+  281  cat opencv_compile.sh 
+  282  cd opencv
+  283  cd build/
+  284  ls
+  285  rm * -rf
+  286  cmake -D CMAKE_BUILD_TYPE=RELEASE         -D CMAKE_INSTALL_PREFIX=/usr/local         -D INSTALL_PYTHON_EXAMPLES=OFF         -D INSTALL_C_EXAMPLES=OFF         -D OPENCV_ENABLE_NONFREE=ON         -D WITH_CUDA=ON         -D WITH_CUDNN=ON         -D OPENCV_DNN_CUDA=ON         -D ENABLE_FAST_MATH=1         -D CUDA_FAST_MATH=1         -D CUDA_ARCH_BIN=7.5         -D WITH_CUBLAS=1         -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules         -D HAVE_opencv_python3=ON         -D PYTHON_EXECUTABLE=/usr/bin/python3         -D PYTHON2_EXECUTABLE=/usr/bin/python2         -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)         -D BUILD_EXAMPLES=OFF ..
+  287  cat ~/opencv_compile.sh 
+  288  nproc
+  289  make -j72
+  290  make install
+  291  python3
+  292  cd ~
+  293  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 1 1
+  294  reboot
+  295  cat opencv_compile.sh 
+  296  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 1 1
+  297  find / -name  cv2*
+  298  which cv2
+  299  ls -la /usr/local/lib/python3.6/dist-packages/cv2
+  300  nvidia-smi
+  301  cd opencv
+  302  cd build/
+  303  rm * -rf
+  304  cmake -D CMAKE_BUILD_TYPE=RELEASE         -D CMAKE_INSTALL_PREFIX=/usr/local         -D INSTALL_PYTHON_EXAMPLES=OFF         -D INSTALL_C_EXAMPLES=OFF         -D OPENCV_ENABLE_NONFREE=ON         -D WITH_CUDA=ON         -D WITH_CUDNN=ON         -D OPENCV_DNN_CUDA=ON         -D ENABLE_FAST_MATH=1         -D CUDA_FAST_MATH=1         -D CUDA_ARCH_BIN=6.1         -D WITH_CUBLAS=1         -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules         -D HAVE_opencv_python3=ON         -D PYTHON_EXECUTABLE=/usr/bin/python3         -D PYTHON2_EXECUTABLE=/usr/bin/python2         -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)         -D BUILD_EXAMPLES=OFF ..
+  305  make -j72
+  306  make install
+  307  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 1 1
+  308  sudo -u www-data /var/lib/zmeventnotification/bin/zm_event_start.sh 3 1
+  309  ls /home/uwuertz/
+  310  ls -la /var/lib/zmeventnotification/known_faces
+  311  mv /home/uwuertz/Udo  /var/lib/zmeventnotification/known_faces/
+  312  ls -la /var/lib/zmeventnotification/known_faces
+  313  chown -R www-data:www-data  /var/lib/zmeventnotification/known_faces
+  314  ls -la /var/lib/zmeventnotification/known_faces
+  315  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  316  nano /etc/zm/objectconfig.ini
+  317  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  318  nano /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+  319  nano /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py 1
+  320  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py 1
+  321  nano /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py 1
+  322  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 3 --monitorid 1 --debug
+  323  mkdir /opt/docker/zm/config/hook/models
+  324  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  325  ls /var/lib/zm
+  326  ls /var/lib/zmeventnotification/
+  327  find / -name hooks
+  328  cd ~
+  329  ls
+  330  cd EventServer/
+  331  nano install.sh 
+  332  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  333  mv /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py.old
+  334  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  335  mv /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py.old /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+  336  which python
+  337  python
+  338  ls -la /usr/bin/python
+  339  rm /usr/bin/python
+  340  ln -sf python3.6 /usr/bin/python
+  341  python
+  342  cd ~
+  343  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  344  mv /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py.old
+  345  pip3 install pyzm
+  346  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  347  pip3 install --upgrade pip
+  348  pip3 uninstall pyzmq
+  349  mv /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py.old /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+  350  pip3 uninstall pyzmq
+  351  pip3 install pyzmq
+  352  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  353  pip3 uninstall facerecognition
+  354  pip3 uninstall face-recognition
+  355  pip3 install face-recognition
+  356  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  357  nano /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+  358  sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+  359  history
+  360  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 3 --monitorid 1 --debug
+  361  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 2 --monitorid 1 --debug
+  362  nano /etc/zm/objectconfig.ini
+  363  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 2 --monitorid 1 --debug
+  364  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 3 --monitorid 1 --debug
+  365  reboot
+  366  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 39 --monitorid 1 --debug
+  367  nano /etc/zm/objectconfig.ini
+  368  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 39 --monitorid 1 --debug
+  369  nano /etc/zm/objectconfig.ini
+  370  reboot
+  371  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 39 --monitorid 1 --debug
+  372  ls -la /var/lib/zmeventnotification/images
+  373  nano /usr/bin/zmeventnotification.pl
+  374  sudo -u www-data /usr/bin/detect_wrapper.sh 39 1
+  375  find / -name detect_wrapper.sh
+  376  nano /etc/zm/objectconfig.ini
+  377  nano /etc/zm/zm.conf 
+  378  ls -la /var/cache/zoneminder
+  379  ls -la /var/cache/zoneminder/events/
+  380  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 39 --monitorid 1 --debug
+  381  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 3 --monitorid 1 --debug
+  382  ls -la etc/cron.weekly
+  383  nano /etc/zm/objectconfig.ini
+  384  nano /etc/zm/zmeventnotification.ini
+  385  nano /etc/zm/secrets.ini 
+  386  nano /etc/zm/zm.conf 
+  387  ls /etc/zm/
+  388  reboot
+  389  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 3 --monitorid 1 --debug
+  390  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 56 --monitorid 1 --debug
+  391  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 66 --monitorid 1 --debug
+  392  ~~~~~~
+  393  nano /etc/zm/objectconfig.ini
+  394  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 66 --monitorid 1 --debug
+  395  nano /etc/zm/objectconfig.ini
+  396  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 66 --monitorid 1 --debug
+  397  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 56 --monitorid 1 --debug
+  398  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 1 --monitorid 1 --debug
+  399  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 11 --monitorid 1 --debug
+  400  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 3 --monitorid 1 --debug
+  401  ls -la /var/lib/zmeventnotification
+  402  ls -la /var/lib/zmeventnotification/images/
+  403  find / -name events
+  404  ls -la /var/cache/zoneminder/events
+  405  ls -la /var/cache/zoneminder/
+  406  find / -name zm_detect.py
+  407  ls -la /root/EventServer/hook/zm_detect.py
+  408  ls -la /root/zoneminder/zmeventnotification/zmeventnotification.old/zm_detect.py
+  409  ls -la /root/zmeventnotification/hook/zm_detect.py
+  410  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 3 --monitorid 1 --debug
+  411  sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 11 --monitorid 1 --debug
+  412  nano /etc/ssh/sshd_config 
+  413  service sshd restart
+  414  systemctl stop apache2
+  415  systemctl start apache2
+  416  systemctl stop apache2
+  417  systemctl stop mysql
+  418  passwd
+  419  find / -name mysql
+  420  history > History

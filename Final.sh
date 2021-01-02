@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+# Es wird empfohlen root als Benutzer zu verwenden
+Benutzer="root"
 
 # Es wird empfohlen root als Benutzer zu verwenden
 Benutzer="root"
@@ -369,7 +373,7 @@ echo $(date -u) "16 von 30: Secrets.ini und OpenCV"  | tee -a  ~/FinalInstall.lo
          echo "Copy /config/conf/ scripts to /etc/zm/conf.d/"  | tee -a  ~/FinalInstall.log
          cp /config/conf/*.conf /etc/zm/conf.d/ 2>/dev/null
          chown root:root /etc/zm/conf.d* 2>/dev/null
-         chmod 640 /etc/conf.d/* 2>/dev/null
+         chmod 640 /etc/zm/conf.d/* 2>/dev/null #Fix UW ZM dazu
      fi
 
      echo "Creating symbolink links"  | tee -a  ~/FinalInstall.log

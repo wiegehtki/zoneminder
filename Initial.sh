@@ -58,6 +58,7 @@ echo $(date -u) "03 von 04 Diverse Pakete installieren wie Compiler, Headers usw
                 apt -y install libgoogle-glog-dev libgflags-dev
                 apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
                 apt -y install gcc-6
+                pip3 install --upgrade pip
                 
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log

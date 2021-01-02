@@ -20,7 +20,6 @@
 * **Basiswissen Objekterkennung mit YOLO:** https://www.youtube.com/watch?v=WXuqsRGIyg4&t=1586s
 * **Technologischer Deep Dive in YOLO:** https://www.youtube.com/watch?v=KMg6BwNDqBY
 
-
 #### Zur Installation könnt ihr wie folgt vorgehen, dazu alle Befehle im Terminal ausführen:
 
 1.  Ubuntu 18.04 LTS installieren
@@ -33,6 +32,20 @@
        sudo chmod +x *sh
        ./Initial.sh      
 ```
+
+#### Bevor wir weitermachen können, müssen im Verzeichnis **Anzupassen** verschiedene Dateien modifiziert werden.
+* **Ohne diese Anpassungen wird die Installation nicht funktionieren. Daher ist dieser Schritt besonders sorgfältig durchzuführen.
+
+1.  Zunächst einloggen und in das /root - Verzeichnis wechseln
+```
+       sudo su
+	   cd ~
+	   nano ~/zoneminder/Anpassungen/secrets.ini
+```
+Anschließend folgende Einträge anpassen:
+`ZMES_PICTURE_URL=https://**<PORTAL-ADRESSE>**/zm/index.php?view=image&eid=EVENTID&fid=objdetect&width=600`
+
+
 **Wichtig:** Der Installationsprozess ist in 2 Schritte unterteilt, **Initial.sh** und **Final.sh** und erfordert ein paar Betsätigungen durch den Benutzer.
 3.  Erneut Einloggen und dann die zweite und letzte Stufe der Installation starten:
 ```
