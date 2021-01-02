@@ -117,7 +117,7 @@ Falls nicht, hier die Download-Links:
 
 ### Bekannte Fehler und deren Behebungen
 1. **Datenbank-Verbindungen werden immer mehr und die Verbindung zur Datenbank geht verloren** 
-   Wenn dieser Fehler auftritt, dann folgende Schritte durchführen:
+   Wenn dieser Fehler auftritt (gesehen bei **Version 1.34.22**), dann folgende Schritte durchführen:
 	* Rechner rebooten
 	* ZM-Site aufrufen
 	* `Options->Users` aufrufen und dem `admin` - Benutzer ein Kennwort vergeben
@@ -125,7 +125,8 @@ Falls nicht, hier die Download-Links:
 	* Ganz unten `Save` anklicken und Einstellungen speichern
 	* `Options->System` anwählen und `OPT_USE_AUTH` **de-aktivieren**
 	* `AUTH_RELAY` auf **none** setzen
-	* `AUTH_HASH_SECRET` setzen auf irgendeinen Wert
+	* `AUTH_HASH_SECRET` auf irgendeinen Wert setzen
+	* Wieder `Save` anklicken und Einstellungen speichern
 	
 	Der Fehler sollte jetzt nicht mehr auftreten.
 	
