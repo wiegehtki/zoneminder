@@ -33,7 +33,7 @@
        ./Initial.sh      
 ```
 
-#### Bevor wir weitermachen können, müssen im Verzeichnis **Anzupassen** verschiedene Dateien modifiziert werden.
+#### Bevor wir weitermachen können, müssen im Verzeichnis `**Anzupassen**` verschiedene Dateien modifiziert werden.
 * **Ohne diese Anpassungen wird die Installation nicht funktionieren. Daher ist dieser Schritt besonders sorgfältig durchzuführen.**
 
 1. **secrets.ini:**  Zunächst einloggen, in das /root - Verzeichnis wechseln und die erste Datei mit dem Editor öffnen.
@@ -87,7 +87,7 @@ Dazu die Datei **Final.sh** im Editor öffnen und folgenden Eintrag suchen:
         -D PYTHON_DEFAULT_EXECUTABLE=$(which python3) \
         -D BUILD_EXAMPLES=OFF ..
 ```
-Entscheidend ist der Eintrag `-D CUDA_ARCH_BIN=6.1`, genau genommen der Wert `6.1` Dieser **MUSS** an die vorhandene Grafikkarte angepasst werden und repräsentiert die sogenannte **Compute capability version**. Dazu die Site **https://en.wikipedia.org/wiki/CUDA** öffnen und die Grafikkarte in der Tabelle suchen. Der benötigte Wert steht ganz links in der Spalte. Für die für den Test verwendetet GTX 1070 beträgt dieser 6.1, bei einer V100 7.0. Bitte diesen Wert auf den für Eure Grafikkarte angegebenen ändern!
+Entscheidend ist der Eintrag `-D CUDA_ARCH_BIN=6.1`, genau genommen der Wert `6.1` Dieser **MUSS** an die vorhandene Grafikkarte angepasst werden und repräsentiert die sogenannte **Compute capability version**. Dazu die Site **https://en.wikipedia.org/wiki/CUDA** öffnen und die jeweilige Grafikkarte in der Tabelle suchen. Der benötigte Wert steht ganz links in der Spalte. Für die im Test verwendetet GTX 1070 beträgt dieser 6.1, bei einer V100 7.0. Bitte diesen Wert auf den für Eure Grafikkarte angegebenen ändern!
 
 
 
