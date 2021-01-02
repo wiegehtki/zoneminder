@@ -1,3 +1,6 @@
+# NOCH NICHT BENUTZEN! WORK IN PROGRESS!!
+
+
 # zoneminder object detection mit yolo by Udo Würtz, WIEGEHTKI.DE
 # Kameraüberwachung mit Objekterkennung mittels Zoneminder, YOLO und OpenCV
 ### KOMMT IN KÜRZE; NOCH IM TEST
