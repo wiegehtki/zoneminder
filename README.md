@@ -120,12 +120,12 @@ Falls nicht, hier die Download-Links:
    Wenn dieser Fehler auftritt, dann folgende Schritte durchführen:
 	* Rechner rebooten
 	* ZM-Site aufrufen
-	c. `Options->Users` aufrufen und dem `admin` - Benutzer ein Kennwort vergeben
-	c. `Options->System` anwählen und `OPT_USE_AUTH` aktivieren
-	d. Ganz unten `Save` anklicken und Einstellungen speichern
-	e. `Options->System` anwählen und `OPT_USE_AUTH` **de-aktivieren**
-	f. `AUTH_RELAY` auf **none** setzen
-	g. `AUTH_HASH_SECRET` setzen auf irgendeinen Wert
+	* `Options->Users` aufrufen und dem `admin` - Benutzer ein Kennwort vergeben
+	* `Options->System` anwählen und `OPT_USE_AUTH` aktivieren
+	* Ganz unten `Save` anklicken und Einstellungen speichern
+	* `Options->System` anwählen und `OPT_USE_AUTH` **de-aktivieren**
+	* `AUTH_RELAY` auf **none** setzen
+	* `AUTH_HASH_SECRET` setzen auf irgendeinen Wert
 	
 	Der Fehler sollte jetzt nicht mehr auftreten.
 	
