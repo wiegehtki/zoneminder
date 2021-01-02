@@ -33,7 +33,7 @@
        ./Initial.sh      
 ```
 
-#### Bevor wir weitermachen können, müssen im Verzeichnis `**Anzupassen**` verschiedene Dateien modifiziert werden.
+#### Bevor wir weitermachen können, müssen im Verzeichnis `~/Anzupassen` verschiedene Dateien modifiziert werden.
 * **Ohne diese Anpassungen wird die Installation nicht funktionieren. Daher ist dieser Schritt besonders sorgfältig durchzuführen.**
 
 1. **secrets.ini:**  Zunächst einloggen, in das /root - Verzeichnis wechseln und die erste Datei mit dem Editor öffnen.
