@@ -154,25 +154,10 @@ echo $(date -u) "05 von 30: zmeventnotification installieren"  | tee -a  ~/Final
                 perl -MCPAN -e "install LWP::Protocol::https"
                 perl -MCPAN -e "install Net::MQTT::Simple"
 
-#MySql
 
-
-
-##Apache2
-mkdir /etc/apache2/ssl/
-mkdir /etc/zm/apache2/
-mkdir /etc/zm/apache2/ssl/
-mv /root/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
-cp /etc/apache2/ports.conf /etc/apache2/ports.conf.default
-cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
-
-##Server name muss noch rein ....
-/etc/apache2/apache2.conf
-#Erste Linie:
-ServerName zm.wiegehtki.de
 
 #Und in etc/hosts:
-192.168.100.245 zm.wiegehtki.de
+#192.168.100.245 zm.wiegehtki.de
 
 # FIX: Opt Auth enablen und dann disablen um die DB Connections zu beruhigen
 
