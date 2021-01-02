@@ -1,76 +1,161 @@
-sudo apt -y upgrade
-sudo apt -y dist-upgrade
+#!/usr/bin/env bash
 
-sudo apt-get install tasksel
-sudo tasksel install lamp-server
-sudo -i
+# Es wird empfohlen root als Benutzer zu verwenden
+Benutzer="root"
 
-add-apt-repository ppa:iconnor/zoneminder-1.34
-apt-get update
-apt-get upgrade
-apt-get dist-upgrade
+CUDA_Version=10.1
+CUDA_Script=cuda_10.1.105_418.39_linux.run
+CUDA_Pfad=/usr/local/cuda-11.2
+CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
+PHP_VERS=7.2
 
-apt -y install python3-pip cmake
-apt -y install libopenblas-dev liblapack-dev libblas-dev
-			 
+export TZ="Europe/Berlin"
 
-#Mysql
-rm /etc/mysql/my.cnf  
-cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
+if [ "$(whoami)" != $Benutzer ]; then
+        echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
+        exit 255
+fi
+
+echo $(date -u) "Test auf bestehende FinalInstall.log"
+      test -f ~/FinalInstall.log && rm ~/FinalInstall.log
+
+echo $(date -u) "FinalInstall.log anlegen"
+      touch ~/FinalInstall.log
+
+####################################################################################################################
+# Ubuntu 18.04 notwendig
+#
+#
+echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
+echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV und YOLO. By WIEGEHTKI.DE                     #" | tee -a  ~/Installation.log
+echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                #" | tee -a  ~/Installation.log
+echo $(date -u) "#                                           #" | tee -a  ~/Installation.log
+echo $(date -u) "# V0.0.9 (Rev a), 28.12.2020                                      #" | tee -a  ~/Installation.log
+echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "01 von 30: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
+                cd ~
+                wget https://developer.nvidia.com/compute/cuda/$CUDA_Version/Prod/local_installers/$CUDA_Script
+                chmod +x $CUDA_Script
+                ./$CUDA_Script --silent
+
+echo $(date -u) "02 von 30: Check auf installierten Treiber"  | tee -a  ~/FinalInstall.log
+                lshw -C display | tee -a  ~/FinalInstall.log
+
+echo $(date -u) "03 von 30: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.log
+                echo $CUDA_Pfad/lib64 >>  /etc/ld.so.conf
+                ldconfig
+                echo 'export PATH='$CUDA_Pfad'/bin:$PATH' >> ~/.bashrc
+                echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+                echo 'cd ~' >> ~/.bashrc
+                source ~/.bashrc
+    
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "04 von 30: Systemupdate und Apache, MySQL und PHP installieren"  | tee -a  ~/FinalInstall.log
+                apt -y upgrade
+                apt -y dist-upgrade
+
+                apt -y install tasksel
+                tasksel install lamp-server
+     
+                add-apt-repository ppa:iconnor/zoneminder-1.34
+                apt -y update
+                apt -y upgrade
+                apt -y dist-upgrade
+
+                apt -y install python3-pip cmake
+                apt -y install libopenblas-dev liblapack-dev libblas-dev
+
+                #Mysql
+                rm /etc/mysql/my.cnf  
+                cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
 
 nano /etc/mysql/my.cnf
 #In mysqkd - Sektion folgendes einfügen:
 sql_mode = NO_ENGINE_SUBSTITUTION 
 
-systemctl restart mysql
-apt-get -y install zoneminder
-sudo apt -y install ntp
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "05 von 30: Apache konfigurieren, SSL-Zertifikate generieren und Zoneminder installieren"  | tee -a  ~/FinalInstall.log
+                echo "default-time-zone='+01:00'" >> /etc/mysql/my.cnf
+				systemctl restart mysql
+                apt -y install zoneminder
+                sudo apt -y install ntp
 
-mysql -uroot -p < /usr/share/zoneminder/db/zm_create.sql
-mysql -uroot -p -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
+                mysql -uroot -p < /usr/share/zoneminder/db/zm_create.sql
+                mysql -uroot -p -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
 
-chmod 740 /etc/zm/zm.conf
-chown root:www-data /etc/zm/zm.conf
-chown -R www-data:www-data /usr/share/zoneminder/
+                chmod 740 /etc/zm/zm.conf
+                chown root:www-data /etc/zm/zm.conf
+                chown -R www-data:www-data /usr/share/zoneminder/
 
-a2enmod cgi
-a2enmod rewrite
-a2enconf zoneminder
-a2enmod expires
-a2enmod headers
+                a2enmod cgi
+                a2enmod rewrite
+                a2enconf zoneminder
+                a2enmod expires
+                a2enmod headers
 
-systemctl enable zoneminder
-systemctl start zoneminder
+                if [[ $(cat /etc/timezone) != "$TZ" ]] ; then
+                         echo "Setzen der Zeitzone auf: $TZ"
+                         echo $TZ > /etc/timezone
+                         ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
+                         dpkg-reconfigure tzdata
+                         echo "Datum: `date`"
+                fi
+                
+                sed -i "s|^date.timezone =.*$|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
+                sed -i "s|^date.timezone =.*$|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini
 
-nano /etc/php/7.2/apache2/php.ini
-nano /etc/php/7.2/cli/php.ini
-## Nachfolgende Timezone anpassen ##
-[Date]
-; Defines the default timezone used by the date functions
-; http://php.net/date.timezone
-date.timezone = Europe/Berlin
-sudo timedatectl set-timezone Europe/Berlin
+                mkdir /etc/apache2/ssl/
+                mkdir /etc/zm/apache2/
+                mkdir /etc/zm/apache2/ssl/
+                mv /root/zoneminder/apache/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
+                cp /etc/apache2/ports.conf /etc/apache2/ports.conf.default
+                cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
 
-git clone https://github.com/pliablepixels/zmeventnotification.git
-cd zmeventnotification
-git fetch --tags
-git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+                if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.keycert.crt ]]; then
+                         echo "Bestehendes Zertifikat gefunden in \"/etc/apache2/ssl/cert.key\""
+                         if [[ ! -f /etc/apache2/ssl/ServerName ]]; then
+                             echo "localhost" > /etc/apache2/ssl/ServerName
+                         fi
+                         SERVER=`cat /etc/apache2/ssl/ServerName`
+                         sed -i "/ServerName/c\ServerName $SERVER" /etc/apache2/apache2.conf
+                else
+                         echo "Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
+                         mkdir -p /config/keys
+                         echo "localhost" >> /etc/apache2/ssl/ServerName
+                         openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=localhost"
+                fi
+
+                chown root:root /config/keys
+                chmod 777 /etc/apache2/ssl
+                
+				systemctl enable zoneminder
+                systemctl start zoneminder
+
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "05 von 30: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
+    
+#git clone https://github.com/pliablepixels/zmeventnotification.git
+#    cd zmeventnotification
+#git fetch --tags
+#git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 
 ##ANpassen! Thema SHell...
-sudo perl -MCPAN -e "install Crypt::MySQL"
-sudo perl -MCPAN -e "install Config::IniFiles"
-sudo perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
+                perl -MCPAN -e "install Crypt::MySQL"
+                perl -MCPAN -e "install Config::IniFiles"
+                perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
 
-sudo apt-get -y install libyaml-perl
-sudo apt-get -y install make
-sudo perl -MCPAN -e "install Net::WebSocket::Server"
+                apt -y install libyaml-perl
+                apt -y install make
+                perl -MCPAN -e "install Net::WebSocket::Server"
 
-sudo apt-get -y install libjson-perl
-perl -MCPAN -e "install LWP::Protocol::https"
-perl -MCPAN -e "install Net::MQTT::Simple"
+                apt -y install libjson-perl
+                perl -MCPAN -e "install LWP::Protocol::https"
+                perl -MCPAN -e "install Net::MQTT::Simple"
 
 #MySql
-default-time-zone='+01:00'
+
 
 
 ##Apache2
@@ -95,7 +180,7 @@ ServerName zm.wiegehtki.de
 # Face recognition
 sudo -H pip3 uninstall dlib
 sudo -H pip3 uninstall face-recognition
-sudo apt-get -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
+sudo apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
 sudo -H pip3 install dlib --verbose --no-cache-dir # make sure it finds openblas
 sudo -H pip3 install face_recognition
 
@@ -168,4 +253,6 @@ Modify  num_jitters = int(self.options.get('face_num_jitters'),0) in  /usr/local
 auf num_jitters = self.options.get('face_num_jitters')
 
 
-	Unrecoverable error:int() can't convert non-string with explicit base Traceback:Traceback (most recent call last): File "/var/lib/zmeventnotification/bin/zm_detect.py", line 858, in <module> main_handler() File "/var/lib/zmeventnotification/bin/zm_detect.py", line 346, in main_handler model=g.config['face_model']) File "/usr/local/lib/python3.6/dist-packages/pyzm/ml/face.py", line 92, in __init__ train.FaceTrain(options=self.options).train() File "/usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py", line 35, in train num_jitters = int(self.options.get('face_num_jitters'),0)TypeError: int() 	
+sudo chown root:www-data /etc/zm/conf.d/*.conf
+sudo chmod 640 /etc/zm/conf.d/*.conf
+

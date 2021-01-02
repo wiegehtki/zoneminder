@@ -53,7 +53,7 @@ Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL
 ```
        nano ~/zoneminder/Anpassungen/objectconfig.ini
 ```
-**Nur bei Bedarf** den Eintrag anpassen, dazu einfach die **#** vor die Zeile setzen, welche inaktviert werden soll und dort entfernen, welche Zeilen aktiviert werden sollen. Der Standard sieht wie folgt aus:
+**Nur bei Bedarf** den Eintrag anpassen, dazu einfach die **#** vor die Zeile setzen, welche inaktviert werden soll und dort entfernen, welche Zeilen aktiviert werden sollen. Die Vorgabe von mir sieht wie folgt aus:
 ```
        # FOR YoloV4. 
        object_framework=opencv
@@ -116,5 +116,17 @@ Falls nicht, hier die Download-Links:
 ### Optimierungen
 
 ### Bekannte Fehler und deren Behebungen
+1. **Datenbank-Verbindungen werden immer mehr und die Verbindung zur Datenbank geht verloren** Wenn dieser Fehler auftritt, dann folgende Schritte durchführen:
+	a. Rechner rebooten
+	b. ZM-Site aufrufen
+	c. `Options->Users` aufrufen und dem `admin` - Benutzer ein Kennwort vergeben
+	c. `Options->System` anwählen und `OPT_USE_AUTH` aktivieren
+	d. Ganz unten `Save` anklicken und Einstellungen speichern
+	e. `Options->System` anwählen und `OPT_USE_AUTH` **de-aktivieren**
+	f. `AUTH_RELAY` auf **none** setzen
+	g. `AUTH_HASH_SECRET` setzen auf irgendeinen Wert
+	
+	Der Fehler sollte jetzt nicht mehr auftreten.
+	
 
 
