@@ -116,7 +116,8 @@ Falls nicht, hier die Download-Links:
 ### Optimierungen
 
 ### Bekannte Fehler und deren Behebungen
-1. **Datenbank-Verbindungen werden immer mehr und die Verbindung zur Datenbank geht verloren** Wenn dieser Fehler auftritt, dann folgende Schritte durchführen:
+1. **Datenbank-Verbindungen werden immer mehr und die Verbindung zur Datenbank geht verloren** 
+   Wenn dieser Fehler auftritt, dann folgende Schritte durchführen:
 	a. Rechner rebooten
 	b. ZM-Site aufrufen
 	c. `Options->Users` aufrufen und dem `admin` - Benutzer ein Kennwort vergeben
