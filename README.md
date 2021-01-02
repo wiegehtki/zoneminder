@@ -49,11 +49,45 @@ Wenn gar keine echte Adresse zur Verfügung steht, dann eine erfinden und im Cli
 Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL=https://<PORTAL-ADRESSE>/zm/api`. Anschließend die Datei mit `STRG + O` speichern und den Editor mit `STRG + X` beenden. Die anderen Parameter können erstmal ignoriert werden und müssen nicht angepasst werden.
 
 
+2. **objectconfig.ini:**  Diese Datei muss nur dann angepasst werden, wenn das vor-trainierte Model gewechselt werden soll. Ich habe hier **yolov4** mit *GPU*-Unterstützung vor- eingestellt. Sollte man KEINE GPU zur Unterstützung zur Verfügung haben, kann der entsprechende Eintrag notfalls auch auf **CPU** geändert werden.  
+```
+       nano ~/zoneminder/Anpassungen/objectconfig.ini
+```
+**Nur bei Bedarf** den Eintrag anpassen, dazu einfach die **#** vor die Zeile setzen, welche inaktviert werden soll und dort entfernen, welche Zeilen aktiviert werden sollen. Der Standard sieht wie folgt aus:
+```
+       # FOR YoloV4. 
+       object_framework=opencv
+       object_processor=gpu 
+       # object_processor=cpu
+       object_config={{base_data_path}}/models/yolov4/yolov4.cfg
+       object_weights={{base_data_path}}/models/yolov4/yolov4.weights
+       object_labels={{base_data_path}}/models/yolov4/coco.names
+```
 
+3. **OpenCV - Anpassung der Grafikkarte**. Dieser Schritt ist sehr wichtig da ansonsten die Grafikkarte von OpenCV nicht angesprochen werden kann und keine Objekterkennung durchgeführt wird.
 
-
-
-
+Dazu die Datei **Final.sh** im Editor öffnen und folgenden Eintrag suchen:
+```
+  cmake -D CMAKE_BUILD_TYPE=RELEASE \
+        -D CMAKE_INSTALL_PREFIX=/usr/local \
+        -D INSTALL_PYTHON_EXAMPLES=OFF \
+        -D INSTALL_C_EXAMPLES=OFF \
+        -D OPENCV_ENABLE_NONFREE=ON \
+        -D WITH_CUDA=ON \
+        -D WITH_CUDNN=ON \
+        -D OPENCV_DNN_CUDA=ON \
+        -D ENABLE_FAST_MATH=1 \
+        -D CUDA_FAST_MATH=1 \
+        -D CUDA_ARCH_BIN=6.1 \
+        -D WITH_CUBLAS=1 \
+        -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+        -D HAVE_opencv_python3=ON \
+        -D PYTHON_EXECUTABLE=/usr/bin/python3 \
+        -D PYTHON2_EXECUTABLE=/usr/bin/python2 \
+        -D PYTHON_DEFAULT_EXECUTABLE=$(which python3) \
+        -D BUILD_EXAMPLES=OFF ..
+```
+Entscheidend ist der Eintrag `-D CUDA_ARCH_BIN=6.1`, genau genommen der Wert `6.1` Dieser **MUSS** an die vorhandene Grafikkarte angepasst werden und repräsentiert die sogenannte **Compute capability version**. Dazu die Site **https://en.wikipedia.org/wiki/CUDA** öffnen und die Grafikkarte in der Tabelle suchen. Der benötigte Wert steht ganz links in der Spalte. Für die für den Test verwendetet GTX 1070 beträgt dieser 6.1, bei einer V100 7.0. Bitte diesen Wert auf den für Eure Grafikkarte angegebenen ändern!
 
 
 

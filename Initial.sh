@@ -23,7 +23,7 @@ echo $(date -u) "###############################################################
 echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV und YOLO. By WIEGEHTKI.DE                                                                 #" | tee -a  ~/Installation.log
 echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #" | tee -a  ~/Installation.log
 echo $(date -u) "#                                                                                                                                   #" | tee -a  ~/Installation.log
-echo $(date -u) "# V0.0.9 (Rev a), 28.12.2020                                                                                                        #" | tee -a  ~/Installation.log
+echo $(date -u) "# v1.0.1 (Rev a), 02.01.2021                                                                                                        #" | tee -a  ~/Installation.log
 echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
 echo $(date -u) "01 von 04: Hardware und Linux - Check"  | tee -a  ~/Installation.log
@@ -68,5 +68,5 @@ echo $(date -u) "04 von 04: Nouveau - Grafiktreiber ausschalten, .bashrc anpasse
                 sudo echo "cd ~/" >> /root/.bashrc
                 update-initramfs -u
 
-                #reboot
+                reboot
 
