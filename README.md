@@ -43,7 +43,7 @@
 	   nano ~/zoneminder/Anpassungen/secrets.ini
 ```
 Anschließend folgende Einträge anpassen:
-`ZMES_PICTURE_URL=https://`**<PORTAL-ADRESSE>**`/zm/index.php?view=image&eid=EVENTID&fid=objdetect&width=600`
+`ZMES_PICTURE_URL=https://<PORTAL-ADRESSE>/zm/index.php?view=image&eid=EVENTID&fid=objdetect&width=600`
 
 
 **Wichtig:** Der Installationsprozess ist in 2 Schritte unterteilt, **Initial.sh** und **Final.sh** und erfordert ein paar Betsätigungen durch den Benutzer.
