@@ -118,8 +118,8 @@ Falls nicht, hier die Download-Links:
 ### Bekannte Fehler und deren Behebungen
 1. **Datenbank-Verbindungen werden immer mehr und die Verbindung zur Datenbank geht verloren** 
    Wenn dieser Fehler auftritt, dann folgende Schritte durchführen:
-	a. Rechner rebooten
-	b. ZM-Site aufrufen
+	* Rechner rebooten
+	* ZM-Site aufrufen
 	c. `Options->Users` aufrufen und dem `admin` - Benutzer ein Kennwort vergeben
 	c. `Options->System` anwählen und `OPT_USE_AUTH` aktivieren
 	d. Ganz unten `Save` anklicken und Einstellungen speichern
