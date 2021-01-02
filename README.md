@@ -34,7 +34,7 @@
 ```
 
 #### Bevor wir weitermachen können, müssen im Verzeichnis **Anzupassen** verschiedene Dateien modifiziert werden.
-* **Ohne diese Anpassungen wird die Installation nicht funktionieren. Daher ist dieser Schritt besonders sorgfältig durchzuführen.
+* **Ohne diese Anpassungen wird die Installation nicht funktionieren. Daher ist dieser Schritt besonders sorgfältig durchzuführen.**
 
 1.  Zunächst einloggen und in das /root - Verzeichnis wechseln
 ```
