@@ -3,15 +3,18 @@
 # Es wird empfohlen root als Benutzer zu verwenden
 Benutzer="root"
 
-CUDA_Version=10.1
-CUDA_Script=cuda_10.1.105_418.39_linux.run
-CUDA_Pfad=/usr/local/cuda-11.2
-CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
-PHP_VERS=7.2
-OPENCV_VER=4.5.1
-OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
-OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
-TZ="Europe/Berlin"
+export CUDA_Version=10.1
+export CUDA_Script=cuda_10.1.105_418.39_linux.run
+export CUDA_Pfad=/usr/local/cuda-11.2
+export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
+export PHP_VERS=7.2
+export OPENCV_VER=4.5.1
+export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
+export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
+export TZ="Europe/Berlin"
+export PYTHON_INCLUDE_DIRS=/usr/include/python3.6
+export PYTHON_LIBRARIES=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so
+
 
 if [ "$(whoami)" != $Benutzer ]; then
         echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
@@ -67,6 +70,7 @@ echo $(date -u) "02 von 30: Systemupdate und Apache, MySQL und PHP installieren"
                 apt -y dist-upgrade
 
                 apt -y install python3-pip cmake
+                pip3 install --upgrade pip
                 apt -y install libopenblas-dev liblapack-dev libblas-dev
 
                 #Mysql
@@ -80,7 +84,7 @@ echo $(date -u) "02 von 30: Systemupdate und Apache, MySQL und PHP installieren"
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und Zoneminder installieren"  | tee -a  ~/FinalInstall.log
                 apt -y install zoneminder
-                sudo apt -y install ntp
+                sudo apt -y install ntp ntp-doc
 
                 mysql -uroot -p < /usr/share/zoneminder/db/zm_create.sql
                 mysql -uroot -p -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
@@ -119,7 +123,7 @@ echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und
                              echo "localhost" > /etc/apache2/ssl/ServerName
                          fi
                          SERVER=`cat /etc/apache2/ssl/ServerName`
-                         sed -i "/ServerName/c\ServerName $SERVER" /etc/apache2/apache2.conf
+                         (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
                 else
                          echo "Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
                          mkdir -p /config/keys
@@ -135,6 +139,7 @@ echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
+                python3 -m pip install numpy -I
                 pip3 install numpy scipy matplotlib ipython pandas sympy nose cython
                 pip3 install future
 
@@ -142,7 +147,7 @@ echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/Final
                 unzip EventServer
                 cd ~/EventServer
                 ./install.sh
-                cd~
+                cd ~
 
 #git clone https://github.com/pliablepixels/zmeventnotification.git
 #    cd zmeventnotification
@@ -178,9 +183,12 @@ echo $(date -u) "05 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 sudo apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
                 sudo -H pip3 install dlib --verbose --no-cache-dir # make sure it finds openblas
                 sudo -H pip3 install face_recognition
+                rm /usr/bin/python
+                ln -sf python3.6 /usr/bin/python
 
                 #CUDNN installieren
                 # Download
+                cd ~
                 tar -xzvf cudnn-10.1-linux-x64-v8.0.5.39.tgz
                 sudo cp cuda/include/cudnn*.h /usr/local/cuda/include
                 sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
@@ -190,7 +198,10 @@ echo $(date -u) "...............................................................
 echo $(date -u) "06 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
  
                 #opencv compilieren
-                
+                apt -y install python-dev python3-dev
+                apt - install python-pip
+                python2 -m pip  install numpy
+
                 cd ~
                 wget  -O opencv.zip $OPENCV_URL
                 wget  -O opencv_contrib.zip $OPENCV_CONTRIB_URL
@@ -219,12 +230,15 @@ echo $(date -u) "06 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
                       -D ENABLE_FAST_MATH=1 \
                       -D CUDA_FAST_MATH=1 \
                       -D CUDA_ARCH_BIN=6.1 \
+                      -D CUDA_ARCH_PTX=6.1 \
                       -D WITH_CUBLAS=1 \
                       -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
                       -D HAVE_opencv_python3=ON \
                       -D PYTHON_EXECUTABLE=/usr/bin/python3 \
                       -D PYTHON2_EXECUTABLE=/usr/bin/python2 \
                       -D PYTHON_DEFAULT_EXECUTABLE=$(which python3) \
+                      -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")  \
+                      -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
                       -D BUILD_EXAMPLES=OFF ..
 
                 make -j$(nproc)
@@ -237,9 +251,8 @@ echo $(date -u) "06 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 echo "count = cv2.cuda.getCudaEnabledDeviceCount()" | tee -a  ~/FinalInstall.log
                 echo "print(count)" | tee -a  ~/FinalInstall.log
 
-                /usr/local/lib/python3.6/dist-packages/cv2
-                rm /usr/bin/python
-                ln -sf python3.6 /usr/bin/python
+                #/usr/local/lib/python3.6/dist-packages/cv2
+                
 
                 cp -r ~/zoneminder/bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
 
