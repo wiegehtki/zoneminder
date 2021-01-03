@@ -135,6 +135,9 @@ echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
+                pip3 install numpy scipy matplotlib ipython pandas sympy nose cython
+                pip3 install future
+
                 cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
                 unzip EventServer
                 cd ~/EventServer
