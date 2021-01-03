@@ -178,8 +178,8 @@ echo $(date -u) "...............................................................
 echo $(date -u) "05 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
                  
                 # Face recognition
-                sudo -H pip3 uninstall dlib
-                sudo -H pip3 uninstall face-recognition
+                #sudo -H pip3 uninstall dlib
+                #sudo -H pip3 uninstall face-recognition
                 sudo apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
                 sudo -H pip3 install dlib --verbose --no-cache-dir # make sure it finds openblas
                 sudo -H pip3 install face_recognition
@@ -254,7 +254,7 @@ echo $(date -u) "06 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 #/usr/local/lib/python3.6/dist-packages/cv2
                 
 
-                cp -r ~/zoneminder/bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+                cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
 
                 sudo chown root:www-data /etc/zm/conf.d/*.conf
                 sudo chmod 640 /etc/zm/conf.d/*.conf
