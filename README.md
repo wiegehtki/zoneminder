@@ -56,7 +56,7 @@ Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL
 ```
        nano ~/zoneminder/Anpassungen/objectconfig.ini
 ```
-**Nur bei Bedarf** den Eintrag anpassen, dazu einfach die **#** vor die Zeile setzen, welche inaktviert werden soll und dort entfernen, welche Zeilen aktiviert werden sollen. Die Vorgabe von mir sieht wie folgt aus:
+**Nur bei Bedarf** Wenn Ihr ein anderes Framework/Model nutzen wollt,könnt Ihr den dazugehörigen Eintrag anpassen. Dazu einfach ein **#** vor die Zeile setzen, welche inaktviert werden soll bzw. entfernen, wenn Zeilen aktiviert werden sollen. Die Vorgabe von mir sieht wie folgt aus:
 ```
        # FOR YoloV4. 
        object_framework=opencv
