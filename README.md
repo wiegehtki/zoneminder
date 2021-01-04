@@ -4,7 +4,7 @@
 # zoneminder object detection mit yolo by Udo Würtz, WIEGEHTKI.DE
 # Kameraüberwachung mit Objekterkennung mittels Zoneminder, YOLO und OpenCV
 ### KOMMT IN KÜRZE; NOCH IM TEST
-### Installation von Zoneminder 1.35.x, OpenCV 4.5 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04 LTS
+### Installation von Zoneminder 1.34.x, OpenCV 4.5.1 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04 LTS
 ### Unterstützt NVIDIA® GPU's unter x86 Ubuntu (Workstation)
 
 #### Nach der Installation dieser Software könnt Ihr:
@@ -12,7 +12,6 @@
 * Den Livestream mit OpenCV und YOLO auf Objekte untersuchen
 * Erkannte Objekte, z.B. Personen, zuverlässig melden lassen
 * Personen trainieren (Achtung: Datenschutzgesetz beachten!)
-*
 * Dokument zu Yolo(v4): https://arxiv.org/abs/2004.10934
 * Infos zum Darknet framework: http://pjreddie.com/darknet/
 * Infos zu OpenCV findet Ihr hier: https://opencv.org/
@@ -24,11 +23,11 @@
 * **Technologischer Deep Dive in YOLO:** https://www.youtube.com/watch?v=KMg6BwNDqBY
 
 #### Aufsetzen des Systems:
-Benötigt wird eine Ubuntu 18.04 LTS Umgebung. Ihr solltet eine Maschine dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür explizit bereitgestellten Test-Systemen durchführen.
+Benötigt wird eine Ubuntu 18.04 LTS Umgebung. Ihr solltet eine Maschine explizit und nur dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür eiegns bereitgestellten Test-Systemen durchführen.
 
-Ihr könnt den Ubuntu Server unter https://releases.ubuntu.com/18.04/ runter laden. Anschließend das Image auf einen USB-Stick übertragen, zum Beispiel mit balenaEtcher ( https://www.balena.io/etcher/ ) oder einem anderem Tool welches dafür geeignet ist.
+Ihr könnt den Ubuntu Server unter https://releases.ubuntu.com/18.04/ runter laden. Anschließend das Image auf einen USB-Stick übertragen, zum Beispiel mit balenaEtcher (https://www.balena.io/etcher/) oder einem anderem Tool welches dafür geeignet ist.
 
-Unter WIEGEHTKI.DE ( https://www.youtube.com/channel/UC_OeEKyvDfCVdhYrEKYf1lA )findet Ihr den Video zur Installation
+Unter WIEGEHTKI.DE (https://www.youtube.com/channel/UC_OeEKyvDfCVdhYrEKYf1lA) findet Ihr den Video zur Installation
 
 
 #### Notwendige Schritte VOR der weiteren Installation:

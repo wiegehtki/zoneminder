@@ -64,7 +64,7 @@ echo $(date -u) "02 von 30: Systemupdate und Apache, MySQL und PHP installieren"
                 apt -y install tasksel
                 tasksel install lamp-server
      
-                add-apt-repository ppa:iconnor/zoneminder-1.34
+                add-apt-repository -y ppa:iconnor/zoneminder-1.34
                 apt -y update
                 apt -y upgrade
                 apt -y dist-upgrade
@@ -86,8 +86,8 @@ echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und
                 apt -y install zoneminder
                 sudo apt -y install ntp ntp-doc
 
-                mysql -uroot -p < /usr/share/zoneminder/db/zm_create.sql
-                mysql -uroot -p -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
+                mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
+                mysql -uroot --skip-password -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
 
                 chmod 740 /etc/zm/zm.conf
                 chown root:www-data /etc/zm/zm.conf
@@ -139,15 +139,15 @@ echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
-                python3 -m pip install numpy -I
-                pip3 install numpy scipy matplotlib ipython pandas sympy nose cython
-                pip3 install future
+                #python3 -m pip install numpy -I
+                python3 -m pip  install numpy scipy matplotlib ipython pandas sympy nose cython
+                python3 -m pip  install future
 
                 cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
                 unzip EventServer
                 cd ~/EventServer
                 chmod -R +x *
-                /install.sh --install-hook --install-es --no-install-config --no-interactive
+                ./install.sh --install-hook --install-es --no-install-config --no-interactive
                 cd ~
 
 #git clone https://github.com/pliablepixels/zmeventnotification.git
@@ -156,18 +156,19 @@ echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/Final
 #git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 
 ##ANpassen! Thema SHell...
-                perl -MCPAN -e "install Crypt::MySQL"
-                perl -MCPAN -e "install Config::IniFiles"
-                perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
+                yes | perl -MCPAN -e "install Crypt::MySQL"
+                yes | perl -MCPAN -e "install Config::IniFiles"
+                yes | perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
 
                 apt -y install libyaml-perl
                 apt -y install make
-                perl -MCPAN -e "install Net::WebSocket::Server"
+                yes | perl -MCPAN -e "install Net::WebSocket::Server"
 
                 apt -y install libjson-perl
-                perl -MCPAN -e "install LWP::Protocol::https"
-                perl -MCPAN -e "install Net::MQTT::Simple"
+                yes | perl -MCPAN -e "install LWP::Protocol::https"
+                yes | perl -MCPAN -e "install Net::MQTT::Simple"
 
+                cpan -u
 
 
 #Und in etc/hosts:
@@ -182,8 +183,8 @@ echo $(date -u) "05 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 #sudo -H pip3 uninstall dlib
                 #sudo -H pip3 uninstall face-recognition
                 sudo apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
-                sudo -H pip3 install dlib --verbose --no-cache-dir # make sure it finds openblas
-                sudo -H pip3 install face_recognition
+                sudo -H python3 -m pip install dlib --verbose --no-cache-dir # make sure it finds openblas
+                sudo -H python3 -m pip install face_recognition
                 rm /usr/bin/python
                 ln -sf python3.6 /usr/bin/python
 
@@ -200,7 +201,7 @@ echo $(date -u) "06 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
  
                 #opencv compilieren
                 apt -y install python-dev python3-dev
-                apt - install python-pip
+                apt -y install python-pip
                 python2 -m pip  install numpy
 
                 cd ~
