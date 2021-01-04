@@ -39,16 +39,16 @@ echo $(date -u) "# V0.0.9 (Rev a), 28.12.2020                                   
 echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "01 von 30: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "01 von 07: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
                 cd ~
                 wget https://developer.nvidia.com/compute/cuda/$CUDA_Version/Prod/local_installers/$CUDA_Script
                 chmod +x $CUDA_Script
                 ./$CUDA_Script --silent
 
-echo $(date -u) "02 von 30: Check auf installierten Treiber"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "02 von 07: Check auf installierten Treiber"  | tee -a  ~/FinalInstall.log
                 lshw -C display | tee -a  ~/FinalInstall.log
 
-echo $(date -u) "03 von 30: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "03 von 07: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.log
                 echo $CUDA_Pfad/lib64 >>  /etc/ld.so.conf
                 ldconfig
                 echo 'export PATH='$CUDA_Pfad'/bin:$PATH' >> ~/.bashrc
@@ -57,7 +57,7 @@ echo $(date -u) "03 von 30: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.log
                 source ~/.bashrc
     
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "02 von 30: Systemupdate und Apache, MySQL und PHP installieren"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "02 von 07: Systemupdate und Apache, MySQL und PHP installieren"  | tee -a  ~/FinalInstall.log
                 apt -y upgrade
                 apt -y dist-upgrade
 
@@ -82,7 +82,7 @@ echo $(date -u) "02 von 30: Systemupdate und Apache, MySQL und PHP installieren"
                 systemctl restart mysql
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und Zoneminder installieren"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und Zoneminder installieren"  | tee -a  ~/FinalInstall.log
                 apt -y install zoneminder
                 sudo apt -y install ntp ntp-doc
 
@@ -103,7 +103,7 @@ echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und
                          echo "Setzen der Zeitzone auf: $TZ"
                          echo $TZ > /etc/timezone
                          ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
-                         dpkg-reconfigure tzdata
+                         dpkg-reconfigure tzdata -f noninteractive
                          echo "Datum: `date`"
                 fi
                 
@@ -138,7 +138,7 @@ echo $(date -u) "03 von 30: Apache konfigurieren, SSL-Zertifikate generieren und
                 systemctl start zoneminder
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
                 #python3 -m pip install numpy -I
                 python3 -m pip  install numpy scipy matplotlib ipython pandas sympy nose cython
                 python3 -m pip  install future
@@ -177,14 +177,14 @@ echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/Final
 # FIX: Opt Auth enablen und dann disablen um die DB Connections zu beruhigen
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "05 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
                  
                 # Face recognition
                 #sudo -H pip3 uninstall dlib
                 #sudo -H pip3 uninstall face-recognition
-                sudo apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
-                sudo -H python3 -m pip install dlib --verbose --no-cache-dir # make sure it finds openblas
-                sudo -H python3 -m pip install face_recognition
+                apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
+                python3 -m pip install dlib --verbose --no-cache-dir # make sure it finds openblas
+                python3 -m pip install face_recognition
                 rm /usr/bin/python
                 ln -sf python3.6 /usr/bin/python
 
@@ -197,7 +197,7 @@ echo $(date -u) "05 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
-echo $(date -u) "06 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
+echo $(date -u) "06 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
  
                 #opencv compilieren
                 apt -y install python-dev python3-dev
@@ -255,9 +255,14 @@ echo $(date -u) "06 von 30: Gesichtserkennung und cuDNN installieren"  | tee -a 
 
                 #/usr/local/lib/python3.6/dist-packages/cv2
                 
+                chown root:www-data /etc/zm/conf.d/*.conf
+                chmod 640 /etc/zm/conf.d/*.conf
 
+echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstall.log
                 cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+                echo "Installation beendet, bitte Rechner neu starten (reboot)"
+                echo ""
 
-                sudo chown root:www-data /etc/zm/conf.d/*.conf
-                sudo chmod 640 /etc/zm/conf.d/*.conf
+                
 
