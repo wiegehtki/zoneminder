@@ -23,6 +23,21 @@
 * **Basiswissen Objekterkennung mit YOLO:** https://www.youtube.com/watch?v=WXuqsRGIyg4&t=1586s
 * **Technologischer Deep Dive in YOLO:** https://www.youtube.com/watch?v=KMg6BwNDqBY
 
+#### Notwendige Schritte VOR der Installation:
+In diesem Projekt kommt eine NVIDIA® Grafikkarte zum Einsatz um den Prozessor von rechenintensiven Verarbeitungen zu befreien. Dazu setzen wir NVIDIA®'s CUDA und cuDNN® ein. CUDA® ist eine Technologie, die es erlaubt Programmteile durch den Grafikprozessor abzuarbeiten zu lassen während die NVIDIA® CUDA® Deep Neural Network Bibliothek (cuDNN) eine GPU-beschleunigte Bibliothek mit Primitiven für tiefe neuronale Netzwerke. Solche Primitive, typischerweise neuronale Netzwerkschichten genannt, sind die grundlegenden Bausteine tiefer Netzwerke.
+
+cuDNN® ist insofern nicht frei verfügbar als dass man sich bei NVIDIA® registrieren muss. Das ist aktuell kostenlos, nach der Registrierung startet eine sehr kurze Umfrage, wozu man das einsetzt und dann kommt man auf die Download-Site.
+
+1. Der Link zur Registrierung: https://developer.nvidia.com/CUDNN Dort auf **Download cuDNN** klicken und registrieren.
+2. Nach erfolgreicher Reistrierung bitte in der Sektion **Download cuDNN v8.0.5 (November 9th, 2020), for CUDA 10.2** die Datei **cuDNN Library for Linux (x86)** runter laden; **NICHT die Ubuntu-Dateien!** 
+3. Die Datei per `scp` oder einem entsprechenden Tool direkt in das `/root/` - Verzeichnis kopieren.
+4. Auf der Maschine anmelden und folgende Schritte ausführen, wobei `sudo su` nicht notwendig ist, wenn Ihr bereits **root** sein solltet.
+```
+       sudo su
+       cd ~
+       sudo chmod +x cudnn*     
+```
+
 #### Zur Installation könnt ihr wie folgt vorgehen, dazu alle Befehle im Terminal ausführen:
 
 1.  Ubuntu 18.04 LTS installieren
