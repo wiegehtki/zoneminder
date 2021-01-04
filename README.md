@@ -29,7 +29,7 @@ In diesem Projekt kommt eine NVIDIA® Grafikkarte zum Einsatz um den Prozessor v
 cuDNN® ist insofern nicht frei verfügbar als dass man sich bei NVIDIA® registrieren muss. Das ist aktuell kostenlos, nach der Registrierung startet eine sehr kurze Umfrage, wozu man das einsetzt und dann kommt man auf die Download-Site.
 
 1. Der Link zur Registrierung: https://developer.nvidia.com/CUDNN Dort auf **Download cuDNN** klicken und registrieren.
-2. Nach erfolgreicher Reistrierung bitte in der Sektion **Download cuDNN v8.0.5 (November 9th, 2020), for CUDA 10.2** die Datei **cuDNN Library for Linux (x86)** runter laden; **NICHT die Ubuntu-Dateien!** 
+2. Nach erfolgreicher Reistrierung bitte in der Sektion **Download cuDNN v8.0.5 (November 9th, 2020), for CUDA 10.2** unter **Library for Linux, Ubuntu(x86_64 & PPC architecture)** die Datei **cuDNN Library for Linux (x86)** runter laden; **NICHT die Ubuntu-Dateien!** 
 3. Die Datei per `scp` oder einem entsprechenden Tool direkt in das `/root/` - Verzeichnis kopieren.
 4. Auf der Maschine anmelden und folgende Schritte ausführen, wobei `sudo su` nicht notwendig ist, wenn Ihr bereits **root** sein solltet.
 ```
