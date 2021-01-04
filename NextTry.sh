@@ -168,9 +168,7 @@ echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/Final
                 yes | perl -MCPAN -e "install LWP::Protocol::https"
                 yes | perl -MCPAN -e "install Net::MQTT::Simple"
 
-                cpan -u
-
-
+                
 #Und in etc/hosts:
 #192.168.100.245 zm.wiegehtki.de
 
