@@ -23,13 +23,21 @@
 * **Basiswissen Objekterkennung mit YOLO:** https://www.youtube.com/watch?v=WXuqsRGIyg4&t=1586s
 * **Technologischer Deep Dive in YOLO:** https://www.youtube.com/watch?v=KMg6BwNDqBY
 
-#### Notwendige Schritte VOR der Installation:
-In diesem Projekt kommt eine NVIDIA® Grafikkarte zum Einsatz um den Prozessor von rechenintensiven Verarbeitungen zu befreien. Dazu setzen wir NVIDIA®'s CUDA und cuDNN® ein. CUDA® ist eine Technologie, die es erlaubt Programmteile durch den Grafikprozessor abzuarbeiten zu lassen während die NVIDIA® CUDA® Deep Neural Network Bibliothek (cuDNN) eine GPU-beschleunigte Bibliothek mit Primitiven für tiefe neuronale Netzwerke. Solche Primitive, typischerweise neuronale Netzwerkschichten genannt, sind die grundlegenden Bausteine tiefer Netzwerke.
+#### Aufsetzen des Systems:
+Benötigt wird eine Ubuntu 18.04 LTS Umgebung. Ihr solltet eine Maschine dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür explizit bereitgestellten Test-Systemen durchführen.
+
+Ihr könnt den Ubuntu Server unter https://releases.ubuntu.com/18.04/ runter laden. Anschließend das Image auf einen USB-Stick übertragen, zum Beispiel mit balenaEtcher ( https://www.balena.io/etcher/ ) oder einem anderem Tool welches dafür geeignet ist.
+
+Unter WIEGEHTKI.DE ( https://www.youtube.com/channel/UC_OeEKyvDfCVdhYrEKYf1lA )findet Ihr den Video zur Installation
+
+
+#### Notwendige Schritte VOR der weiteren Installation:
+In diesem Projekt kommt eine NVIDIA® Grafikkarte zum Einsatz um den Prozessor von rechenintensiven Verarbeitungen zu befreien. Dazu setzen wir NVIDIA®'s CUDA® und cuDNN® ein. CUDA® ist eine Technologie, die es erlaubt Programmteile durch den Grafikprozessor abarbeiten zu lassen während die NVIDIA® CUDA® Deep Neural Network Bibliothek (cuDNN) eine GPU-beschleunigte Bibliothek mit Primitiven für tiefe neuronale Netzwerke darstellt. Solche Primitive, typischerweise neuronale Netzwerkschichten genannt, sind die grundlegenden Bausteine tiefer Netzwerke.
 
 cuDNN® ist insofern nicht frei verfügbar als dass man sich bei NVIDIA® registrieren muss. Das ist aktuell kostenlos, nach der Registrierung startet eine sehr kurze Umfrage, wozu man das einsetzt und dann kommt man auf die Download-Site.
 
-1. Der Link zur Registrierung: https://developer.nvidia.com/CUDNN Dort auf **Download cuDNN** klicken und registrieren.
-2. Nach erfolgreicher Reistrierung bitte in der Sektion **Download cuDNN v8.0.5 (November 9th, 2020), for CUDA 10.2** unter **Library for Linux, Ubuntu(x86_64 & PPC architecture)** die Datei **cuDNN Library for Linux (x86)** runter laden; **NICHT die Ubuntu-Dateien!** 
+1. Der Link zur Registrierung: https://developer.nvidia.com/CUDNN. Dort auf **Download cuDNN** klicken und anschließend registrieren.
+2. Nach erfolgreicher Reistrierung bitte in der Sektion **Download cuDNN v8.0.5 (November 9th, 2020), for CUDA 10.2** (das kann sich natürlich ggfs. ändern und etwas anders heißen) unter **Library for Linux, Ubuntu(x86_64 & PPC architecture)** die Datei **cuDNN Library for Linux (x86)** runter laden; **NICHT die Ubuntu-Dateien!** 
 3. Die Datei per `scp` oder einem entsprechenden Tool direkt in das `/root/` - Verzeichnis kopieren.
 4. Auf der Maschine anmelden und folgende Schritte ausführen, wobei `sudo su` nicht notwendig ist, wenn Ihr bereits **root** sein solltet.
 ```
@@ -37,11 +45,10 @@ cuDNN® ist insofern nicht frei verfügbar als dass man sich bei NVIDIA® regist
        cd ~
        sudo chmod +x cudnn*     
 ```
+Anschließend kommen wir zur eigentlichen Installation des Systems. Diese ist in zwei Stufen unterteilt: In Stufe 1 installieren wir einige Standard-Pakete und de-aktivieren den bisherigen Grafiktreiber, anschließend startet das System neu. Der Script geht davon aus, dass es sich um eine neu aufgesetzte Maschine handelt, falls nicht, müsst Ihr entsprechende Anpassungen machen oder die Befehle per Hand ausführen um sicher zu gehen, dass eine vorhandene Installation nicht beeinträchtigt wird. Empfohlen wird daher, ein verfügbares Testsystem zu nutzen welches neu aufgesetzt werden kann.
 
 #### Zur Installation könnt ihr wie folgt vorgehen, dazu alle Befehle im Terminal ausführen:
-
-1.  Ubuntu 18.04 LTS installieren
-2.  Einloggen und dann die erste Stufe der Installation starten, der Rechner rebootet danach automatisch:
+Einloggen und dann die erste Stufe der Installation starten, der Rechner rebootet danach automatisch:
 ```
        sudo su
        cd ~
