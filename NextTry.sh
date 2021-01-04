@@ -146,7 +146,8 @@ echo $(date -u) "04 von 30: zmeventnotification installieren"  | tee -a  ~/Final
                 cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
                 unzip EventServer
                 cd ~/EventServer
-                ./install.sh
+                chmod -R +x *
+                /install.sh --install-hook --install-es --no-install-config --no-interactive
                 cd ~
 
 #git clone https://github.com/pliablepixels/zmeventnotification.git
