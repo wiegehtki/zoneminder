@@ -3,17 +3,22 @@
 # Es wird empfohlen root als Benutzer zu verwenden
 Benutzer="root"
 
+export DEBCONF_NONINTERACTIVE_SEEN="true"
+export DEBIAN_FRONTEND="noninteractive"
 export CUDA_Version=10.1
 export CUDA_Script=cuda_10.1.105_418.39_linux.run
 export CUDA_Pfad=/usr/local/cuda-11.2
 export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
-export PHP_VERS=7.2
+export PHP_VERS="7.2"
 export OPENCV_VER=4.5.1
 export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
 export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
 export TZ="Europe/Berlin"
 export PYTHON_INCLUDE_DIRS=/usr/include/python3.6
 export PYTHON_LIBRARIES=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so
+export SHMEM="50%"
+export MULTI_PORT_START="0"
+export MULTI_PORT_END="0"
 
 
 if [ "$(whoami)" != $Benutzer ]; then
@@ -85,11 +90,15 @@ echo $(date -u) "...............................................................
 echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und Zoneminder installieren"  | tee -a  ~/FinalInstall.log
                 apt -y install zoneminder
                 sudo apt -y install ntp ntp-doc
+                apt -y install ssmtp mailutils net-tools wget sudo make
+                apt -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd
+                apt -y install libcrypt-mysql-perl libyaml-perl libjson-perl libavutil-dev ffmpeg && \
+                apt -y install --no-install-recommends libvlc-dev libvlccore-dev vlc
 
                 mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
                 mysql -uroot --skip-password -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
 
-                chmod 740 /etc/zm/zm.conf
+                 /etc/zm/zm.conf
                 chown root:www-data /etc/zm/zm.conf
                 chown -R www-data:www-data /usr/share/zoneminder/
 
@@ -107,9 +116,9 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                          echo "Datum: `date`"
                 fi
                 
-                sed -i "s|^date.timezone =.*$|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
-                sed -i "s|^date.timezone =.*$|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini
-
+                sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
+                sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini
+				
                 mkdir /etc/apache2/ssl/
                 mkdir /etc/zm/apache2/
                 mkdir /etc/zm/apache2/ssl/
@@ -117,7 +126,7 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 cp /etc/apache2/ports.conf                     /etc/apache2/ports.conf.default
                 cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
 
-                if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.keycert.crt ]]; then
+                if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.crt ]]; then
                          echo "Bestehendes Zertifikat gefunden in \"/etc/apache2/ssl/cert.key\""
                          if [[ ! -f /etc/apache2/ssl/ServerName ]]; then
                              echo "localhost" > /etc/apache2/ssl/ServerName
@@ -128,14 +137,23 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                          echo "Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
                          mkdir -p /config/keys
                          echo "localhost" >> /etc/apache2/ssl/ServerName
+                         dd if=/dev/urandom of=~/.rnd bs=256 count=1
+                         chmod 600 ~/.rnd
                          openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=localhost"
                 fi
 
-                chown root:root /config/keys
+                #chown root:root /config/keys
                 chmod 777 /etc/apache2/ssl
+                a2enmod proxy_fcgi setenvif
+                a2enconf php7.2-fpm
+                systemctl reload apache2
+                adduser www-data video
+                /etc/php/$PHP_VERS/mods-available/apcu.ini
+                echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
                 
                 systemctl enable zoneminder
                 systemctl start zoneminder
+
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
 echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
@@ -149,6 +167,8 @@ echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/Final
                 chmod -R +x *
                 ./install.sh --install-hook --install-es --no-install-config --no-interactive
                 cd ~
+                cp EventServer/zmeventnotification.ini /etc/zm/. -r
+                chmod +x /var/lib/zmeventnotification/bin/*
 
 #git clone https://github.com/pliablepixels/zmeventnotification.git
 #    cd zmeventnotification
@@ -262,5 +282,37 @@ echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstal
                 echo "Installation beendet, bitte Rechner neu starten (reboot)"
                 echo ""
 
-                
+                cp -r ~/zoneminder/Anzupassen/. /etc/zm/.
+                # Fix memory issue
+                echo "Setzen shared memory auf :" $SHMEM "von `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"  | tee -a  ~/FinalInstall.log
+                umount /dev/shm
+                mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
+
+                if [ $((MULTI_PORT_START)) -gt 0 ] && [ $((MULTI_PORT_END)) -gt $((MULTI_PORT_START)) ]; then
+
+                         echo "Einstellung ES-Multiport-Bereich von ${MULTI_PORT_START} bis ${MULTI_PORT_END}."  | tee -a  ~/FinalInstall.log
+
+                         ORIG_VHOST="_default_:443"
+                         NEW_VHOST=${ORIG_VHOST}
+                         PORT=${MULTI_PORT_START}
+                         while [[ ${PORT} -le ${MULTI_PORT_END} ]]; do
+                             egrep -sq "Listen ${PORT}" /etc/apache2/ports.conf || echo "Listen ${PORT}" >> /etc/apache2/ports.conf
+                             NEW_VHOST="${NEW_VHOST} _default_:${PORT}"
+                             PORT=$(($PORT + 1))
+                         done
+                         perl -pi -e "s/${ORIG_VHOST}/${NEW_VHOST}/ if (/<VirtualHost/);" /etc/apache2/sites-enabled/default-ssl.conf
+                else
+                         if [ $((MULTI_PORT_START)) -ne 0 ];then
+                             echo "Multi-port error start ${MULTI_PORT_START}, end ${MULTI_PORT_END}."  | tee -a  ~/FinalInstall.log
+                         fi
+                fi
+                a2enmodssl
+                systemctl restart apache2        
+
+                chown -R root:www-data /etc/apache2/ssl/*
+
+#Test:
+#https://zm.wiegehtki.de/zm/api/host/getVersion.json
+#https://zm.wiegehtki.de/zm/?view=image&eid=57&fid=snapshot
+#https://zm.wiegehtki.de/zm/?view=image&eid=57&fid=alarm
 
