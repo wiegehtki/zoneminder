@@ -32,18 +32,15 @@ echo $(date -u) "Test auf bestehende FinalInstall.log"
 echo $(date -u) "FinalInstall.log anlegen"
       touch ~/FinalInstall.log
 
-####################################################################################################################
-# Ubuntu 18.04 notwendig
-#
-#
-echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
-echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV und YOLO. By WIEGEHTKI.DE                     #" | tee -a  ~/Installation.log
-echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                #" | tee -a  ~/Installation.log
-echo $(date -u) "#                                           #" | tee -a  ~/Installation.log
-echo $(date -u) "# V0.0.9 (Rev a), 28.12.2020                                      #" | tee -a  ~/Installation.log
-echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
 
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "########################################################################################################################" | tee -a  ~/Installation.log
+echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS                   By WIEGEHTKI.DE #" | tee -a  ~/Installation.log
+echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/Installation.log
+echo $(date -u) "#                                                                                                                      #" | tee -a  ~/Installation.log
+echo $(date -u) "# V1.0.0 (Rev a), 06.01.2021                                                                                           #" | tee -a  ~/Installation.log
+echo $(date -u) "########################################################################################################################" | tee -a  ~/Installation.log
+
+echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "01 von 07: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
                 cd ~
                 wget https://developer.nvidia.com/compute/cuda/$CUDA_Version/Prod/local_installers/$CUDA_Script
@@ -61,7 +58,7 @@ echo $(date -u) "03 von 07: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.log
                 echo 'cd ~' >> ~/.bashrc
                 source ~/.bashrc
     
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "02 von 07: Systemupdate und Apache, MySQL und PHP installieren"  | tee -a  ~/FinalInstall.log
                 apt -y upgrade
                 apt -y dist-upgrade
@@ -86,7 +83,7 @@ echo $(date -u) "02 von 07: Systemupdate und Apache, MySQL und PHP installieren"
                 echo "sql_mode        = NO_ENGINE_SUBSTITUTION" >> /etc/mysql/my.cnf
                 systemctl restart mysql
 
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und Zoneminder installieren"  | tee -a  ~/FinalInstall.log
                 apt -y install zoneminder
                 sudo apt -y install ntp ntp-doc
@@ -118,8 +115,8 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 
                 sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
                 sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini
-				sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/fpm/php.ini
-				
+                sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/fpm/php.ini
+
                 mkdir /etc/apache2/ssl/
                 mkdir /etc/zm/apache2/
                 mkdir /etc/zm/apache2/ssl/
@@ -130,7 +127,7 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 echo "localhost" >> /etc/apache2/ssl/ServerName
                 SERVER=`cat /etc/apache2/ssl/ServerName`
                 (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
-				
+
                 if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.crt ]]; then
                     echo "Bestehendes Zertifikat gefunden in \"/etc/apache2/ssl/cert.key\""  | tee -a  ~/FinalInstall.log
                 else
@@ -154,7 +151,7 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 systemctl start zoneminder
 
 
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/FinalInstall.log
                 #python3 -m pip install numpy -I
                 python3 -m pip  install numpy scipy matplotlib ipython pandas sympy nose cython
@@ -169,12 +166,7 @@ echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/Final
                 cp EventServer/zmeventnotification.ini /etc/zm/. -r
                 chmod +x /var/lib/zmeventnotification/bin/*
 
-#git clone https://github.com/pliablepixels/zmeventnotification.git
-#    cd zmeventnotification
-#git fetch --tags
-#git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 
-##ANpassen! Thema SHell...
                 yes | perl -MCPAN -e "install Crypt::MySQL"
                 yes | perl -MCPAN -e "install Config::IniFiles"
                 yes | perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
@@ -188,12 +180,7 @@ echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/Final
                 yes | perl -MCPAN -e "install Net::MQTT::Simple"
 
                 
-#Und in etc/hosts:
-#192.168.100.245 zm.wiegehtki.de
-
-# FIX: Opt Auth enablen und dann disablen um die DB Connections zu beruhigen
-
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
                  
                 # Face recognition
@@ -213,7 +200,7 @@ echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
                 sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "06 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
  
                 #opencv compilieren
@@ -275,7 +262,7 @@ echo $(date -u) "06 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 chown root:www-data /etc/zm/conf.d/*.conf
                 chmod 640 /etc/zm/conf.d/*.conf
 
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/FinalInstall.log
+echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstall.log
                 cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
                 echo "Installation beendet, bitte Rechner neu starten (reboot)"
