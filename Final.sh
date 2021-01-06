@@ -321,7 +321,7 @@ echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstal
 #chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
 #echo "zm.wiegehtki.de" >> /etc/hosts
 
-#rtmp://192.168.100.164/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password=o4h7nl$42
+#rtmp://192.168.100.164/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password=<Dein Passwort>
 
 
 
