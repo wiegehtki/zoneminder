@@ -1,9 +1,5 @@
-# NOCH NICHT BENUTZEN! WORK IN PROGRESS!!
-
-
 # zoneminder object detection mit yolo by Udo Würtz, WIEGEHTKI.DE
 # Kameraüberwachung mit Objekterkennung mittels Zoneminder, YOLO und OpenCV
-### KOMMT IN KÜRZE; NOCH IM TEST
 ### Installation von Zoneminder 1.34.x, OpenCV 4.5.1 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04 LTS
 ### Unterstützt NVIDIA® GPU's unter x86 Ubuntu (Workstation)
 
@@ -11,7 +7,7 @@
 * Mit Zoneminder Eure IP-Kameras einbinden und mobil verfügbar machen
 * Den Livestream mit OpenCV und YOLO auf Objekte untersuchen
 * Erkannte Objekte, z.B. Personen, zuverlässig melden lassen
-* Personen trainieren (Achtung: Datenschutzgesetz beachten!)
+* Gesichter trainieren (Achtung: Datenschutzgesetz beachten!)
 * Dokument zu Yolo(v4): https://arxiv.org/abs/2004.10934
 * Infos zum Darknet framework: http://pjreddie.com/darknet/
 * Infos zu OpenCV findet Ihr hier: https://opencv.org/
