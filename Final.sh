@@ -33,12 +33,12 @@ echo $(date -u) "FinalInstall.log anlegen"
       touch ~/FinalInstall.log
 
 
-echo $(date -u) "########################################################################################################################" | tee -a  ~/Installation.log
-echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS                   By WIEGEHTKI.DE #" | tee -a  ~/Installation.log
-echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/Installation.log
-echo $(date -u) "#                                                                                                                      #" | tee -a  ~/Installation.log
-echo $(date -u) "# V1.0.0 (Rev a), 06.01.2021                                                                                           #" | tee -a  ~/Installation.log
-echo $(date -u) "########################################################################################################################" | tee -a  ~/Installation.log
+echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
+echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS                   By WIEGEHTKI.DE #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "#                                                                                                                      #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "# V1.0.0 (Rev a), 06.01.2021                                                                                           #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
 
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "01 von 07: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
