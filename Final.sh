@@ -126,7 +126,8 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
 
                 echo "localhost" >> /etc/apache2/ssl/ServerName
                 SERVER=`cat /etc/apache2/ssl/ServerName`
-                (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
+                # Test wegen doppelten Einträgen UW 9.1.2021
+				#(echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
 
                 if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.crt ]]; then
                     echo "Bestehendes Zertifikat gefunden in \"/etc/apache2/ssl/cert.key\""  | tee -a  ~/FinalInstall.log
