@@ -189,17 +189,17 @@ echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 #sudo -H pip3 uninstall face-recognition
                 apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
                 cd ~/zoneminder/dlib
-                rm ~/zoneminder/dlib/build/* -rf
-				python ./setup.py install 
-				 #wget http://dlib.net/files/dlib-19.19.tar.bz2
-                 #tar xvf dlib-19.19.tar.bz2
-                 #cd dlib-19.19/
-                 #mkdir build
-                 #cd build
-                 #cmake ..
-                 #cmake --build . --config Release
-                 #sudo make install
-                 #sudo ldconfig
+                #rm ~/zoneminder/dlib/build/* -rf
+                python ./setup.py install 
+                #wget http://dlib.net/files/dlib-19.19.tar.bz2
+                #tar xvf dlib-19.19.tar.bz2
+                #cd dlib-19.19/
+                #mkdir build
+                #cd build
+                #cmake ..
+                #cmake --build . --config Release
+                #sudo make install
+                #sudo ldconfig
                 #python3 -m pip install dlib --verbose --no-cache-dir # make sure it finds openblas
                 python3 -m pip install face_recognition
                 rm /usr/bin/python
