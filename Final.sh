@@ -184,9 +184,9 @@ echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/Final
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a  ~/FinalInstall.log
                  
-                # Face recognition
-                #sudo -H pip3 uninstall dlib
-                #sudo -H pip3 uninstall face-recognition
+                # Face recognition, umschalten auf CUDA. Bisherigen (CPU-) dlib de-installieren
+                sudo -H pip3 uninstall dlib
+                sudo -H pip3 uninstall face-recognition
                 apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
                 cd ~/zoneminder/dlib
                 #rm ~/zoneminder/dlib/build/* -rf
