@@ -125,9 +125,9 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
 
                 echo "localhost" >> /etc/apache2/ssl/ServerName
-                SERVER=`cat /etc/apache2/ssl/ServerName`
+                export SERVER=`cat /etc/apache2/ssl/ServerName`
                 # Test wegen doppelten Einträgen UW 9.1.2021
-				#(echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
+				(echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
 
                 if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.crt ]]; then
                     echo "Bestehendes Zertifikat gefunden in \"/etc/apache2/ssl/cert.key\""  | tee -a  ~/FinalInstall.log
@@ -188,7 +188,19 @@ echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 #sudo -H pip3 uninstall dlib
                 #sudo -H pip3 uninstall face-recognition
                 apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
-                python3 -m pip install dlib --verbose --no-cache-dir # make sure it finds openblas
+                cd ~/zoneminder/dlib
+                rm ~/zoneminder/dlib/build/* -rf
+				python ./setup.py install 
+				 #wget http://dlib.net/files/dlib-19.19.tar.bz2
+                 #tar xvf dlib-19.19.tar.bz2
+                 #cd dlib-19.19/
+                 #mkdir build
+                 #cd build
+                 #cmake ..
+                 #cmake --build . --config Release
+                 #sudo make install
+                 #sudo ldconfig
+                #python3 -m pip install dlib --verbose --no-cache-dir # make sure it finds openblas
                 python3 -m pip install face_recognition
                 rm /usr/bin/python
                 ln -sf python3.6 /usr/bin/python
@@ -250,6 +262,7 @@ echo $(date -u) "06 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
 
                 make -j$(nproc)
 
+
                 #logger "Installing opencv..." -tEventServer
                 make install
 
@@ -300,8 +313,8 @@ echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstal
 
 #Test:
 #https://zm.wiegehtki.de/zm/api/host/getVersion.json
-#https://zm.wiegehtki.de/zm/?view=image&eid=57&fid=snapshot
-#https://zm.wiegehtki.de/zm/?view=image&eid=57&fid=alarm
+#https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=snapshot
+#https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=alarm
 
 #/var/lib/zmeventnotification/known_faces
 #sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
