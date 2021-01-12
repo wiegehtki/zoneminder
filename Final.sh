@@ -95,7 +95,6 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
                 mysql -uroot --skip-password -e "grant lock tables,alter,drop,select,insert,update,delete,create,index,alter routine,create routine, trigger,execute on zm.* to 'zmuser'@localhost identified by 'zmpass';"
 
-                 /etc/zm/zm.conf
                 chown root:www-data /etc/zm/zm.conf
                 chown -R www-data:www-data /usr/share/zoneminder/
 
@@ -127,7 +126,7 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 echo "localhost" >> /etc/apache2/ssl/ServerName
                 export SERVER=`cat /etc/apache2/ssl/ServerName`
                 # Test wegen doppelten Einträgen UW 9.1.2021
-				(echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
+                (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
 
                 if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.crt ]]; then
                     echo "Bestehendes Zertifikat gefunden in \"/etc/apache2/ssl/cert.key\""  | tee -a  ~/FinalInstall.log
@@ -145,7 +144,7 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 a2enconf php7.2-fpm
                 systemctl reload apache2
                 adduser www-data video
-                /etc/php/$PHP_VERS/mods-available/apcu.ini
+                echo "extension=apcu.so" > /etc/php/$PHP_VERS/mods-available/apcu.ini
                 echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
                 
                 systemctl enable zoneminder
