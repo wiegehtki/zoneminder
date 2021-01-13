@@ -1,6 +1,6 @@
-# Kameraüberwachung mit Objekterkennung mittels Zoneminder, YOLO und OpenCV by Udo Würtz, WIEGEHTKI.DE
+# Kameraüberwachung mit Objekt- und Gesichtserkennung mittels Zoneminder, YOLO und OpenCV auf x86 - Plattformen, benötigt NVIDIA® - GPU mit CUDA® und cuDNN®
 ### Installation von Zoneminder 1.34.x, OpenCV 4.5.1 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04 LTS
-### Unterstützt NVIDIA® GPU's unter x86 Ubuntu (Workstation) mit CUDA® und cuDNN®
+
 
 #### Nach der Installation dieser Software könnt Ihr:
 * Mit Zoneminder Eure IP-Kameras einbinden und mobil verfügbar machen
