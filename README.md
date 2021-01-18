@@ -13,9 +13,11 @@
 
 
 #### Videos zu diesem Projekt (und weitere) findet Ihr auf https://wiegehtki.de
-* **Intro:** https://www.youtube.com/watch?v=_ndzsZ66SLQ
-* **Basiswissen Objekterkennung mit YOLO:** https://www.youtube.com/watch?v=WXuqsRGIyg4&t=1586s
-* **Technologischer Deep Dive in YOLO:** https://www.youtube.com/watch?v=KMg6BwNDqBY
+* **Einführung in das Projekt:** https://youtu.be/TsEwtInBl3c
+* **Installation des Betriebssystems:** https://youtu.be/_P9d5rERbBA
+* **Installation der Software:** https://youtu.be/9pQ3ouCPqm8
+* **Inbetriebnahme:** https://youtu.be/3yM87yOXaBs
+
 
 #### Aufsetzen des Systems:
 Benötigt wird eine Ubuntu 18.04 LTS Umgebung. Ihr solltet eine Maschine explizit und nur dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür eiegns bereitgestellten Test-Systemen durchführen.
