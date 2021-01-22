@@ -81,6 +81,9 @@ echo $(date -u) "02 von 07: Systemupdate und Apache, MySQL und PHP installieren"
 
                 echo "default-time-zone='+01:00'" >> /etc/mysql/my.cnf
                 echo "sql_mode        = NO_ENGINE_SUBSTITUTION" >> /etc/mysql/my.cnf
+                mysql_tzinfo_to_sql /usr/share/zoneinfo/Europe/ | sudo mysql -u root mysql
+                sudo mysql -e "SET GLOBAL time_zone = 'Berlin';"
+
                 systemctl restart mysql
 
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
