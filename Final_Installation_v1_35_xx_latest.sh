@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
                 # Es wird empfohlen root als Benutzer zu verwenden
-                Benutzer="root"
+                Benutzer="root" 
                 
                 export DEBCONF_NONINTERACTIVE_SEEN="true"
                 export DEBIAN_FRONTEND="noninteractive"
