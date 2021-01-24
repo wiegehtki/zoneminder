@@ -5,9 +5,12 @@
                 
                 export DEBCONF_NONINTERACTIVE_SEEN="true"
                 export DEBIAN_FRONTEND="noninteractive"
+                export PHP_VERS="7.4"
+                export OPENCV_VER="4.5.1"
+                export PYTHON_VER="3.8"
                 export CUDA_Version=11.2.0
                 export CUDA_Script=cuda_11.2.0_460.27.04_linux.run 
-				#cuda_10.1.105_418.39_linux.run
+                #cuda_10.1.105_418.39_linux.run
                 export CUDA_Pfad=/usr/local/cuda-11.2
                 export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
                 export PHP_VERS="7.2"
@@ -15,8 +18,8 @@
                 export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
                 export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
                 export TZ="Europe/Berlin"
-                export PYTHON_INCLUDE_DIRS=/usr/include/python3.6
-                export PYTHON_LIBRARIES=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/libpython3.6.so
+                export PYTHON_INCLUDE_DIRS=/usr/include/python$PYTHON_VER
+                export PYTHON_LIBRARIES=/usr/lib/python$PYTHON_VER/config-$PYTHON_VER-x86_64-linux-gnu/libpython$PYTHON_VER.so
                 export SHMEM="50%"
                 export MULTI_PORT_START="0"
                 export MULTI_PORT_END="0"
@@ -135,7 +138,7 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 
                 sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
                 sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/apache2/php.ini
-                sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/fpm/php.ini
+                #sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/fpm/php.ini
 
                 mkdir /etc/apache2/ssl/
                 mkdir /etc/zm/apache2/
@@ -223,7 +226,7 @@ echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 #python3 -m pip install dlib --verbose --no-cache-dir # make sure it finds openblas
                 python3 -m pip install face_recognition
                 rm /usr/bin/python
-                ln -sf python3.6 /usr/bin/python
+                ln -sf python$PYTHON_VER /usr/bin/python
 
                 #CUDNN installieren
                 # Download
@@ -298,7 +301,7 @@ echo $(date -u) "06 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
 
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstall.log
-                cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+                cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/face_train.py
                 echo "Installation beendet, bitte Rechner neu starten (reboot)"
                 echo ""
 
