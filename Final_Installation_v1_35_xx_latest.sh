@@ -5,8 +5,9 @@
                 
                 export DEBCONF_NONINTERACTIVE_SEEN="true"
                 export DEBIAN_FRONTEND="noninteractive"
-                export CUDA_Version=10.1
-                export CUDA_Script=cuda_10.1.105_418.39_linux.run
+                export CUDA_Version=11.2.0
+                export CUDA_Script=cuda_11.2.0_460.27.04_linux.run 
+				#cuda_10.1.105_418.39_linux.run
                 export CUDA_Pfad=/usr/local/cuda-11.2
                 export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
                 export PHP_VERS="7.2"
@@ -48,7 +49,11 @@ echo $(date -u) "###############################################################
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "01 von 07: CUDA runterladen und samt Grafiktreiber installieren"  | tee -a  ~/FinalInstall.log
                 cd ~
-                wget https://developer.nvidia.com/compute/cuda/$CUDA_Version/Prod/local_installers/$CUDA_Script
+                wget https://developer.download.nvidia.com/compute/cuda/$CUDA_Version/local_installers/$CUDA_Script
+				#wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
+                            
+                #wget https://developer.nvidia.com/compute/cuda/$CUDA_Version/Prod/local_installers/$CUDA_Script
+                #wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
                 chmod +x $CUDA_Script
                 ./$CUDA_Script --silent
 
@@ -62,6 +67,7 @@ echo $(date -u) "03 von 07: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.log
                 echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
                 echo 'cd ~' >> ~/.bashrc
                 source ~/.bashrc
+                sudo apt install nvidia-cuda-toolkit
     
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "02 von 07: Systemupdate und Apache, MySQL und PHP installieren"  | tee -a  ~/FinalInstall.log
