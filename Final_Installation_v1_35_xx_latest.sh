@@ -43,10 +43,10 @@
 
 
 echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
-echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS                   By WIEGEHTKI.DE #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 20.04 LTS                   By WIEGEHTKI.DE #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "#                                                                                                                      #" | tee -a  ~/FinalInstall.log
-echo $(date -u) "# V1.0.0 (Rev a), 06.01.2021                                                                                           #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "# V1.0.0 (Rev a), 24.01.2021                                                                                           #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
 
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
