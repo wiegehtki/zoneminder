@@ -13,7 +13,6 @@
                 #cuda_10.1.105_418.39_linux.run
                 export CUDA_Pfad=/usr/local/cuda-11.2
                 export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
-                export PHP_VERS="7.2"
                 export OPENCV_VER=4.5.1
                 export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
                 export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
@@ -79,7 +78,7 @@ echo $(date -u) "02 von 07: Systemupdate und Apache, MySQL und PHP installieren"
 
                 apt -y install tasksel
                 tasksel install lamp-server
-     
+                
                 #add-apt-repository -y ppa:iconnor/zoneminder-1.34
                 add-apt-repository -y ppa:iconnor/zoneminder-master
                 
@@ -165,7 +164,7 @@ echo $(date -u) "03 von 07: Apache konfigurieren, SSL-Zertifikate generieren und
                 #chown root:root /config/keys
                 chmod 777 /etc/apache2/ssl
                 a2enmod proxy_fcgi setenvif
-                a2enconf php7.2-fpm
+                a2enconf php$PHP_VERS-fpm
                 systemctl reload apache2
                 adduser www-data video
                 echo "extension=apcu.so" > /etc/php/$PHP_VERS/mods-available/apcu.ini
