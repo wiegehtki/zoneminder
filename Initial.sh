@@ -1,20 +1,23 @@
 #!/usr/bin/env bash
 
-# Es wird empfohlen root als Benutzer zu verwenden
-Benutzer="root"
-
-
-if [ "$(whoami)" != $Benutzer ]; then
-        echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
-        exit 255
-fi
-
-echo $(date -u) "Test auf bestehende Installation.log"
-                 test -f ~/Installation.log && rm ~/Installation.log
-
-echo $(date -u) "Installation.log anlegen"
-                 touch ~/Installation.log
-
+                # Es wird empfohlen root als Benutzer zu verwenden
+                Benutzer="root"
+                
+                
+                if [ "$(whoami)" != $Benutzer ]; then
+                        echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
+                        exit 255
+                fi
+                
+                echo $(date -u) "Test auf bestehende Installation.log"
+                                 test -f ~/Installation.log && rm ~/Installation.log
+                
+                echo $(date -u) "Installation.log anlegen"
+                                 touch ~/Installation.log
+                
+                export LINUX_VERSION_NAME=`lsb_release -sr`
+                
+                
 ####################################################################################################################
 # Ubuntu 18.04 notwendig
 #
@@ -50,14 +53,18 @@ echo $(date -u) "03 von 04 Diverse Pakete installieren wie Compiler, Headers usw
                 cd /usr/include/linux
                 ln -s -f ../libv4l1-videodev.h videodev.h
                 cd ~
-                apt -y install install libgtk-3-dev
+                apt -y install libgtk-3-dev
                 apt -y install python3-testresources
-                apt -y install libtbb-dev tbb-examples libtbb-doc
+                apt -y install libtbb-dev libtbb-doc
                 apt -y install libatlas-base-dev gfortran 
                 apt -y install libprotobuf-dev protobuf-compiler
                 apt -y install libgoogle-glog-dev libgflags-dev
                 apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
-                apt -y install gcc-6
+                
+                if [[ ${LINUX_VERSION_NAME} == "18.04" ]]; then
+                    apt -y install gcc-6
+                fi
+                
                                 
 
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log

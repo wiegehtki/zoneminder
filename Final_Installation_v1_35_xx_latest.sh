@@ -70,7 +70,7 @@ echo $(date -u) "03 von 07: CUDA Umgebung setzen"  | tee -a  ~/FinalInstall.log
                 echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
                 echo 'cd ~' >> ~/.bashrc
                 source ~/.bashrc
-                sudo apt install nvidia-cuda-toolkit
+                sudo apt -y install nvidia-cuda-toolkit
     
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "02 von 07: Systemupdate und Apache, MySQL und PHP installieren"  | tee -a  ~/FinalInstall.log
