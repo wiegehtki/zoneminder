@@ -180,7 +180,8 @@ echo $(date -u) "04 von 07: zmeventnotification installieren"  | tee -a  ~/Final
                 python3 -m pip  install numpy scipy matplotlib ipython pandas sympy nose cython
                 python3 -m pip  install future
 
-                cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
+                cp ~/zoneminder/Anzupassen/. /etc/zm/. -r                
+				cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
                 unzip EventServer
                 cd ~/EventServer
                 chmod -R +x *
@@ -212,7 +213,7 @@ echo $(date -u) "05 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 apt -y install libopenblas-dev liblapack-dev libblas-dev # this is the important part
                 cd ~/zoneminder/dlib
                 #rm ~/zoneminder/dlib/build/* -rf
-                python ./setup.py install 
+                python3 ./setup.py install 
                 #wget http://dlib.net/files/dlib-19.19.tar.bz2
                 #tar xvf dlib-19.19.tar.bz2
                 #cd dlib-19.19/
