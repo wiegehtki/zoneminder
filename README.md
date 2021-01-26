@@ -151,6 +151,11 @@ Falls nicht, hier die Download-Links:
 	* Wieder `Save` anklicken und Einstellungen speichern
 	
 	Der Fehler sollte jetzt nicht mehr auftreten.
-	
+
+2. **Beim Aufruf eines Installationsscripts kommt die Fehlermeldung `/usr/bin/env: ‘bash\r’: No such file or directory`** 
+   Wenn dieser Fehler auftritt, dann folgende Schritte durchführen:
+	* sed $'s/\r$//' -Script bei dem der Fehler auftriit, z.B. Initial.sh- > -Neues Script, z.B. InitialNeu.sh-
+	* chmod +x *
+	* Aufruf des neuen Scripts, z.B.: ./InitialNeu.sh
 
 
