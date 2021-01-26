@@ -37,7 +37,7 @@ echo $(date -u) "###############################################################
 echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS                   By WIEGEHTKI.DE #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "#                                                                                                                      #" | tee -a  ~/FinalInstall.log
-echo $(date -u) "# V1.0.0 (Rev a), 06.01.2021                                                                                           #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "# V1.1.0 (Rev a), 26.01.2021                                                                                           #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
 
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
@@ -238,6 +238,9 @@ echo $(date -u) "06 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
                 rm -rf build
                 mkdir build
                 cd build
+
+                export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+                export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
                 #Wichtig: Je nach Karte wählen - CUDA_ARCH_BIN = https://en.wikipedia.org/wiki/CUDA 
                 cmake -D CMAKE_BUILD_TYPE=RELEASE \
