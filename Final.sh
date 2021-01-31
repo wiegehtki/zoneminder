@@ -312,7 +312,7 @@ echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstal
                          fi
                 fi
                 
-                chown -R root:www-data /etc/apache2/ssl/*
+                chown -R www-data:www-data /etc/apache2/ssl/*
                 a2enmod ssl
                 systemctl restart apache2        
 
