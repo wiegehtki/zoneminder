@@ -178,6 +178,7 @@ echo $(date -u) "...............................................................
                     apt-get -y autoremove
                     apt-get -y install python3-apt
                     apt-get update  --fix-missing
+                    echo "3.7" > ~/python.version
                 }
                 InstallMathPacks() {
                     echo $(date -u) "Mathematische Bibliotheken installieren"  | tee -a  ~/Installation.log

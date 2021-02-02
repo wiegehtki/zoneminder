@@ -2,10 +2,18 @@
                 # Es wird empfohlen root als Benutzer zu verwenden
                 Benutzer="root" 
                 
+                
                 export PHP_VERS="7.4"
                 export OPENCV_VER="4.5.1"
-                export PYTHON_VER="3.8"
-               
+                export PYTHON_VER="3.6"
+                if [ -f ~/python.version ];   then 
+                    for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
+                        do  
+                        export PYTHON_VER=$i
+                        declare var="$i"
+                    done  
+                fi
+                
                 #export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
                 #export CUDA_Script=cuda_10.1.105_418.39_linux.run
                 export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
@@ -41,7 +49,7 @@
                 
                 
                 if [ "$(whoami)" != $Benutzer ]; then
-                       echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
+                       echo $(date -u) "Script muss als Benutzer $Benutzer ausgefuehrt werden!"
                        exit 255
                 fi
                 
@@ -53,7 +61,7 @@
                  
                  
                 if lshw -C display | grep -q 'nouveau'; then
-                      echo $(date -u) "NOUVEAU - Grafiktreiber muss de-aktiviert sein! Bitte Initial-Script prüfen bzw. vorher laufen lassen."
+                      echo $(date -u) "NOUVEAU - Grafiktreiber muss de-aktiviert sein! Bitte Initial-Script pruefen bzw. vorher laufen lassen."
                       exit 255
                 fi
 
@@ -72,7 +80,7 @@
 
 echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
 echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS und 20.04 LTS     By WIEGEHTKI.DE #" | tee -a  ~/FinalInstall.log
-echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/FinalInstall.log
+echo $(date -u) "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "#                                                                                                                      #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "# V2.0.0 (Rev a), 30.01.2021                                                                                           #" | tee -a  ~/FinalInstall.log
 echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
@@ -99,7 +107,7 @@ echo $(date -u) "...............................................................
                         echo 'cd ~' >> ~/.bashrc
                         source ~/.bashrc
                         apt-get -y install nvidia-cuda-toolkit
-                        echo $(date -u) "Kompilieren der CUDA - Beispiele um DeviceQuery zu ermöglichen"  | tee -a  ~/FinalInstall.log
+                        echo $(date -u) "Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen"  | tee -a  ~/FinalInstall.log
                                     
                         cd ~/$CUDA_EXAMPLES_PATH
                         make -j$(nproc) 
@@ -113,7 +121,7 @@ echo $(date -u) "...............................................................
                                 declare var="$i"
                             done  
                         else
-                            echo $(date -u) "Fehler beim  Ausführen von deviceQuery! Standardwert für CUDA_COMPUTE_CAPABILITY wird beibehalten!"  | tee -a  ~/FinalInstall.log
+                            echo $(date -u) "Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"  | tee -a  ~/FinalInstall.log
                         fi
                         # PATH includes /usr/local/cuda-11.2/bin
                         # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
@@ -398,7 +406,7 @@ echo $(date -u) "...............................................................
                     pkg-config --cflags --libs opencv4
                     pkg-config --modversion opencv4
                     
-                    echo "Test auf CUDA enabled Devices, muss grösser 0 sein:" | tee -a  ~/FinalInstall.log
+                    echo "Test auf CUDA enabled Devices, muss groesser 0 sein:" | tee -a  ~/FinalInstall.log
                     echo "import cv2" | tee -a  ~/FinalInstall.log
                     echo "count = cv2.cuda.getCudaEnabledDeviceCount()" | tee -a  ~/FinalInstall.log
                     echo "print(count)" | tee -a  ~/FinalInstall.log
