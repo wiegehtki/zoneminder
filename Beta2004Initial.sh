@@ -26,6 +26,10 @@
                     fi
                 fi
                 
+                Logging() {
+                    echo $(date -u) "$1"  | tee -a  ~/Installation.log
+                }
+                
                 #Debug Modus: -x = an, +x = aus
                 set +x
 
@@ -40,23 +44,24 @@ echo $(date -u) "#                                                              
 echo $(date -u) "# v2.0.1 (Rev a), 27.01.2021                                                                                                        #" | tee -a  ~/Installation.log
 echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
-echo $(date -u) "Hardware- und Linux - Check"  | tee -a  ~/Installation.log
-                 lshw -C display | tee -a  ~/Installation.log
-                 uname -m && cat /etc/*release | tee -a  ~/Installation.log
+                Logging "Hardware- und Linux - Check"
+                lshw -C display | tee -a  ~/Installation.log
+                uname -m && cat /etc/*release | tee -a  ~/Installation.log
+                
 echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
                 UpdatePackages() {
-                echo $(date -u) "Pakete aktualisieren"  | tee -a  ~/Installation.log 
+                Logging "Pakete aktualisieren"
                     apt-get -y update
                     apt-get -y dist-upgrade
                 }
                 InstallImageHandling() {
-                    echo $(date -u) "Pakete für Imagehandling installieren"  | tee -a  ~/Installation.log                 
+                    Logging "Pakete für Imagehandling installieren"                 
                     apt-get -y install libjpeg-dev \
                                    libpng-dev \
                                    libtiff-dev 
                 }
                 InstallCodecs() {
-                    echo $(date -u) "Codecs installieren"  | tee -a  ~/Installation.log                 
+                    Logging "Codecs installierenLogging"                 
                     apt-get -y install libgstreamer1.0-dev \
                                        libgstreamer-plugins-base1.0-dev \
                                        libxvidcore-dev \
@@ -70,7 +75,7 @@ echo $(date -u) "...............................................................
                                        libopencore-amrwb-dev
                 }
                 InstallVideo4Camera() {
-                    echo $(date -u) "Pakete für Video und Kameras installieren"  | tee -a  ~/Installation.log
+                    Logging "Pakete für Video und Kameras installieren"
                     apt-get -y install libdc1394-22 \
                                        libdc1394-22-dev \
                                        libxine2-dev \
@@ -82,7 +87,7 @@ echo $(date -u) "...............................................................
                     ln -s -f ../libv4l1-videodev.h videodev.h 
                 }
                 InstallCompiler() {
-                    echo $(date -u) "Pakete für Compiler (allgemein) installieren"  | tee -a  ~/Installation.log                
+                    Logging "Pakete für Compiler (allgemein) installieren"                
                     apt-get -y install linux-headers-$(uname -r) \
                                        pkg-config \
                                        gcc \
@@ -93,7 +98,7 @@ echo $(date -u) "...............................................................
                                        gfortran
                 }
                 InstallCompiler_v7() {
-                    echo $(date -u) "Pakete für Compiler (Version 7) installieren"  | tee -a  ~/Installation.log            
+                    Logging "Pakete für Compiler (Version 7) installieren"            
                     apt-get -y install build-essential 
                     apt-get -y install gcc-7 
                     apt-get -y install g++-7 
@@ -116,7 +121,7 @@ echo $(date -u) "...............................................................
                     ln -s /usr/bin/g++-7 /usr/bin/g++
                 }
                 InstallCompiler_v6() {
-                    echo $(date -u) "Pakete für Compiler (Version 6) installieren"  | tee -a  ~/Installation.log
+                    Logging "Pakete für Compiler (Version 6) installieren"
                     apt-get -y install gcc-6 
                     apt-get -y install g++-6 
                     apt-get -y install build-essential 
@@ -138,7 +143,7 @@ echo $(date -u) "...............................................................
                     ln -s /usr/bin/g++-6 /usr/bin/g++
                 }
                 InstallTools() {
-                    echo $(date -u) "Diverse Tools installieren"  | tee -a  ~/Installation.log
+                    Logging "Diverse Tools installieren"
                     apt-get -y install nano  \
                                        letsencrypt \
                                        doxygen \
@@ -157,7 +162,7 @@ echo $(date -u) "...............................................................
                                        net-tools
                 }
                 InstallPython3.7() {
-                    echo $(date -u) "Python 3.7 installieren"  | tee -a  ~/Installation.log
+                    Logging "Python 3.7 installieren"
                     if [ "$UBUNTU_VER" = "20.04" ]; then
                         add-apt-repository -y ppa:deadsnakes/ppa
                         UpdatePackages
@@ -180,8 +185,9 @@ echo $(date -u) "...............................................................
                     apt-get update  --fix-missing
                     echo "3.7" > ~/python.version
                 }
+
                 InstallMathPacks() {
-                    echo $(date -u) "Mathematische Bibliotheken installieren"  | tee -a  ~/Installation.log
+                    Logging "Mathematische Bibliotheken installieren"
                     apt-get -y install libatlas-base-dev \
                                        libeigen3-dev \
                                        libopenblas-dev \
@@ -189,17 +195,17 @@ echo $(date -u) "...............................................................
                                        libblas-dev 
                 }
                 InstallGooglePacks() {
-                    echo $(date -u) "Google Open-Source Pakete installieren"  | tee -a  ~/Installation.log
+                    Logging "Google Open-Source Pakete installieren"
                     apt-get -y install libprotobuf-dev \
                                        protobuf-compiler \
                                        libgoogle-glog-dev
                 }
                 InstallDataManagement() {
-                    echo $(date -u) "Pakete für Datenmanagement installieren"  | tee -a  ~/Installation.log
+                    Logging "Pakete für Datenmanagement installieren"
                     apt-get -y install libhdf5-dev
                 }
                 DeactivateNouveau() {
-                    echo $(date -u) "Nouveau - Grafiktreiber de-aktivieren"  | tee -a  ~/Installation.log
+                    Logging "Nouveau - Grafiktreiber de-aktivieren"
                     bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
                     bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
                     echo "cd ~/" >> /root/.bashrc
@@ -217,17 +223,28 @@ echo $(date -u) "...............................................................
                 InstallMathPacks
                 InstallDataManagement
                 
-                cd ~
-                if [ "$UBUNTU_VER" = "18.04" ]; then
-                    apt-get -y install python3-testresources
-                    InstallCompiler_v6
+                python -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
+                if [ -f ~/python.version ];   then 
+                    for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
+                        do  
+                        export PYTHON_VER=$i
+                        declare var="$i"
+                    done  
+                else
+                    echo "Probleme beim Auslesen der Python - Version, Abbruch..."
+                    exit 255
                 fi
-                if [ "$UBUNTU_VER" = "20.04" ]; then
+                
+                if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.7" ]; then
+                    Logging "Keine unterstützte Pyton3 - Version gefunden, installiere Python 3.7.x"  
                     InstallPython3.7
-                    InstallCompiler_v7
-                fi               
+                fi
+
+                cd ~
+                if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install python3-testresources; InstallCompiler_v6; fi
+                if [ "$UBUNTU_VER" = "20.04" ]; then InstallCompiler_v7; fi               
 
                 DeactivateNouveau
                 lshw -C display | tee -a  ~/Installation.log
-                echo $(date -u) "Ende der Initialisierung, reboot..."  | tee -a  ~/Installation.log
+                Logging "Ende der Initialisierung, initialisiere einen Neustart..."
                 reboot

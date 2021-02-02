@@ -2,7 +2,7 @@
                 # Es wird empfohlen root als Benutzer zu verwenden
                 Benutzer="root" 
                 
-				if [ "$(whoami)" != $Benutzer ]; then
+                if [ "$(whoami)" != $Benutzer ]; then
                        echo $(date -u) "Script muss als Benutzer $Benutzer ausgefuehrt werden!"
                        exit 255
                 fi
