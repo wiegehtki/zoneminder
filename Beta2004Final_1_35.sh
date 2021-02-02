@@ -24,7 +24,7 @@
                     exit 255
                 fi
                 
-                if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.7" ]; then
+                if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then
                     echo $(date -u) "Keine unterstützte Pyton3 - Version gefunden welche kleiner 3.8 ist, Abbruch"  | tee -a  ~/FinalInstall.log
                 fi
                 
@@ -96,13 +96,12 @@ Logging "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwend
 Logging "#                                                                                                                      #" 
 Logging "# V2.0.0 (Rev a), 30.01.2021                                                                                           #" 
 Logging "########################################################################################################################" 
-Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log                
                 UpdatePackages() {
+                    Logging "Pakete aktualisieren"                  
                     apt-get -y update
                     apt-get -y dist-upgrade
                 }
                 
-                Logging "........................................................................................................................"
                 InstallCuda() {
                     Logging "CUDA - Download und Installation inklusive Grafiktreiber" 
                     cd ~
@@ -134,7 +133,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                                 declare var="$i"
                             done  
                         else
-                            Logging "Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"  | tee -a  ~/FinalInstall.log
+                            Logging "Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"  
                         fi
                         # PATH includes /usr/local/cuda-11.2/bin
                         # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
@@ -146,7 +145,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                     fi
                 }
                 InstallcuDNN() {
-                    Logging "cuDNN - Installation"  | tee -a  ~/FinalInstall.log
+                    Logging "cuDNN - Installation" 
                     local cuDNNFile
                     cd ~
                     if [ -f ~/$CUDNN_VERSION_1804 ] && [ "$UBUNTU_VER" = "18.04" ]; then
@@ -200,7 +199,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                     return 0                    
                 }
                 SetUpMySQL() {
-                    Logging "MySQL - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "MySQL - Setup"  
                     if [ $# -eq 0 ]; then
                         rm /etc/mysql/my.cnf  
                         cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
@@ -217,7 +216,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                     fi 
                 }
                 SetUpPHP() {
-                    Logging "PHP "$PHP_VERS" - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "PHP "$PHP_VERS" - Setup"  
                     apt -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd
                     if [ -f /etc/php/$PHP_VERS/cli/php.ini ]; then
                         sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
@@ -232,7 +231,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                     echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
                 }
                 AccessRightsZoneminder() {
-                    Logging "Zoneminder - Zugriffsrechte setzen"  | tee -a  ~/FinalInstall.log
+                    Logging "Zoneminder - Zugriffsrechte setzen"  
                     chown root:www-data /etc/zm/zm.conf
                     chown -R www-data:www-data /usr/share/zoneminder/
                     chown root:www-data /etc/zm/conf.d/*.conf
@@ -241,7 +240,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 }
                
                 SetUpApache2() {
-                    Logging "Apache2 - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "Apache2 - Setup" 
                     a2enmod cgi
                     a2enmod rewrite
                     a2enconf zoneminder
@@ -290,7 +289,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                     systemctl reload apache2
                 }
                 InstallZoneminder() {
-                    Logging "Zoneminder - Installation & Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "Zoneminder - Installation & Setup"  
                     add-apt-repository -y ppa:iconnor/zoneminder-master
                     apt-get -y install libcrypt-mysql-perl \
                                        libyaml-perl \
@@ -316,7 +315,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 }
                 #EventServer installieren
                 InstallEventerver() {
-                    Logging "EventServer - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "EventServer - Setup"  
                     apt-get -y install python3-numpy
                     python3 -m pip  install scipy matplotlib ipython pandas sympy nose cython
                     cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
@@ -352,7 +351,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 }
                 #Apache, MySQL, PHP 
                 InstallFaceRecognition() {
-                    Logging "Gesichtserkennung - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "Gesichtserkennung - Setup"  
                     if python -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then
                        sudo -H pip3 uninstall dlib
                     fi
@@ -366,13 +365,13 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 }                        
 
                 InstallLAMP() {
-                    Logging "LAMP - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "LAMP - Setup" 
                     apt-get -y install tasksel
                     tasksel install lamp-server
                     #add-apt-repository -y ppa:iconnor/zoneminder-1.34
                 }                        
                 InstallOpenCV(){
-                    Logging  "OpenCV kompilieren mit Compute Capability " $CUDA_COMPUTE_CAPABILITY    | tee -a  ~/FinalInstall.log
+                    Logging "OpenCV kompilieren mit Compute Capability " $CUDA_COMPUTE_CAPABILITY    
                     apt-get -y install python-pip
                     #python2 -m pip  install numpy
                     cd ~
@@ -425,16 +424,16 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 }
  
                 installLibs(){
-                echo "Notwendige Pakete installieren"
-                sudo apt-get update
-                sudo apt-get -y --force-yes install autoconf automake build-essential libass-dev libfreetype6-dev libgpac-dev \
-                     libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev \
-                     libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev libopus-dev
+                    Logging "Notwendige Pakete installieren"
+                    sudo apt-get update
+                    sudo apt-get -y --force-yes install autoconf automake build-essential libass-dev libfreetype6-dev libgpac-dev \
+                    libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev \
+                    libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev libopus-dev
                 }
                  
                 #Install nvidia SDK
                 installSDK(){
-                    echo "Installieren NVIDIA Codecs."
+                    Logging  "Installieren NVIDIA Codecs."
                     cd ~/ffmpeg_sources
                     cd ~/ffmpeg_sources
                     git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
@@ -445,7 +444,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 
                 #nasm
                 compileNasm(){
-                    echo "Kompilieren von nasm"
+                    Logging "Kompilieren von nasm"
                     cd ~/ffmpeg_sources
                     wget https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/nasm-2.15.05.tar.gz
                     tar xzvf nasm-2.15.05.tar.gz
@@ -458,7 +457,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 
                 #libx264
                 compileLibX264(){
-                    echo "Kompilieren von libx264"
+                    Logging "Kompilieren von libx264"
                     cd ~/ffmpeg_sources
                     wget https://download.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245-stable.tar.bz2 
                     tar xjvf x264-snapshot-20191217-2245-stable.tar.bz2
@@ -471,7 +470,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 
                 #libfdk-acc
                 compileLibfdkcc(){
-                    echo "Kompilieren von libfdk-cc"
+                    Logging "Kompilieren von libfdk-cc"
                     sudo apt-get install unzip
                     cd ~/ffmpeg_sources
                     wget -O fdk-aac.zip https://github.com/mstorsjo/fdk-aac/zipball/master
@@ -486,7 +485,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 
                 #libmp3lame
                 compileLibMP3Lame(){
-                    echo "Kompilieren von libmp3lame"
+                    Logging "Kompilieren von libmp3lame"
                     sudo apt-get install nasm
                     cd ~/ffmpeg_sources
                     wget http://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
@@ -500,7 +499,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 
                 #libopus
                 compileLibOpus(){
-                    echo "Kompilieren von libopus"
+                    Logging "Kompilieren von libopus"
                     cd ~/ffmpeg_sources
                     wget http://downloads.xiph.org/releases/opus/opus-1.3.1.tar.gz
                     tar xzvf opus-1.3.1.tar.gz
@@ -513,7 +512,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
     
                 #libx265
                 compileLibX265(){
-                    echo "Kompilieren von libx265"               
+                    Logging "Kompilieren von libx265"               
                     cd ~
                     git clone https://bitbucket.org/multicoreware/x265_git
                     cd x265_git/build/linux
@@ -523,7 +522,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
     
                 #libvpx
                     compileLibPvx(){
-                    echo "Kompilieren von libvpx"
+                    Logging "Kompilieren von libvpx"
                     cd ~/ffmpeg_sources
                     git clone https://chromium.googlesource.com/webm/libvpx
                     cd libvpx
@@ -537,7 +536,7 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                 
                 #ffmpeg
                 compileFfmpeg(){
-                    echo "Kompilieren von ffmpeg"
+                    Logging "Kompilieren von ffmpeg"
                     cd ~/ffmpeg_sources
                     git clone https://github.com/FFmpeg/FFmpeg -b master
                     cd FFmpeg
@@ -581,15 +580,16 @@ Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log
                }
                 #Bugfixing und Finalisierung
                 BugFixes_Init() {
-                python3 -m pip install protobuf==3.3.0
-                python3 -m pip install numpy==1.16.5
-                
-                yes | perl -MCPAN -e "upgrade IO::Socket::SSL"
-                cd ~
-                zmupdate.pl -f
+                    Logging "Bugfixes einspielen"
+                    python3 -m pip install protobuf==3.3.0
+                    python3 -m pip install numpy==1.16.5
+                    
+                    yes | perl -MCPAN -e "upgrade IO::Socket::SSL"
+                    cd ~
+                    zmupdate.pl -f
                 }
                                 
-                Logging "Starten der Installation"  | tee -a  ~/FinalInstall.log
+                Logging "Starten der Installation"  
                 if [[ $(cat /etc/timezone) != "$TZ" ]] ; then
                    echo "Setzen der Zeitzone auf: $TZ"
                    echo $TZ > /etc/timezone

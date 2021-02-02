@@ -1,31 +1,58 @@
 #!/usr/bin/env bash
                 Benutzer="root"
-
-                declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
-                declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
-                declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
+                Language="German"
                 
-                declare -r checkGPUDriver= "Nouveau - Grafiktreiber de-aktivieren"
-                declare -r checkPythonVersion="Keine unterstützte Pyton3 - Version gefunden, installiere Python 3.7.x"
-                declare -r checkInstallationLog="Test auf bestehende Installation.log"
-                declare -r checkHW_OS="Hardware_und_Linux Check"
-                
-                declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
-                declare -r createInstallationLog="Installation.log anlegen"
-                
-                declare -r installUpdate="Pakete aktualisieren"
-                declare -r installImagehandling="Pakete für Imagehandling installieren"
-                declare -r installCodecs="Codecs installierenLogging"
-                declare -r installCameras="Pakete für Video und Kameras installieren"
-                declare -r installCompiler="Pakete für Compiler (allgemein) installieren"
-                declare -r installCompilerv7="Pakete für Compiler (Version 7) installieren"
-                declare -r installCompilerv6="Pakete für Compiler (Version 6) installieren"
-                declare -r installTools="Diverse Tools installieren"
-                declare -r installPython37="Python 3.7 installieren"
-                declare -r installMathPacks="Mathematische Bibliotheken installieren"
-                declare -r installGoogle="Google Open-Source Pakete installieren"
-                declare -r installDataManagement="Pakete für Datenmanagement installieren"
-                              
+                if [ $Language = "German" ]; then
+                    declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
+                    declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
+                    declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
+                    
+                    declare -r checkGPUDriver= "Nouveau - Grafiktreiber de-aktivieren"
+                    declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, installiere Python 3.7.x"
+                    declare -r checkInstallationLog="Test auf bestehende Installation.log"
+                    declare -r checkHW_OS="Hardware_und_Linux Check"
+                    
+                    declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
+                    declare -r createInstallationLog="Installation.log anlegen"
+                    
+                    declare -r installUpdate="Pakete aktualisieren"
+                    declare -r installImagehandling="Pakete für Imagehandling installieren"
+                    declare -r installCodecs="Codecs installieren"
+                    declare -r installCameras="Pakete für Video und Kameras installieren"
+                    declare -r installCompiler="Pakete für Compiler (allgemein) installieren"
+                    declare -r installCompilerv7="Pakete für Compiler (Version 7) installieren"
+                    declare -r installCompilerv6="Pakete für Compiler (Version 6) installieren"
+                    declare -r installTools="Diverse Tools installieren"
+                    declare -r installPython37="Python 3.7 installieren"
+                    declare -r installMathPacks="Mathematische Bibliotheken installieren"
+                    declare -r installGoogle="Google Open-Source Pakete installieren"
+                    declare -r installDataManagement="Pakete für Datenmanagement installieren"
+                else
+                    declare -r errorUser="Script must be executed as user: $Benutzer !"
+                    declare -r errorPythonVersion="Problems reading out the Python version, abort..."
+                    declare -r errorLinuxDistribution="No valid distribution, installer exits"
+                    
+                    declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
+                    declare -r checkPythonVersion="No supported Python3 version found, install Python 3.7.x"
+                    declare -r checkInstallationLog="Test for existing installation.log"
+                    declare -r checkHW_OS="Hardware_and_Linux check"
+                    
+                    declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
+                    declare -r createInstallationLog="Create Installation.log"
+                    
+                    declare -r installUpdate="Update packages"
+                    declare -r installImagehandling="Install packages for image handling"
+                    declare -r installCodecs="Install codecs"
+                    declare -r installCameras="Install packages for video and cameras"
+                    declare -r installCompiler="Installing packages for compilers (general)"
+                    declare -r installCompilerv7="Install packages for compiler (version 7)"
+                    declare -r installCompilerv6="Install packages for compiler (version 6)"
+                    declare -r installTools="Install various tools"
+                    declare -r installPython37="Install Python 3.7"
+                    declare -r installMathPacks="Install mathematical libraries"
+                    declare -r installGoogle="Install Google Open Source Packages"
+                    declare -r installDataManagement="Install packages for data management"
+                fi
                 
                 if [ "$(whoami)" != $Benutzer ]; then
                     echo $(date -u) "$errorUser"
@@ -190,22 +217,30 @@
                 InstallPython3.7() {
                     Logging "$installPython37"
                     if [ "$UBUNTU_VER" = "20.04" ]; then add-apt-repository -y ppa:deadsnakes/ppa; UpdatePackages; fi
+                    apt -y install build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev libffi-dev
+                    cd /usr/src
+                    sudo wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
+                    sudo tar xzf Python-3.7.9.tgz
+                    cd Python-3.7.9
+                    sudo ./configure --enable-optimizations
+                    sudo make altinstall
+
+                    #apt-get update --fix-missing
+                    #apt-get -y install python3.7 
+                    #apt-get -y install python3.7-dev 
+                    #apt-get -y install python3-testresources 
+                    #apt-get -y install python3-pip
                     
-                    apt-get update --fix-missing
-                    apt-get -y install python3.7 
-                    apt-get -y install python3.7-dev 
-                    apt-get -y install python3-testresources 
-                    apt-get -y install python3-pip
                     
                     if [ -f /usr/bin/python ];  then rm /usr/bin/python;  fi
                     if [ -f /usr/bin/python3 ]; then rm /usr/bin/python3; fi
                     ln -sf python3.7 /usr/bin/python
                     ln -sf python3.7 /usr/bin/python3
                     
-                    apt-get -y remove --purge python3-apt
-                    apt-get -y autoremove
-                    apt-get -y install python3-apt
-                    apt-get update  --fix-missing
+                    #apt-get -y remove --purge python3-apt
+                    #apt-get -y autoremove
+                    #apt-get -y install python3-apt
+                    #apt-get update  --fix-missing
                     echo "3.7" > ~/python.version
                 }
 
@@ -258,7 +293,7 @@
                     exit 255
                 fi
                 
-                if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.7" ]; then
+                if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then
                     Logging "$checkPythonVersion"
                     InstallPython3.7
                 fi
