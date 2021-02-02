@@ -1,13 +1,39 @@
 #!/usr/bin/env bash
-                # Es wird empfohlen root als Benutzer zu verwenden
                 Benutzer="root"
+
+                declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
+                declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
+                declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
+                
+                declare -r checkGPUDriver= "Nouveau - Grafiktreiber de-aktivieren"
+                declare -r checkPythonVersion="Keine unterstützte Pyton3 - Version gefunden, installiere Python 3.7.x"
+                declare -r checkInstallationLog="Test auf bestehende Installation.log"
+                declare -r checkHW_OS="Hardware_und_Linux Check"
+                
+                declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
+                declare -r createInstallationLog="Installation.log anlegen"
+                
+                declare -r installUpdate="Pakete aktualisieren"
+                declare -r installImagehandling="Pakete für Imagehandling installieren"
+                declare -r installCodecs="Codecs installierenLogging"
+                declare -r installCameras="Pakete für Video und Kameras installieren"
+                declare -r installCompiler="Pakete für Compiler (allgemein) installieren"
+                declare -r installCompilerv7="Pakete für Compiler (Version 7) installieren"
+                declare -r installCompilerv6="Pakete für Compiler (Version 6) installieren"
+                declare -r installTools="Diverse Tools installieren"
+                declare -r installPython37="Python 3.7 installieren"
+                declare -r installMathPacks="Mathematische Bibliotheken installieren"
+                declare -r installGoogle="Google Open-Source Pakete installieren"
+                declare -r installDataManagement="Pakete für Datenmanagement installieren"
+                              
+                
                 if [ "$(whoami)" != $Benutzer ]; then
-                    echo $(date -u) "Script muss als Benutzer $Benutzer ausgeführt werden!"
+                    echo $(date -u) "$errorUser"
                     exit 255
                 fi
-                echo $(date -u) "Test auf bestehende Installation.log"
+                echo $(date -u) "$checkInstallationLog"
                 test -f ~/Installation.log && rm ~/Installation.log
-                echo $(date -u) "Installation.log anlegen"
+                echo $(date -u) "$createInstallationLog"
                 touch ~/Installation.log
                 
                 #Linux-Version erkennen
@@ -21,7 +47,7 @@
                         export UBUNTU_VER="20.04"
                     else
                         echo " "
-                        echo "Keine gültige Distribution, Installer wird beendet"
+                        echo "$errorLinuxDistribution"
                         exit
                     fi
                 fi
@@ -37,31 +63,31 @@
                 set -e
                 
                 
-echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
-echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu 18.04 LTS und 20.04 LTS                      By WIEGEHTKI.DE #" | tee -a  ~/Installation.log
-echo $(date -u) "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #" | tee -a  ~/Installation.log
-echo $(date -u) "#                                                                                                                                   #" | tee -a  ~/Installation.log
-echo $(date -u) "# v2.0.1 (Rev a), 27.01.2021                                                                                                        #" | tee -a  ~/Installation.log
-echo $(date -u) "#####################################################################################################################################" | tee -a  ~/Installation.log
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
-                Logging "Hardware- und Linux - Check"
+                Logging "#####################################################################################################################################"
+                Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu 18.04 LTS und 20.04 LTS                      By WIEGEHTKI.DE #"
+                Logging "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #"
+                Logging "#                                                                                                                                   #"
+                Logging "# v2.0.1 (Rev a), 27.01.2021                                                                                                        #"
+                Logging "#####################################################################################################################################"
+                Logging "....................................................................................................................................."
+                Logging "$checkHW_OS"
                 lshw -C display | tee -a  ~/Installation.log
                 uname -m && cat /etc/*release | tee -a  ~/Installation.log
                 
-echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+                Logging "....................................................................................................................................."
                 UpdatePackages() {
-                Logging "Pakete aktualisieren"
+                Logging "$installUpdate"
                     apt-get -y update
                     apt-get -y dist-upgrade
                 }
                 InstallImageHandling() {
-                    Logging "Pakete für Imagehandling installieren"                 
+                    Logging "$installImagehandling"
                     apt-get -y install libjpeg-dev \
                                    libpng-dev \
                                    libtiff-dev 
                 }
                 InstallCodecs() {
-                    Logging "Codecs installierenLogging"                 
+                    Logging "$installCodecs"
                     apt-get -y install libgstreamer1.0-dev \
                                        libgstreamer-plugins-base1.0-dev \
                                        libxvidcore-dev \
@@ -75,7 +101,7 @@ echo $(date -u) "...............................................................
                                        libopencore-amrwb-dev
                 }
                 InstallVideo4Camera() {
-                    Logging "Pakete für Video und Kameras installieren"
+                    Logging "$installCameras"
                     apt-get -y install libdc1394-22 \
                                        libdc1394-22-dev \
                                        libxine2-dev \
@@ -87,7 +113,7 @@ echo $(date -u) "...............................................................
                     ln -s -f ../libv4l1-videodev.h videodev.h 
                 }
                 InstallCompiler() {
-                    Logging "Pakete für Compiler (allgemein) installieren"                
+                    Logging "$installCompiler"               
                     apt-get -y install linux-headers-$(uname -r) \
                                        pkg-config \
                                        gcc \
@@ -98,7 +124,7 @@ echo $(date -u) "...............................................................
                                        gfortran
                 }
                 InstallCompiler_v7() {
-                    Logging "Pakete für Compiler (Version 7) installieren"            
+                    Logging "$installCompilerv7"           
                     apt-get -y install build-essential 
                     apt-get -y install gcc-7 
                     apt-get -y install g++-7 
@@ -121,7 +147,7 @@ echo $(date -u) "...............................................................
                     ln -s /usr/bin/g++-7 /usr/bin/g++
                 }
                 InstallCompiler_v6() {
-                    Logging "Pakete für Compiler (Version 6) installieren"
+                    Logging "$installCompilerv6"
                     apt-get -y install gcc-6 
                     apt-get -y install g++-6 
                     apt-get -y install build-essential 
@@ -143,7 +169,7 @@ echo $(date -u) "...............................................................
                     ln -s /usr/bin/g++-6 /usr/bin/g++
                 }
                 InstallTools() {
-                    Logging "Diverse Tools installieren"
+                    Logging "$installTools"
                     apt-get -y install nano  \
                                        letsencrypt \
                                        doxygen \
@@ -162,11 +188,8 @@ echo $(date -u) "...............................................................
                                        net-tools
                 }
                 InstallPython3.7() {
-                    Logging "Python 3.7 installieren"
-                    if [ "$UBUNTU_VER" = "20.04" ]; then
-                        add-apt-repository -y ppa:deadsnakes/ppa
-                        UpdatePackages
-                    fi
+                    Logging "$installPython37"
+                    if [ "$UBUNTU_VER" = "20.04" ]; then add-apt-repository -y ppa:deadsnakes/ppa; UpdatePackages; fi
                     
                     apt-get update --fix-missing
                     apt-get -y install python3.7 
@@ -187,7 +210,7 @@ echo $(date -u) "...............................................................
                 }
 
                 InstallMathPacks() {
-                    Logging "Mathematische Bibliotheken installieren"
+                    Logging "$installMathPacks"
                     apt-get -y install libatlas-base-dev \
                                        libeigen3-dev \
                                        libopenblas-dev \
@@ -195,17 +218,17 @@ echo $(date -u) "...............................................................
                                        libblas-dev 
                 }
                 InstallGooglePacks() {
-                    Logging "Google Open-Source Pakete installieren"
+                    Logging "$installGoogle"
                     apt-get -y install libprotobuf-dev \
                                        protobuf-compiler \
                                        libgoogle-glog-dev
                 }
                 InstallDataManagement() {
-                    Logging "Pakete für Datenmanagement installieren"
+                    Logging "$installDataManagement"
                     apt-get -y install libhdf5-dev
                 }
                 DeactivateNouveau() {
-                    Logging "Nouveau - Grafiktreiber de-aktivieren"
+                    Logging "$checkGPUDriver"
                     bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
                     bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
                     echo "cd ~/" >> /root/.bashrc
@@ -223,7 +246,7 @@ echo $(date -u) "...............................................................
                 InstallMathPacks
                 InstallDataManagement
                 
-                python -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
+                python3 -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
                 if [ -f ~/python.version ];   then 
                     for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
                         do  
@@ -231,12 +254,12 @@ echo $(date -u) "...............................................................
                         declare var="$i"
                     done  
                 else
-                    echo "Probleme beim Auslesen der Python - Version, Abbruch..."
+                    echo "$errorPythonVersion"
                     exit 255
                 fi
                 
                 if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.7" ]; then
-                    Logging "Keine unterstützte Pyton3 - Version gefunden, installiere Python 3.7.x"  
+                    Logging "$checkPythonVersion"
                     InstallPython3.7
                 fi
 
@@ -246,5 +269,5 @@ echo $(date -u) "...............................................................
 
                 DeactivateNouveau
                 lshw -C display | tee -a  ~/Installation.log
-                Logging "Ende der Initialisierung, initialisiere einen Neustart..."
+                Logging "$infoEndofInstallation"
                 reboot
