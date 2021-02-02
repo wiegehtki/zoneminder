@@ -2,18 +2,36 @@
                 # Es wird empfohlen root als Benutzer zu verwenden
                 Benutzer="root" 
                 
+				if [ "$(whoami)" != $Benutzer ]; then
+                       echo $(date -u) "Script muss als Benutzer $Benutzer ausgefuehrt werden!"
+                       exit 255
+                fi
+                
                 
                 export PHP_VERS="7.4"
                 export OPENCV_VER="4.5.1"
-                export PYTHON_VER="3.6"
+                
+                python -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
+
                 if [ -f ~/python.version ];   then 
                     for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
                         do  
                         export PYTHON_VER=$i
                         declare var="$i"
                     done  
+                else
+                    echo "Probleme beim Auslesen der Python - Version, Abbruch..."
+                    exit 255
                 fi
                 
+                if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.7" ]; then
+                    echo $(date -u) "Keine unterstÃ¼tzte Pyton3 - Version gefunden welche kleiner 3.8 ist, Abbruch"  | tee -a  ~/FinalInstall.log
+                fi
+                
+                Logging() {
+                    echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
+                }
+
                 #export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
                 #export CUDA_Script=cuda_10.1.105_418.39_linux.run
                 export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
@@ -47,12 +65,6 @@
                 export CPPFLAGS=$CPPFLAGS" -w"
                 export CXXFLAGS=$CXXFLAGS" -w"
                 
-                
-                if [ "$(whoami)" != $Benutzer ]; then
-                       echo $(date -u) "Script muss als Benutzer $Benutzer ausgefuehrt werden!"
-                       exit 255
-                fi
-                
                 echo $(date -u) "Test auf bestehende FinalInstall.log"
                      test -f ~/FinalInstall.log && rm ~/FinalInstall.log
                 
@@ -72,26 +84,27 @@
                        export UBUNTU_VER="20.04"
                    else
                        echo " "
-                       echo "Keine gültige Distribution, Installer wird beendet"
+                       echo "Keine gueltige Distribution, Installer wird beendet"
                        exit 255
                    fi
                 fi
                  
 
-echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
-echo $(date -u) "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS und 20.04 LTS     By WIEGEHTKI.DE #" | tee -a  ~/FinalInstall.log
-echo $(date -u) "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                               #" | tee -a  ~/FinalInstall.log
-echo $(date -u) "#                                                                                                                      #" | tee -a  ~/FinalInstall.log
-echo $(date -u) "# V2.0.0 (Rev a), 30.01.2021                                                                                           #" | tee -a  ~/FinalInstall.log
-echo $(date -u) "########################################################################################################################" | tee -a  ~/FinalInstall.log
-echo $(date -u) "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log                
+Logging "########################################################################################################################"  
+Logging "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu 18.04 LTS und 20.04 LTS     By WIEGEHTKI.DE #" 
+Logging "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                              #" 
+Logging "#                                                                                                                      #" 
+Logging "# V2.0.0 (Rev a), 30.01.2021                                                                                           #" 
+Logging "########################################################################################################################" 
+Logging "Pakete aktualisieren"  | tee -a  ~/FinalInstall.log                
                 UpdatePackages() {
                     apt-get -y update
                     apt-get -y dist-upgrade
                 }
-echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
+                
+                Logging "........................................................................................................................"
                 InstallCuda() {
-                    echo $(date -u) "CUDA - Download und Installation inklusive Grafiktreiber"  | tee -a  ~/FinalInstall.log
+                    Logging "CUDA - Download und Installation inklusive Grafiktreiber" 
                     cd ~
                     wget $CUDA_Download 
                     if [ -f ~/$CUDA_Script ]; then
@@ -107,7 +120,7 @@ echo $(date -u) "...............................................................
                         echo 'cd ~' >> ~/.bashrc
                         source ~/.bashrc
                         apt-get -y install nvidia-cuda-toolkit
-                        echo $(date -u) "Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen"  | tee -a  ~/FinalInstall.log
+                        Logging "Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen" 
                                     
                         cd ~/$CUDA_EXAMPLES_PATH
                         make -j$(nproc) 
@@ -121,19 +134,19 @@ echo $(date -u) "...............................................................
                                 declare var="$i"
                             done  
                         else
-                            echo $(date -u) "Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"  | tee -a  ~/FinalInstall.log
+                            Logging "Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"  | tee -a  ~/FinalInstall.log
                         fi
                         # PATH includes /usr/local/cuda-11.2/bin
                         # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
                         #return 0
                     else
                        echo " "
-                       echo $CUDA_Script "konnte nicht herunter geladen werden, Abbruch..." | tee -a  ~/FinalInstall.log
+                       echo $CUDA_Script "konnte nicht herunter geladen werden, Abbruch..."
                        #return 1
                     fi
                 }
                 InstallcuDNN() {
-                    echo $(date -u) "cuDNN - Installation"  | tee -a  ~/FinalInstall.log
+                    Logging "cuDNN - Installation"  | tee -a  ~/FinalInstall.log
                     local cuDNNFile
                     cd ~
                     if [ -f ~/$CUDNN_VERSION_1804 ] && [ "$UBUNTU_VER" = "18.04" ]; then
@@ -143,7 +156,7 @@ echo $(date -u) "...............................................................
                             cuDNNFile=$CUDNN_VERSION_2004
                         else
                             echo " "
-                            echo "cuDNN - Datei konnte nicht gefunden werden, Abbruch..." | tee -a  ~/FinalInstall.log
+                            echo "cuDNN - Datei konnte nicht gefunden werden, Abbruch..."
                             return 1
                         fi
                     fi
@@ -187,7 +200,7 @@ echo $(date -u) "...............................................................
                     return 0                    
                 }
                 SetUpMySQL() {
-                    echo $(date -u) "MySQL - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "MySQL - Setup"  | tee -a  ~/FinalInstall.log
                     if [ $# -eq 0 ]; then
                         rm /etc/mysql/my.cnf  
                         cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
@@ -199,12 +212,12 @@ echo $(date -u) "...............................................................
                         systemctl restart mysql
                     else 
                         mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
-                        mysql -uroot --skip-password < ~/database/Settings.sql
+                        mysql -uroot --skip-password < ~/zoneminder/database/Settings.sql
                         mysqladmin -uroot --skip-password reload
                     fi 
                 }
                 SetUpPHP() {
-                    echo $(date -u) "PHP "$PHP_VERS" - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "PHP "$PHP_VERS" - Setup"  | tee -a  ~/FinalInstall.log
                     apt -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd
                     if [ -f /etc/php/$PHP_VERS/cli/php.ini ]; then
                         sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
@@ -219,7 +232,7 @@ echo $(date -u) "...............................................................
                     echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
                 }
                 AccessRightsZoneminder() {
-                    echo $(date -u) "Zoneminder - Zugriffsrechte setzen"  | tee -a  ~/FinalInstall.log
+                    Logging "Zoneminder - Zugriffsrechte setzen"  | tee -a  ~/FinalInstall.log
                     chown root:www-data /etc/zm/zm.conf
                     chown -R www-data:www-data /usr/share/zoneminder/
                     chown root:www-data /etc/zm/conf.d/*.conf
@@ -228,7 +241,7 @@ echo $(date -u) "...............................................................
                 }
                
                 SetUpApache2() {
-                    echo $(date -u) "Apache2 - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "Apache2 - Setup"  | tee -a  ~/FinalInstall.log
                     a2enmod cgi
                     a2enmod rewrite
                     a2enconf zoneminder
@@ -277,7 +290,7 @@ echo $(date -u) "...............................................................
                     systemctl reload apache2
                 }
                 InstallZoneminder() {
-                    echo $(date -u) "Zoneminder - Installation & Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "Zoneminder - Installation & Setup"  | tee -a  ~/FinalInstall.log
                     add-apt-repository -y ppa:iconnor/zoneminder-master
                     apt-get -y install libcrypt-mysql-perl \
                                        libyaml-perl \
@@ -303,7 +316,7 @@ echo $(date -u) "...............................................................
                 }
                 #EventServer installieren
                 InstallEventerver() {
-                    echo $(date -u) "EventServer - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "EventServer - Setup"  | tee -a  ~/FinalInstall.log
                     apt-get -y install python3-numpy
                     python3 -m pip  install scipy matplotlib ipython pandas sympy nose cython
                     cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
@@ -339,7 +352,7 @@ echo $(date -u) "...............................................................
                 }
                 #Apache, MySQL, PHP 
                 InstallFaceRecognition() {
-                    echo $(date -u) "Gesichtserkennung - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "Gesichtserkennung - Setup"  | tee -a  ~/FinalInstall.log
                     if python -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then
                        sudo -H pip3 uninstall dlib
                     fi
@@ -353,13 +366,13 @@ echo $(date -u) "...............................................................
                 }                        
 
                 InstallLAMP() {
-                    echo $(date -u) "LAMP - Setup"  | tee -a  ~/FinalInstall.log
+                    Logging "LAMP - Setup"  | tee -a  ~/FinalInstall.log
                     apt-get -y install tasksel
                     tasksel install lamp-server
                     #add-apt-repository -y ppa:iconnor/zoneminder-1.34
                 }                        
                 InstallOpenCV(){
-                    echo $(date -u)  "OpenCV kompilieren mit Compute Capability " $CUDA_COMPUTE_CAPABILITY    | tee -a  ~/FinalInstall.log
+                    Logging  "OpenCV kompilieren mit Compute Capability " $CUDA_COMPUTE_CAPABILITY    | tee -a  ~/FinalInstall.log
                     apt-get -y install python-pip
                     #python2 -m pip  install numpy
                     cd ~
@@ -406,10 +419,8 @@ echo $(date -u) "...............................................................
                     pkg-config --cflags --libs opencv4
                     pkg-config --modversion opencv4
                     
-                    echo "Test auf CUDA enabled Devices, muss groesser 0 sein:" | tee -a  ~/FinalInstall.log
-                    echo "import cv2" | tee -a  ~/FinalInstall.log
-                    echo "count = cv2.cuda.getCudaEnabledDeviceCount()" | tee -a  ~/FinalInstall.log
-                    echo "print(count)" | tee -a  ~/FinalInstall.log
+                    Logging "Test auf CUDA enabled Devices, muss groesser 0 sein:"
+                    python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)' >>  ~/FinalInstall.log
                 
                 }
  
@@ -578,7 +589,7 @@ echo $(date -u) "...............................................................
                 zmupdate.pl -f
                 }
                                 
-echo $(date -u) "Starten der Installation"  | tee -a  ~/FinalInstall.log
+                Logging "Starten der Installation"  | tee -a  ~/FinalInstall.log
                 if [[ $(cat /etc/timezone) != "$TZ" ]] ; then
                    echo "Setzen der Zeitzone auf: $TZ"
                    echo $TZ > /etc/timezone
@@ -587,7 +598,7 @@ echo $(date -u) "Starten der Installation"  | tee -a  ~/FinalInstall.log
                    echo "Datum: `date`"
                 fi
                 
-                if InstallCuda $1;  then echo "InstallCuda ok" | tee -a  ~/FinalInstall.log; else echo "Fehler bei InstallCuda: Returnwert:" $1 | tee -a  ~/FinalInstall.log; fi
+                if InstallCuda $1;  then echo "InstallCuda ok"  | tee -a  ~/FinalInstall.log; else echo "Fehler bei InstallCuda: Returnwert:" $1  | tee -a  ~/FinalInstall.log; fi
                 if InstallcuDNN $1; then echo "InstallcuDNN ok" | tee -a  ~/FinalInstall.log; else echo "Fehler bei InstallcuDNN: Returnwert:" $1 | tee -a  ~/FinalInstall.log; fi
                 UpdatePackages
                 InstallLamp
