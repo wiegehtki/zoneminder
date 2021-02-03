@@ -499,7 +499,8 @@ Logging "#######################################################################
                 }                        
                 InstallOpenCV(){
                     Logging "$installOpenCV"
-                    apt-get -y install python-pip
+                    apt-get -y install python3-pip \
+                               python3-dev
                     #python2 -m pip  install numpy
                     cd ~
                     wget  -O opencv.zip $OPENCV_URL
