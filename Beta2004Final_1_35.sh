@@ -1,33 +1,155 @@
 #!/usr/bin/env bash
                 # Es wird empfohlen root als Benutzer zu verwenden
                 Benutzer="root" 
+                Language="German"
                 
-                if [ "$(whoami)" != $Benutzer ]; then
-                       echo $(date -u) "Script muss als Benutzer $Benutzer ausgefuehrt werden!"
-                       exit 255
+                if [ $Language = "German" ]; then
+                    declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
+                    declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
+                    declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
+                    declare -r errorGPUDriver="NOUVEAU - Grafiktreiber muss de-aktiviert sein! Bitte Initial-Script pruefen bzw. vorher laufen lassen."
+                    declare -r errorDeviceQuery="Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"
+                    declare -r errorcuDNN="cuDNN - Installationsdatei konnte nicht gefunden werden, Abbruch..."
+                    declare -r errorDownload="konnte nicht herunter geladen werden, Abbruch..."
+                    declare -r errorCUDAInstall="Fehler bei InstallCuda, Fehlernummer:"
+                    declare -r errorcuDNNInstall="Fehler bei InstallCuda, Fehlernummer:"
+                    declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV fehlgeschlagen, Abbruch..."
+                    
+                    declare -r checkGPUDriver= "Nouveau - Grafiktreiber de-aktivieren"
+                    declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
+                    declare -r checkInstallationLog="Test auf bestehende Installation.log"
+                    declare -r checkHW_OS="Hardware_und_Linux Check"
+                    declare -r checkOpenCV="Test auf CUDA enabled Devices"
+                    declare -r checkOpenCVCUDA="Abfrage auf CUDA Devices in OpenCV fehlgeschlagen, Abbruch..."
+                    
+                    declare -r infoStartInstallation="Start der Installation"
+                    declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
+                    declare -r infoSelfSignedCertificates="Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
+                    declare -r infoSelfSignedCertificateFound="Bestehendes Zertifikat gefunden in"
+                    declare -r infoCompileCUDAExamples="Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen"
+                    declare -r infoSharedMemory="Setzen shared memory auf :" $SHMEM "von `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"
+                    declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV erfolgreich durchgeführt"
+                    
+                    declare -r createInstallationLog="Installation.log anlegen"
+                    
+                    declare -r installUpdate="Pakete aktualisieren"
+                    declare -r installCUDA="CUDA - Download und Installation inklusive Grafiktreiber"
+                    declare -r installcuDNN="Installation cuDNN"
+                    declare -r installImagehandling="Pakete für Imagehandling installieren"
+                    declare -r installCodecs="Codecs installieren"
+                    declare -r installNVIDIACodecs"Installieren NVIDIA Codecs."
+                    declare -r installCameras="Pakete für Video und Kameras installieren"
+                    declare -r installCompiler="Pakete für Compiler (allgemein) installieren"
+                    declare -r installCompilerv7="Pakete für Compiler (Version 7) installieren"
+                    declare -r installCompilerv6="Pakete für Compiler (Version 6) installieren"
+                    declare -r installTools="Diverse Tools installieren"
+                    declare -r installPython37="Python 3.7 installieren"
+                    declare -r installMathPacks="Mathematische Bibliotheken installieren"
+                    declare -r installGoogle="Google Open-Source Pakete installieren"
+                    declare -r installDataManagement="Pakete für Datenmanagement installieren"
+                    declare -r installMySQL="MySQL - Setup"
+                    declare -r installPHP="PHP $PHP_VERS - Setup"
+                    declare -r installZM="Zoneminder - Installation & Setup"
+                    declare -r installZMAccessRights="Zoneminder - Zugriffsrechte setzen"
+                    declare -r installApacheSetup="Apache2 - Setup"
+                    declare -r installEventServer="EventServer - Setup" 
+                    declare -r installFaceRecognition="Gesichtserkennung - Setup" 
+                    declare -r installLAMP="LAMP - Setup"
+                    declare -r installOpenCV="OpenCV kompilieren mit Compute Capability $CUDA_COMPUTE_CAPABILITY"
+                    declare -r installLibs="Notwendige Pakete installieren"
+                    declare -r installNASM="Kompilieren von nasm"
+                    declare -r installx264="Kompilieren von libx264"
+                    declare -r installLibfdk-acc="Kompilieren von libfdk-acc"
+                    declare -r installLibMP3Lame="Kompilieren von libmp3lame"
+                    declare -r installLibOpus="Kompilieren von libopus"
+                    declare -r installLibx265="Kompilieren von libx265"
+                    declare -r installLibPvx="Kompilieren von libvpx"
+                    declare -r installFFMPEG="Kompilieren von ffmpeg"
+                    declare -r installBugfixes="Bug fixes einspielen"
+                else
+                    declare -r errorUser="Script must be executed as user: $Benutzer !"
+                    declare -r errorPythonVersion="Problems reading out the Python version, abort..."
+                    declare -r errorLinuxDistribution="No valid distribution, installer exits"
+                    declare -r errorGPUDriver="NOUVEAU - Graphics driver must be deactivated! Please check initial script or run it first."
+                    declare -r errorDeviceQuery="Error when executing deviceQuery! Default value for CUDA_COMPUTE_CAPABILITY is retained!"
+                    declare -r errorcuDNN="cuDNN - Installation file could not be found, abort..."
+                    declare -r errorDownload="could not be downloaded, abort..."
+                    declare -r errorCUDAInstall="Error with InstallCuda, Error:"
+                    declare -r errorcuDNNInstall="Error with InstallcuDNN, Error:"
+                    declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV failed, abort..."
+                    
+                    declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
+                    declare -r checkPythonVersion="No supported Python3 version found, abort..."
+                    declare -r checkInstallationLog="Test for existing installation.log"
+                    declare -r checkHW_OS="Hardware_and_Linux check"
+                    declare -r checkOpenCV="Test for CUDA enabled Devices"
+                    declare -r checkOpenCVCUDA="Query on CUDA devices in OpenCV failed, abort..."
+                    
+                    declare -r infoStartInstallation="Start der Installation"
+                    declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
+                    declare -r infoSelfSignedCertificates="Self-signed keys are generated in /etc/apache2/ssl/, please replace with your own certificates if necessary."
+                    declare -r infoSelfSignedCertificateFound="Existing certificate found in"
+                    declare -r infoCompileCUDAExamples="Compiling the CUDA examples to enable DeviceQuery"
+                    declare -r infoSharedMemory="Configure shared memory:" $SHMEM "of `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"
+                    declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV successful."
+                    
+                    declare -r createInstallationLog="Create Installation.log"
+                    
+                    declare -r installUpdate="Update packages"
+                    declare -r installCUDA="CUDA - Download and installation including graphics driver"
+                    declare -r installcuDNN="Installation cuDNN"
+                    declare -r installImagehandling="Install packages for image handling"
+                    declare -r installCodecs="Install codecs"
+                    declare -r installNVIDIACodecs"Install NVIDIA Codecs."
+                    declare -r installCameras="Install packages for video and cameras"
+                    declare -r installCompiler="Installing packages for compilers (general)"
+                    declare -r installCompilerv7="Install packages for compiler (version 7)"
+                    declare -r installCompilerv6="Install packages for compiler (version 6)"
+                    declare -r installTools="Install various tools"
+                    declare -r installPython37="Install Python 3.7"
+                    declare -r installMathPacks="Install mathematical libraries"
+                    declare -r installGoogle="Install Google Open Source Packages"
+                    declare -r installDataManagement="Install packages for data management"
+                    declare -r installMySQL="MySQL - Setup"
+                    declare -r installPHP="PHP $PHP_VERS - Setup"
+                    declare -r installZM="Zoneminder - Installation & Setup"
+                    declare -r installZMAccessRights="Zoneminder - Set access rights"
+                    declare -r installApacheSetup="Apache2 - Setup" 
+                    declare -r installEventServer="EventServer - Setup" 
+                    declare -r installFaceRecognition="Face recognition - Setup" 
+                    declare -r installLAMP="LAMP - Setup"
+                    declare -r installOpenCV="Compile OpenCV with Compute Capability $CUDA_COMPUTE_CAPABILITY"
+                    declare -r installLibs="Install necessary packages"
+                    declare -r installNASM="Compile nasm"
+                    declare -r installx264="Compile libx264"
+                    declare -r installLibfdk-acc="Compile libfdk-acc"
+                    declare -r installLibMP3Lame="Compile libmp3lame"
+                    declare -r installLibOpus="Compile libopus"
+                    declare -r installLibx265="Compile libx265"
+                    declare -r installLibPvx="Compile libvpx"
+                    declare -r installFFMPEG="Compile ffmpeg"
+                    declare -r installBugfixes="Apply bug fixes"
                 fi
                 
-                
+                if [ "$(whoami)" != $Benutzer ]; then
+                       echo $(date -u) $errorUser
+                       exit 255
+                fi
                 export PHP_VERS="7.4"
                 export OPENCV_VER="4.5.1"
                 
                 python -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
 
-                if [ -f ~/python.version ];   then 
-                    for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
-                        do  
-                        export PYTHON_VER=$i
-                        declare var="$i"
-                    done  
-                else
-                    echo "Probleme beim Auslesen der Python - Version, Abbruch..."
-                    exit 255
-                fi
-                
-                if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then
-                    echo $(date -u) "Keine unterstützte Pyton3 - Version gefunden welche kleiner 3.8 ist, Abbruch"  | tee -a  ~/FinalInstall.log
-                fi
-                
+                if [ -f ~/python.version]; then 
+                        for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' ` ; do
+                            export PYTHON_VER=$i
+                            if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then  echo $(date -u) $checkPythonVersion  | tee -a  ~/FinalInstall.log; fi
+                        done  
+                    else
+                        echo $errorPythonVersion
+                        exit 255
+                    fi
+               
                 Logging() {
                     echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
                 }
@@ -73,7 +195,7 @@
                  
                  
                 if lshw -C display | grep -q 'nouveau'; then
-                      echo $(date -u) "NOUVEAU - Grafiktreiber muss de-aktiviert sein! Bitte Initial-Script pruefen bzw. vorher laufen lassen."
+                      echo $(date -u) $errorGPUDriver
                       exit 255
                 fi
 
@@ -97,13 +219,13 @@ Logging "#                                                                      
 Logging "# V2.0.0 (Rev a), 30.01.2021                                                                                           #" 
 Logging "########################################################################################################################" 
                 UpdatePackages() {
-                    Logging "Pakete aktualisieren"                  
+                    Logging "$installUpdate"                  
                     apt-get -y update
                     apt-get -y dist-upgrade
                 }
                 
                 InstallCuda() {
-                    Logging "CUDA - Download und Installation inklusive Grafiktreiber" 
+                    Logging "$installCUDA" 
                     cd ~
                     wget $CUDA_Download 
                     if [ -f ~/$CUDA_Script ]; then
@@ -119,7 +241,7 @@ Logging "#######################################################################
                         echo 'cd ~' >> ~/.bashrc
                         source ~/.bashrc
                         apt-get -y install nvidia-cuda-toolkit
-                        Logging "Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen" 
+                        Logging "$infoCompileCUDAExamples" 
                                     
                         cd ~/$CUDA_EXAMPLES_PATH
                         make -j$(nproc) 
@@ -133,19 +255,20 @@ Logging "#######################################################################
                                 declare var="$i"
                             done  
                         else
-                            Logging "Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"  
+                            Logging "$errorDeviceQuery"  
                         fi
                         # PATH includes /usr/local/cuda-11.2/bin
                         # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
                         #return 0
                     else
+                       Logging "$CUDA_Script $errorDownload"
                        echo " "
-                       echo $CUDA_Script "konnte nicht herunter geladen werden, Abbruch..."
+                       echo $CUDA_Script $errorDownload
                        #return 1
                     fi
                 }
                 InstallcuDNN() {
-                    Logging "cuDNN - Installation" 
+                    Logging "$installcuDNN" 
                     local cuDNNFile
                     cd ~
                     if [ -f ~/$CUDNN_VERSION_1804 ] && [ "$UBUNTU_VER" = "18.04" ]; then
@@ -154,8 +277,9 @@ Logging "#######################################################################
                         if [ -f ~/$CUDNN_VERSION_2004 ] && [ "$UBUNTU_VER" = "20.04" ]; then
                             cuDNNFile=$CUDNN_VERSION_2004
                         else
+                            Logging "$errorcuDNN"
                             echo " "
-                            echo "cuDNN - Datei konnte nicht gefunden werden, Abbruch..."
+                            echo $errorcuDNN
                             return 1
                         fi
                     fi
@@ -199,7 +323,7 @@ Logging "#######################################################################
                     return 0                    
                 }
                 SetUpMySQL() {
-                    Logging "MySQL - Setup"  
+                    Logging "$installMySQL"  
                     if [ $# -eq 0 ]; then
                         rm /etc/mysql/my.cnf  
                         cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
@@ -216,7 +340,7 @@ Logging "#######################################################################
                     fi 
                 }
                 SetUpPHP() {
-                    Logging "PHP "$PHP_VERS" - Setup"  
+                    Logging "installPHP"  
                     apt -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd
                     if [ -f /etc/php/$PHP_VERS/cli/php.ini ]; then
                         sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
@@ -231,7 +355,7 @@ Logging "#######################################################################
                     echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
                 }
                 AccessRightsZoneminder() {
-                    Logging "Zoneminder - Zugriffsrechte setzen"  
+                    Logging "$installZMAccessRights"  
                     chown root:www-data /etc/zm/zm.conf
                     chown -R www-data:www-data /usr/share/zoneminder/
                     chown root:www-data /etc/zm/conf.d/*.conf
@@ -240,7 +364,7 @@ Logging "#######################################################################
                 }
                
                 SetUpApache2() {
-                    Logging "Apache2 - Setup" 
+                    Logging "$installApacheSetup" 
                     a2enmod cgi
                     a2enmod rewrite
                     a2enconf zoneminder
@@ -258,9 +382,9 @@ Logging "#######################################################################
                     # Test wegen doppelten Einträgen UW 9.1.2021
                     (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
                     if [[ -f /etc/apache2/ssl/cert.key && -f /etc/apache2/ssl/cert.crt ]]; then
-                        echo "Bestehendes Zertifikat gefunden in \"/etc/apache2/ssl/cert.key\""  | tee -a  ~/FinalInstall.log
+                        echo "$infoSelfSignedCertificateFound \"/etc/apache2/ssl/cert.key\""  | tee -a  ~/FinalInstall.log
                     else
-                        echo "Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"  | tee -a  ~/FinalInstall.log
+                        Logging "$infoSelfSignedCertificates"
                         mkdir -p /config/keys
                         dd if=/dev/urandom of=~/.rnd bs=256 count=1
                         chmod 600 ~/.rnd
@@ -289,7 +413,7 @@ Logging "#######################################################################
                     systemctl reload apache2
                 }
                 InstallZoneminder() {
-                    Logging "Zoneminder - Installation & Setup"  
+                    Logging "$installZM"  
                     add-apt-repository -y ppa:iconnor/zoneminder-master
                     apt-get -y install libcrypt-mysql-perl \
                                        libyaml-perl \
@@ -315,7 +439,7 @@ Logging "#######################################################################
                 }
                 #EventServer installieren
                 InstallEventerver() {
-                    Logging "EventServer - Setup"  
+                    Logging "$installEventServer"  
                     apt-get -y install python3-numpy
                     python3 -m pip  install scipy matplotlib ipython pandas sympy nose cython
                     cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
@@ -340,7 +464,7 @@ Logging "#######################################################################
                     yes | perl -MCPAN -e "install Net::MQTT::Simple"
                     
                     # Fix memory issue
-                    echo "Setzen shared memory auf :" $SHMEM "von `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"  | tee -a  ~/FinalInstall.log
+                    Loggin "$infoSharedMemory"
                     umount /dev/shm
                     mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
                  
@@ -351,7 +475,7 @@ Logging "#######################################################################
                 }
                 #Apache, MySQL, PHP 
                 InstallFaceRecognition() {
-                    Logging "Gesichtserkennung - Setup"  
+                    Logging "$installFaceRecognition"  
                     if python -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then
                        sudo -H pip3 uninstall dlib
                     fi
@@ -365,13 +489,13 @@ Logging "#######################################################################
                 }                        
 
                 InstallLAMP() {
-                    Logging "LAMP - Setup" 
+                    Logging "$installLAMP" 
                     apt-get -y install tasksel
                     tasksel install lamp-server
                     #add-apt-repository -y ppa:iconnor/zoneminder-1.34
                 }                        
                 InstallOpenCV(){
-                    Logging "OpenCV kompilieren mit Compute Capability " $CUDA_COMPUTE_CAPABILITY    
+                    Logging "$installOpenCV"
                     apt-get -y install python-pip
                     #python2 -m pip  install numpy
                     cd ~
@@ -413,18 +537,25 @@ Logging "#######################################################################
                           -D BUILD_EXAMPLES=OFF ..
                     
                     make -j$(nproc)
-                    #logger "Installing opencv..." -tEventServer
                     make install
                     pkg-config --cflags --libs opencv4
                     pkg-config --modversion opencv4
                     
-                    Logging "Test auf CUDA enabled Devices, muss groesser 0 sein:"
-                    python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)' >>  ~/FinalInstall.log
-                
+                    Logging "$checkOpenCV"
+                    python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)' >  ~/devices.cuda
+                   
+                    if [ -f ~/devices.cuda ]; then 
+                        for i in ` sed s'/=/ /g' ~/devices.cuda | awk '{print $1}' ` ; do
+                            if [ $i \> "0" ]; then Logging "$infoOpenCVCUDA"; else Logging "$errorOpenCVCUDA"; exit 255; fi
+                        done  
+                    else
+                        Logging "$checkOpenCVCUDA"
+                        exit 255
+                    fi
                 }
  
-                installLibs(){
-                    Logging "Notwendige Pakete installieren"
+                InstallLibs(){
+                    Logging "$installLibs"
                     sudo apt-get update
                     sudo apt-get -y --force-yes install autoconf automake build-essential libass-dev libfreetype6-dev libgpac-dev \
                     libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev \
@@ -432,8 +563,8 @@ Logging "#######################################################################
                 }
                  
                 #Install nvidia SDK
-                installSDK(){
-                    Logging  "Installieren NVIDIA Codecs."
+                InstallSDK(){
+                    Logging  "$installNVIDIACodecs"
                     cd ~/ffmpeg_sources
                     cd ~/ffmpeg_sources
                     git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
@@ -443,8 +574,8 @@ Logging "#######################################################################
                 }
                 
                 #nasm
-                compileNasm(){
-                    Logging "Kompilieren von nasm"
+                CompileNasm(){
+                    Logging "$installNASM"
                     cd ~/ffmpeg_sources
                     wget https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/nasm-2.15.05.tar.gz
                     tar xzvf nasm-2.15.05.tar.gz
@@ -456,8 +587,8 @@ Logging "#######################################################################
                 }
                 
                 #libx264
-                compileLibX264(){
-                    Logging "Kompilieren von libx264"
+                CompileLibX264(){
+                    Logging "$installx264"
                     cd ~/ffmpeg_sources
                     wget https://download.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245-stable.tar.bz2 
                     tar xjvf x264-snapshot-20191217-2245-stable.tar.bz2
@@ -469,8 +600,8 @@ Logging "#######################################################################
                 }
                 
                 #libfdk-acc
-                compileLibfdkcc(){
-                    Logging "Kompilieren von libfdk-cc"
+                CompileLibfdkacc(){
+                    Logging "$installLibfdk-acc"
                     sudo apt-get install unzip
                     cd ~/ffmpeg_sources
                     wget -O fdk-aac.zip https://github.com/mstorsjo/fdk-aac/zipball/master
@@ -482,10 +613,10 @@ Logging "#######################################################################
                     make -j$(nproc) install
                     make -j$(nproc) distclean
                 }
-                
+
                 #libmp3lame
-                compileLibMP3Lame(){
-                    Logging "Kompilieren von libmp3lame"
+                CompileLibMP3Lame(){
+                    Logging "$installLibMP3Lame"
                     sudo apt-get install nasm
                     cd ~/ffmpeg_sources
                     wget http://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
@@ -498,8 +629,8 @@ Logging "#######################################################################
                 }
                 
                 #libopus
-                compileLibOpus(){
-                    Logging "Kompilieren von libopus"
+                CompileLibOpus(){
+                    Logging "$installLibOpus"
                     cd ~/ffmpeg_sources
                     wget http://downloads.xiph.org/releases/opus/opus-1.3.1.tar.gz
                     tar xzvf opus-1.3.1.tar.gz
@@ -511,8 +642,8 @@ Logging "#######################################################################
                 }
     
                 #libx265
-                compileLibX265(){
-                    Logging "Kompilieren von libx265"               
+                CompileLibX265(){
+                    Logging "$installLibx265"               
                     cd ~
                     git clone https://bitbucket.org/multicoreware/x265_git
                     cd x265_git/build/linux
@@ -521,8 +652,8 @@ Logging "#######################################################################
                 }
     
                 #libvpx
-                    compileLibPvx(){
-                    Logging "Kompilieren von libvpx"
+                CompileLibPvx(){
+                    Logging "$installLibPvx"
                     cd ~/ffmpeg_sources
                     git clone https://chromium.googlesource.com/webm/libvpx
                     cd libvpx
@@ -535,8 +666,8 @@ Logging "#######################################################################
                 }
                 
                 #ffmpeg
-                compileFfmpeg(){
-                    Logging "Kompilieren von ffmpeg"
+                CompileFfmpeg(){
+                    Logging "$installFFMPEG"
                     cd ~/ffmpeg_sources
                     git clone https://github.com/FFmpeg/FFmpeg -b master
                     cd FFmpeg
@@ -580,7 +711,7 @@ Logging "#######################################################################
                }
                 #Bugfixing und Finalisierung
                 BugFixes_Init() {
-                    Logging "Bugfixes einspielen"
+                    Logging "$installBugfixes"
                     python3 -m pip install protobuf==3.3.0
                     python3 -m pip install numpy==1.16.5
                     
@@ -589,17 +720,17 @@ Logging "#######################################################################
                     zmupdate.pl -f
                 }
                                 
-                Logging "Starten der Installation"  
+                Logging "$infoStartInstallation"  
                 if [[ $(cat /etc/timezone) != "$TZ" ]] ; then
                    echo "Setzen der Zeitzone auf: $TZ"
                    echo $TZ > /etc/timezone
                    ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
                    dpkg-reconfigure tzdata -f noninteractive
-                   echo "Datum: `date`"
+                   #echo "Datum: `date`"
                 fi
                 
-                if InstallCuda $1;  then echo "InstallCuda ok"  | tee -a  ~/FinalInstall.log; else echo "Fehler bei InstallCuda: Returnwert:" $1  | tee -a  ~/FinalInstall.log; fi
-                if InstallcuDNN $1; then echo "InstallcuDNN ok" | tee -a  ~/FinalInstall.log; else echo "Fehler bei InstallcuDNN: Returnwert:" $1 | tee -a  ~/FinalInstall.log; fi
+                if InstallCuda $1;  then echo "InstallCuda ok"  | tee -a  ~/FinalInstall.log; else echo "$errorCUDAInstall" $1  | tee -a  ~/FinalInstall.log; fi
+                if InstallcuDNN $1; then echo "InstallcuDNN ok" | tee -a  ~/FinalInstall.log; else echo "$errorcuDNNInstall" $1 | tee -a  ~/FinalInstall.log; fi
                 UpdatePackages
                 InstallLamp
                 SetUpPHP
