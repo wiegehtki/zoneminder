@@ -286,7 +286,6 @@
                     for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
                         do  
                         export PYTHON_VER=$i
-                        declare var="$i"
                     done  
                 else
                     echo "$errorPythonVersion"
@@ -300,7 +299,7 @@
 
                 cd ~
                 if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install python3-testresources; InstallCompiler_v6; fi
-                if [ "$UBUNTU_VER" = "20.04" ]; then InstallCompiler_v7; fi               
+                if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3; InstallCompiler_v7; fi               
 
                 DeactivateNouveau
                 lshw -C display | tee -a  ~/Installation.log

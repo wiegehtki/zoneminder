@@ -16,7 +16,7 @@
                     declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV fehlgeschlagen, Abbruch..."
                     declare -r errorLinuxDist="Keine unterstützte Linux-Distribution, Installer wird beendet, Abbruch..."
                     
-                    declare -r checkGPUDriver= "Nouveau - Grafiktreiber de-aktivieren"
+                    declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
                     declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
                     declare -r checkInstallationLog="Test auf bestehende Installation.log"
                     declare -r checkHW_OS="Hardware_und_Linux Check"
@@ -28,7 +28,7 @@
                     declare -r infoSelfSignedCertificates="Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
                     declare -r infoSelfSignedCertificateFound="Bestehendes Zertifikat gefunden in"
                     declare -r infoCompileCUDAExamples="Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen"
-                    declare -r infoSharedMemory="Setzen shared memory auf :" $SHMEM "von `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"
+                    declare -r infoSharedMemory="Setzen shared memory"
                     declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV erfolgreich durchgeführt"
                     
                     declare -r createInstallationLog="Installation.log anlegen"
@@ -38,7 +38,7 @@
                     declare -r installcuDNN="Installation cuDNN"
                     declare -r installImagehandling="Pakete für Imagehandling installieren"
                     declare -r installCodecs="Codecs installieren"
-                    declare -r installNVIDIACodecs"Installieren NVIDIA Codecs."
+                    declare -r installNVIDIACodecs="Installieren NVIDIA Codecs."
                     declare -r installCameras="Pakete für Video und Kameras installieren"
                     declare -r installCompiler="Pakete für Compiler (allgemein) installieren"
                     declare -r installCompilerv7="Pakete für Compiler (Version 7) installieren"
@@ -60,7 +60,7 @@
                     declare -r installLibs="Notwendige Pakete installieren"
                     declare -r installNASM="Kompilieren von nasm"
                     declare -r installx264="Kompilieren von libx264"
-                    declare -r installLibfdk-acc="Kompilieren von libfdk-acc"
+                    declare -r installLibfdkacc="Kompilieren von libfdk-acc"
                     declare -r installLibMP3Lame="Kompilieren von libmp3lame"
                     declare -r installLibOpus="Kompilieren von libopus"
                     declare -r installLibx265="Kompilieren von libx265"
@@ -92,7 +92,7 @@
                     declare -r infoSelfSignedCertificates="Self-signed keys are generated in /etc/apache2/ssl/, please replace with your own certificates if necessary."
                     declare -r infoSelfSignedCertificateFound="Existing certificate found in"
                     declare -r infoCompileCUDAExamples="Compiling the CUDA examples to enable DeviceQuery"
-                    declare -r infoSharedMemory="Configure shared memory:" $SHMEM "of `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes"
+                    declare -r infoSharedMemory="Configure shared memory"
                     declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV successful."
                     
                     declare -r createInstallationLog="Create Installation.log"
@@ -102,7 +102,7 @@
                     declare -r installcuDNN="Installation cuDNN"
                     declare -r installImagehandling="Install packages for image handling"
                     declare -r installCodecs="Install codecs"
-                    declare -r installNVIDIACodecs"Install NVIDIA Codecs."
+                    declare -r installNVIDIACodecs="Install NVIDIA Codecs."
                     declare -r installCameras="Install packages for video and cameras"
                     declare -r installCompiler="Installing packages for compilers (general)"
                     declare -r installCompilerv7="Install packages for compiler (version 7)"
@@ -124,7 +124,7 @@
                     declare -r installLibs="Install necessary packages"
                     declare -r installNASM="Compile nasm"
                     declare -r installx264="Compile libx264"
-                    declare -r installLibfdk-acc="Compile libfdk-acc"
+                    declare -r installLibfdkacc="Compile libfdk-acc"
                     declare -r installLibMP3Lame="Compile libmp3lame"
                     declare -r installLibOpus="Compile libopus"
                     declare -r installLibx265="Compile libx265"
@@ -142,15 +142,15 @@
                 
                 python -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
 
-                if [ -f ~/python.version]; then 
-                        for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' ` ; do
-                            export PYTHON_VER=$i
-                            if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then  echo $(date -u) $checkPythonVersion  | tee -a  ~/FinalInstall.log; fi
-                        done  
-                    else
-                        echo $errorPythonVersion
-                        exit 255
-                    fi
+                if [ -f ~/python.version ]; then 
+                    for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' ` ; do
+                        export PYTHON_VER=$i
+                        if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then  echo $(date -u) $checkPythonVersion  | tee -a  ~/FinalInstall.log; fi
+                    done  
+                else
+                    echo $errorPythonVersion
+                    #exit 255
+                fi
                
                 Logging() {
                     echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
@@ -229,6 +229,7 @@ Logging "#######################################################################
                 InstallCuda() {
                     Logging "$installCUDA" 
                     cd ~
+                    if [ -f ~/cuda*run* ]; then rm ~/cuda*run*^; fi
                     wget $CUDA_Download 
                     if [ -f ~/$CUDA_Script ]; then
                         chmod +x $CUDA_Script
@@ -254,7 +255,6 @@ Logging "#######################################################################
                             for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
                                 do  
                                 export CUDA_COMPUTE_CAPABILITY=$i
-                                declare var="$i"
                             done  
                         else
                             Logging "$errorDeviceQuery"  
@@ -342,7 +342,7 @@ Logging "#######################################################################
                     fi 
                 }
                 SetUpPHP() {
-                    Logging "installPHP"  
+                    Logging "$installPHP"  
                     apt -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd
                     if [ -f /etc/php/$PHP_VERS/cli/php.ini ]; then
                         sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
@@ -466,7 +466,8 @@ Logging "#######################################################################
                     yes | perl -MCPAN -e "install Net::MQTT::Simple"
                     
                     # Fix memory issue
-                    Loggin "$infoSharedMemory"
+                    Logging "$infoSharedMemory"
+                    echo "Config" $SHMEM " - `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes" | tee -a  ~/FinalInstall.log
                     umount /dev/shm
                     mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
                  
@@ -603,7 +604,7 @@ Logging "#######################################################################
                 
                 #libfdk-acc
                 CompileLibfdkacc(){
-                    Logging "$installLibfdk-acc"
+                    Logging "$installLibfdkacc"
                     sudo apt-get install unzip
                     cd ~/ffmpeg_sources
                     wget -O fdk-aac.zip https://github.com/mstorsjo/fdk-aac/zipball/master
