@@ -14,6 +14,7 @@
                     declare -r errorCUDAInstall="Fehler bei InstallCuda, Fehlernummer:"
                     declare -r errorcuDNNInstall="Fehler bei InstallCuda, Fehlernummer:"
                     declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV fehlgeschlagen, Abbruch..."
+                    declare -r errorLinuxDist="Keine unterstützte Linux-Distribution, Installer wird beendet, Abbruch..."
                     
                     declare -r checkGPUDriver= "Nouveau - Grafiktreiber de-aktivieren"
                     declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
@@ -77,6 +78,7 @@
                     declare -r errorCUDAInstall="Error with InstallCuda, Error:"
                     declare -r errorcuDNNInstall="Error with InstallcuDNN, Error:"
                     declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV failed, abort..."
+                    declare -r errorLinuxDist="No supported Linux distribution, installer quits, abort..."
                     
                     declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
                     declare -r checkPythonVersion="No supported Python3 version found, abort..."
@@ -206,7 +208,7 @@
                        export UBUNTU_VER="20.04"
                    else
                        echo " "
-                       echo "Keine gueltige Distribution, Installer wird beendet"
+                       echo $errorLinuxDist
                        exit 255
                    fi
                 fi
