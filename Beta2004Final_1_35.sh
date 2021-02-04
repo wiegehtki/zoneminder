@@ -446,8 +446,9 @@ Logging "#######################################################################
                     apt-get -y install python3-numpy
                     python3 -m pip install scipy matplotlib ipython pandas sympy nose cython
                     cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
-                    chmod +x ~/EventServer.zip
-                    unzip ~/EventServer
+                    cd ~
+                    chmod +x EventServer.zip
+                    unzip EventServer
                     cd ~/EventServer
                     chmod -R +x *
                     ./install.sh --install-hook --install-es --no-install-config --no-interactive
@@ -472,11 +473,9 @@ Logging "#######################################################################
                     echo "Config" $SHMEM " - `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes" | tee -a  ~/FinalInstall.log
                     umount /dev/shm
                     mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
-                 
-                 
-                 chown -R www-data:www-data /etc/apache2/ssl/*
-                 a2enmod ssl
-                 systemctl restart apache2  
+                    chown -R www-data:www-data /etc/apache2/ssl/*
+                    a2enmod ssl
+                    systemctl restart apache2  
                 }
                 #Apache, MySQL, PHP 
                 InstallFaceRecognition() {
@@ -704,7 +703,7 @@ Logging "#######################################################################
                         --enable-nvenc \
                         --pkg-config-flags="--static"
                     
-                     ./configure --pkg-config-flags="--static" --enable-nonfree --enable-gpl --enable-version3 --enable-libmp3lame --enable-libvpx --enable-libopus --enable-opencl --enable-libxcb --enable-opengl --enable-nvenc --enable-vaapi --enable-vdpau --enable-ffplay --enable-ffprobe --enable-libxvid --enable-libx264 --enable-libx265 --enable-openal --enable-cuda-nvcc --enable-cuvid --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64ble-openal --enable-cuda-nvcc --enable-cuvid
+                    ./configure --pkg-config-flags="--static" --enable-nonfree --enable-gpl --enable-version3 --enable-libmp3lame --enable-libvpx --enable-libopus --enable-opencl --enable-libxcb --enable-opengl --enable-nvenc --enable-vaapi --enable-vdpau --enable-ffplay --enable-ffprobe --enable-libxvid --enable-libx264 --enable-libx265 --enable-openal --enable-cuda-nvcc --enable-cuvid --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64ble-openal --enable-cuda-nvcc --enable-cuvid
                      
                     PATH="$HOME/bin:$PATH" make -j$(nproc)
                     make -j$(nproc) install
