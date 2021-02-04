@@ -269,8 +269,8 @@
         echo "cd ~/" >> /root/.bashrc
         update-initramfs -u
     }
-    
-    apt -y install software-properties-common
+    chmod -R +x ~/zoneminder/*
+    apt-get -y install software-properties-common
     UpdatePackages
     InstallTools
     InstallCompiler

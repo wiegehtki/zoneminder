@@ -436,16 +436,18 @@ Logging "#######################################################################
                     AccessRightsZoneminder
                     SetUpApache2
                     cp ~/zoneminder/Anzupassen/. /etc/zm/. -r
+                    chmod +x /etc/zm/*
                     systemctl enable zoneminder
                     systemctl start zoneminder
                 }
                 #EventServer installieren
-                InstallEventerver() {
+                InstallEventserver() {
                     Logging "$installEventServer"  
                     apt-get -y install python3-numpy
-                    python3 -m pip  install scipy matplotlib ipython pandas sympy nose cython
+                    python3 -m pip install scipy matplotlib ipython pandas sympy nose cython
                     cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
-                    unzip EventServer
+                    chmod +x ~/EventServer.zip
+                    unzip ~/EventServer
                     cd ~/EventServer
                     chmod -R +x *
                     ./install.sh --install-hook --install-es --no-install-config --no-interactive
@@ -479,12 +481,8 @@ Logging "#######################################################################
                 #Apache, MySQL, PHP 
                 InstallFaceRecognition() {
                     Logging "$installFaceRecognition"  
-                    if python -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then
-                       sudo -H pip3 uninstall dlib
-                    fi
-                    if python -c 'import pkgutil; exit(not pkgutil.find_loader("face-recognition"))'; then
-                       sudo -H pip3 uninstall face-recognition
-                    fi
+                    if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then sudo -H pip3 uninstall dlib; fi
+                    if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("face-recognition"))'; then sudo -H pip3 uninstall face-recognition; fi
                     cd ~/zoneminder/dlib
                     python3 ./setup.py install 
                     python3 -m pip install face_recognition
@@ -732,14 +730,13 @@ Logging "#######################################################################
                    dpkg-reconfigure tzdata -f noninteractive
                    #echo "Datum: `date`"
                 fi
-                
                 if InstallCuda $1;  then echo "InstallCuda ok"  | tee -a  ~/FinalInstall.log; else echo "$errorCUDAInstall" $1  | tee -a  ~/FinalInstall.log; fi
                 if InstallcuDNN $1; then echo "InstallcuDNN ok" | tee -a  ~/FinalInstall.log; else echo "$errorcuDNNInstall" $1 | tee -a  ~/FinalInstall.log; fi
                 UpdatePackages
                 InstallLamp
                 SetUpPHP
                 InstallZoneminder
-                InstallEventerver
+                InstallEventserver
                 BugFixes_Init
                 InstallFaceRecognition
                 AccessRightsZoneminder
