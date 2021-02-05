@@ -14,6 +14,13 @@
         
         declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
         declare -r createInstallationLog="Installation.log anlegen"
+     
+        declare -r infoStep1="...Stufe 1"
+        declare -r infoStep2="...Stufe 2"
+        declare -r infoStep3="...Stufe 3"
+        declare -r infoStep4="...Stufe 4"
+        declare -r infoStep5="...Stufe 5"
+        declare -r infoStepEnd="...Beendet"
         
         declare -r installUpdate="Pakete aktualisieren"
         declare -r installImagehandling="Pakete für Imagehandling installieren"
@@ -36,7 +43,14 @@
         declare -r checkPythonVersion="No supported Python3 version found, install Python 3.7.x"
         declare -r checkInstallationLog="Test for existing installation.log"
         declare -r checkHW_OS="Hardware_and_Linux check"
-        
+
+        declare -r infoStep1="...Step 1"
+        declare -r infoStep2="...Step 2"
+        declare -r infoStep3="...Step 3"
+        declare -r infoStep4="...Step 4"
+        declare -r infoStep5="...Step 5"
+        declare -r infoStepEnd="...completed"
+                    
         declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
         declare -r createInstallationLog="Create Installation.log"
         
@@ -106,12 +120,14 @@
     Logging "$installUpdate"
         apt-get -y update
         apt-get -y dist-upgrade
+        Logging "$infoStepEnd"
     }
     InstallImageHandling() {
         Logging "$installImagehandling"
         apt-get -y install libjpeg-dev \
                        libpng-dev \
                        libtiff-dev 
+        Logging "$infoStepEnd"
     }
     InstallCodecs() {
         Logging "$installCodecs"
@@ -126,6 +142,7 @@
                            libvorbis-dev \
                            libopencore-amrnb-dev \
                            libopencore-amrwb-dev
+        Logging "$infoStepEnd"
     }
     InstallVideo4Camera() {
         Logging "$installCameras"
@@ -136,8 +153,10 @@
                            v4l-utils \
                            libraw1394-doc \
                            libgphoto2-dev
+        Logging "$infoStep1"
         cd /usr/include/linux
         ln -s -f ../libv4l1-videodev.h videodev.h 
+        Logging "$infoStepEnd"
     }
     InstallCompiler() {
         Logging "$installCompiler"               
@@ -149,6 +168,7 @@
                            cmake \
                            yasm \
                            gfortran
+        Logging "$infoStepEnd"
     }
     InstallCompiler_v7() {
         Logging "$installCompilerv7"           
@@ -166,12 +186,15 @@
         apt-get -y install libtbb-dev 
         apt-get -y install libtbb-doc 
         apt-get -y install libgflags-dev
+        Logging "$infoStep1"
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 99
         update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 99
         if [ -f /usr/bin/gcc ]; then rm /usr/bin/gcc; fi
         if [ -f /usr/bin/g++ ]; then rm /usr/bin/g++; fi
+        Logging "$infoStep2"
         ln -s /usr/bin/gcc-7 /usr/bin/gcc
         ln -s /usr/bin/g++-7 /usr/bin/g++
+        Logging "$infoStepEnd"
     }
     InstallCompiler_v6() {
         Logging "$installCompilerv6"
@@ -188,12 +211,15 @@
         apt-get -y install libtbb-dev 
         apt-get -y install libtbb-doc 
         apt-get -y install libgflags-dev
+        Logging "$infoStep1"
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 99
         update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 99
         if [ -f /usr/bin/gcc ]; then rm /usr/bin/gcc; fi
         if [ -f /usr/bin/g++ ]; then rm /usr/bin/g++; fi
+        Logging "$infoStep2"
         ln -s /usr/bin/gcc-6 /usr/bin/gcc
         ln -s /usr/bin/g++-6 /usr/bin/g++
+        Logging "$infoStepEnd"
     }
     InstallTools() {
         Logging "$installTools"
@@ -213,6 +239,7 @@
                            ssmtp \
                            mailutils \
                            net-tools
+        Logging "$infoStepEnd"
     }
     InstallPython3.7() {
         Logging "$installPython37"
@@ -222,6 +249,7 @@
         sudo wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
         sudo tar xzf Python-3.7.9.tgz
         cd Python-3.7.9
+        Logging "$infoStep1"
         sudo ./configure --enable-optimizations
         sudo make altinstall
     
@@ -231,7 +259,7 @@
         #apt-get -y install python3-testresources 
         #apt-get -y install python3-pip
         
-        
+        Logging "$infoStep2"
         if [ -f /usr/bin/python ];  then rm /usr/bin/python;  fi
         if [ -f /usr/bin/python3 ]; then rm /usr/bin/python3; fi
         ln -sf python3.7 /usr/bin/python
@@ -242,6 +270,7 @@
         #apt-get -y install python3-apt
         #apt-get update  --fix-missing
         echo "3.7" > ~/python.version
+        Logging "$infoStepEnd"
     }
     
     InstallMathPacks() {
@@ -251,16 +280,19 @@
                            libopenblas-dev \
                            liblapack-dev \
                            libblas-dev 
+        Logging "$infoStepEnd"
     }
     InstallGooglePacks() {
         Logging "$installGoogle"
         apt-get -y install libprotobuf-dev \
                            protobuf-compiler \
                            libgoogle-glog-dev
+        Logging "$infoStepEnd"
     }
     InstallDataManagement() {
         Logging "$installDataManagement"
         apt-get -y install libhdf5-dev
+        Logging "$infoStepEnd"
     }
     DeactivateNouveau() {
         Logging "$checkGPUDriver"
@@ -268,6 +300,7 @@
         bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
         echo "cd ~/" >> /root/.bashrc
         update-initramfs -u
+        Logging "$infoStepEnd"
     }
     chmod -R +x ~/zoneminder/*
     apt-get -y install software-properties-common
@@ -300,6 +333,7 @@
     cd ~
     if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install python3-testresources python3-pip; InstallCompiler_v6; fi
     if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi               
+    #apt-get -y install libzmq3-dev
     pip3 install --upgrade pip
     DeactivateNouveau
     Logging "$infoEndofInstallation"

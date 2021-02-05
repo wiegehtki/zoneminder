@@ -24,6 +24,13 @@
                     declare -r checkOpenCV="Test auf CUDA enabled Devices"
                     declare -r checkOpenCVCUDA="Abfrage auf CUDA Devices in OpenCV fehlgeschlagen, Abbruch..."
                     
+                    declare -r infoStep1="...Stufe 1"
+                    declare -r infoStep2="...Stufe 2"
+                    declare -r infoStep3="...Stufe 3"
+                    declare -r infoStep4="...Stufe 4"
+                    declare -r infoStep5="...Stufe 5"
+                    declare -r infoStepEnd="...Beendet"
+                    
                     declare -r infoStartInstallation="Start der Installation"
                     declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
                     declare -r infoSelfSignedCertificates="Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
@@ -88,6 +95,13 @@
                     declare -r checkHW_OS="Hardware_and_Linux check"
                     declare -r checkOpenCV="Test for CUDA enabled Devices"
                     declare -r checkOpenCVCUDA="Query on CUDA devices in OpenCV failed, abort..."
+                    
+                    declare -r infoStep1="...Step 1"
+                    declare -r infoStep2="...Step 2"
+                    declare -r infoStep3="...Step 3"
+                    declare -r infoStep4="...Step 4"
+                    declare -r infoStep5="...Step 5"
+                    declare -r infoStepEnd="...completed"
                     
                     declare -r infoStartInstallation="Start der Installation"
                     declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
@@ -227,6 +241,7 @@ Logging "#######################################################################
                     Logging "$installUpdate"                  
                     apt-get -y update
                     apt-get -y dist-upgrade
+                    Logging "$infoStepEnd"
                 }
                 
                 InstallCuda() {
@@ -271,6 +286,7 @@ Logging "#######################################################################
                        echo $CUDA_Script $errorDownload
                        #return 1
                     fi
+                    Logging "$infoStepEnd"
                 }
                 InstallcuDNN() {
                     Logging "$installcuDNN" 
@@ -288,6 +304,7 @@ Logging "#######################################################################
                             return 1
                         fi
                     fi
+                    Logging "$infoStep1"
                     tar -xzvf $cuDNNFile
                     cp cuda/include/cudnn*.h /usr/local/cuda/include
                     cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
@@ -298,6 +315,7 @@ Logging "#######################################################################
                     ln libcudnn.so.8.0.5 libcudnn.so.8
                     ln libcudnn.so.8 libcudnn.so
                     
+                    Logging "$infoStep2"
                     cd  /usr/local/cuda-11.2/targets/x86_64-linux/lib
                     if [ -f libcudnn_adv_infer.so ];   then rm libcudnn_adv_infer.so;   fi 
                     if [ -f libcudnn_ops_train.so ];   then rm libcudnn_ops_train.so;   fi 
@@ -311,7 +329,7 @@ Logging "#######################################################################
                     if [ -f libcudnn_cnn_infer.so.8 ]; then rm libcudnn_cnn_infer.so.8; fi 
                     if [ -f libcudnn_adv_train.so.8 ]; then rm libcudnn_adv_train.so.8; fi 
                     if [ -f libcudnn_ops_infer.so.8 ]; then rm libcudnn_ops_infer.so.8; fi 
-                    
+                    Logging "$infoStep3"
                     ln libcudnn_adv_infer.so.8.0.5 libcudnn_adv_infer.so.8
                     ln libcudnn_ops_train.so.8.0.5 libcudnn_ops_train.so.8
                     ln libcudnn_cnn_train.so.8.0.5 libcudnn_cnn_train.so.8
@@ -325,11 +343,13 @@ Logging "#######################################################################
                     ln libcudnn_adv_train.so.8 libcudnn_adv_train.so
                     ln libcudnn_ops_infer.so.8 libcudnn_ops_infer.so
                     ldconfig  
+                    Logging "$infoStepEnd"
                     return 0                    
                 }
                 SetUpMySQL() {
                     Logging "$installMySQL"  
                     if [ $# -eq 0 ]; then
+                        Logging "$infoStep1"
                         rm /etc/mysql/my.cnf  
                         cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
                         
@@ -338,11 +358,13 @@ Logging "#######################################################################
                         mysql_tzinfo_to_sql /usr/share/zoneinfo/Europe | sudo mysql -u root mysql
                         mysql -e "SET GLOBAL time_zone = 'Berlin';"
                         systemctl restart mysql
-                    else 
+                    else
+                        Logging "$infoStep2"
                         #mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
                         mysql -uroot --skip-password < ~/zoneminder/database/Settings.sql
                         mysqladmin -uroot --skip-password reload
                     fi 
+                    Logging "$infoStepEnd"
                 }
                 SetUpPHP() {
                     Logging "$installPHP"  
@@ -358,6 +380,7 @@ Logging "#######################################################################
                     fi
                     echo "extension=apcu.so" > /etc/php/$PHP_VERS/mods-available/apcu.ini
                     echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
+                    Logging "$infoStepEnd"
                 }
                 AccessRightsZoneminder() {
                     Logging "$installZMAccessRights"  
@@ -365,7 +388,7 @@ Logging "#######################################################################
                     chown -R www-data:www-data /usr/share/zoneminder/
                     chown root:www-data /etc/zm/conf.d/*.conf
                     chmod 640 /etc/zm/conf.d/*.conf
-                    
+                    Logging "$infoStepEnd"
                 }
                
                 SetUpApache2() {
@@ -382,7 +405,8 @@ Logging "#######################################################################
                     mv /root/zoneminder/apache/default-ssl.conf    /etc/apache2/sites-enabled/default-ssl.conf
                     cp /etc/apache2/ports.conf                     /etc/apache2/ports.conf.default
                     cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
-                    
+
+                    Logging "$infoStep1"
                     echo "localhost" >> /etc/apache2/ssl/ServerName
                     export SERVER=`cat /etc/apache2/ssl/ServerName`
                     # Test wegen doppelten Einträgen UW 9.1.2021
@@ -396,6 +420,7 @@ Logging "#######################################################################
                         chmod 600 ~/.rnd
                         openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=localhost"
                     fi
+                    Logging "$infoStep2"
                     chmod 777 /etc/apache2/ssl
                     a2enmod proxy_fcgi setenvif
                     a2enconf php$PHP_VERS-fpm
@@ -417,9 +442,11 @@ Logging "#######################################################################
                         fi
                     fi
                     systemctl reload apache2
+                    Logging "$infoStepEnd"
                 }
                 InstallZoneminder() {
                     Logging "$installZM"  
+
                     if [ ZM_VERSION="1.35" ]; then add-apt-repository -y ppa:iconnor/zoneminder-master
                     else
                         if [ ZM_VERSION="1.34" ]; then add-apt-repository -y ppa:iconnor/zoneminder-1.34
@@ -428,6 +455,7 @@ Logging "#######################################################################
                             exit 255
                         fi
                     fi
+
                     apt-get -y install libcrypt-mysql-perl \
                                        libyaml-perl \
                                        libjson-perl 
@@ -439,22 +467,26 @@ Logging "#######################################################################
                                        libswscale-dev \
                                        openexr \
                                        libopenexr-dev 
-                    
+                    Logging "$infoStep1"
                     UpdatePackages
+                    Logging "$infoStep2"
                     SetUpMySQL
                     SetUpMySQL /usr/share/zoneminder/db/zm_create.sql
+                    Logging "$infoStep3"
                     AccessRightsZoneminder
+                    Logging "$infoStep3"
                     SetUpApache2
                     cp ~/zoneminder/Anzupassen/. /etc/zm/. -r
                     chmod +x /etc/zm/*
                     systemctl enable zoneminder
                     systemctl start zoneminder
+                    Logging "$infoStepEnd"
                 }
                 #EventServer installieren
                 InstallEventserver() {
                     Logging "$installEventServer"  
                     apt-get -y install python3-numpy
-                    python3 -m pip install scipy matplotlib ipython pandas sympy nose cython
+                    python3 -m pip install scipy matplotlib ipython pandas sympy nose cython pyzm
                     cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
                     cd ~
                     chmod +x EventServer.zip
@@ -465,19 +497,23 @@ Logging "#######################################################################
                     cd ~
                     cp EventServer/zmeventnotification.ini /etc/zm/. -r
                     chmod +x /var/lib/zmeventnotification/bin/*
-                    
+
+                    Logging "$infoStep1"
                     yes | perl -MCPAN -e "install Crypt::MySQL"
                     yes | perl -MCPAN -e "install Config::IniFiles"
                     yes | perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
-                    
+
+                    Logging "$infoStep2"
                     apt -y install libyaml-perl
                     apt -y install make
                     yes | perl -MCPAN -e "install Net::WebSocket::Server"
-                    
+
+                    Logging "$infoStep3"
                     apt -y install libjson-perl
                     yes | perl -MCPAN -e "install LWP::Protocol::https"
                     yes | perl -MCPAN -e "install Net::MQTT::Simple"
-                    
+
+                    Logging "$infoStep4"
                     # Fix memory issue
                     Logging "$infoSharedMemory"
                     echo "Config" $SHMEM " - `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes" | tee -a  ~/FinalInstall.log
@@ -486,23 +522,28 @@ Logging "#######################################################################
                     chown -R www-data:www-data /etc/apache2/ssl/*
                     a2enmod ssl
                     systemctl restart apache2  
+                    Logging "$infoStepEnd"
                 }
                 #Apache, MySQL, PHP 
                 InstallFaceRecognition() {
                     Logging "$installFaceRecognition"  
                     if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then sudo -H pip3 uninstall dlib; fi
                     if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("face-recognition"))'; then sudo -H pip3 uninstall face-recognition; fi
+                    Logging "$infoStep1"
                     cd ~/zoneminder/dlib
                     python3 ./setup.py install 
                     python3 -m pip install face_recognition
                     cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/face_train.py
+                    Logging "$infoStepEnd"
                 }                        
 
                 InstallLAMP() {
                     Logging "$installLAMP" 
                     apt-get -y install tasksel
                     tasksel install lamp-server
+                    Logging "$infoStepEnd"
                 }                        
+
                 InstallOpenCV(){
                     Logging "$installOpenCV"
                     apt-get -y install python3-pip \
@@ -522,7 +563,8 @@ Logging "#######################################################################
                     export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
                     export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
                     #Wichtig: Je nach Karte anpassen - CUDA_ARCH_BIN = https://en.wikipedia.org/wiki/CUDA 
-                    
+
+                    Logging "$infoStep1"
                     cmake -D CMAKE_BUILD_TYPE=RELEASE \
                           -D CMAKE_INSTALL_PREFIX=/usr/local \
                           -D INSTALL_PYTHON_EXAMPLES=OFF \
@@ -550,7 +592,7 @@ Logging "#######################################################################
                     make install
                     pkg-config --cflags --libs opencv4
                     pkg-config --modversion opencv4
-                    
+
                     Logging "$checkOpenCV"
                     python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)' >  ~/devices.cuda
                    
@@ -562,6 +604,7 @@ Logging "#######################################################################
                         Logging "$checkOpenCVCUDA"
                         exit 255
                     fi
+                    Logging "$infoStepEnd"
                 }
  
                 InstallLibs(){
@@ -570,6 +613,7 @@ Logging "#######################################################################
                     sudo apt-get -y --force-yes install autoconf automake build-essential libass-dev libfreetype6-dev libgpac-dev \
                     libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev \
                     libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev libopus-dev
+                    Logging "$infoStepEnd"
                 }
                  
                 #Install nvidia SDK
@@ -579,8 +623,11 @@ Logging "#######################################################################
                     cd ~/ffmpeg_sources
                     git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
                     cd nv-codec-headers
+                    Logging "$infoStep1"
                     make -j$(nproc)
+                    Logging "$infoStep2"
                     sudo make install
+                    Logging "$infoStepEnd"
                 }
                 
                 #nasm
@@ -590,10 +637,15 @@ Logging "#######################################################################
                     wget https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/nasm-2.15.05.tar.gz
                     tar xzvf nasm-2.15.05.tar.gz
                     cd nasm-2.15.05
+                    Logging "$infoStep1"
                     ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin"
+                    Logging "$infoStep2"
                     make -j$(nproc)
+                    Logging "$infoStep3"
                     make -j$(nproc) install
+                    Logging "$infoStep4"
                     make -j$(nproc) distclean
+                    Logging "$infoStepEnd"
                 }
                 
                 #libx264
@@ -603,10 +655,14 @@ Logging "#######################################################################
                     wget https://download.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245-stable.tar.bz2 
                     tar xjvf x264-snapshot-20191217-2245-stable.tar.bz2
                     cd x264-snapshot-20191217-2245-stable
+                    Logging "$infoStep1"
                     PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static
                     PATH="$HOME/bin:$PATH" make -j$(nproc)
+                    Logging "$infoStep2"
                     make -j$(nproc) install
+                    Logging "$infoStep3"
                     make -j$(nproc) distclean
+                    Logging "$infoStepEnd"
                 }
                 
                 #libfdk-acc
@@ -616,12 +672,17 @@ Logging "#######################################################################
                     cd ~/ffmpeg_sources
                     wget -O fdk-aac.zip https://github.com/mstorsjo/fdk-aac/zipball/master
                     unzip fdk-aac.zip
+                    Logging "$infoStep1"
                     cd mstorsjo-fdk-aac*
                     autoreconf -fiv
                     ./configure --prefix="$HOME/ffmpeg_build" --disable-shared
+                    Logging "$infoStep2"
                     make -j$(nproc)
+                    Logging "$infoStep3"
                     make -j$(nproc) install
+                    Logging "$infoStep4"
                     make -j$(nproc) distclean
+                    Logging "$infoStepEnd"
                 }
 
                 #libmp3lame
@@ -631,11 +692,16 @@ Logging "#######################################################################
                     cd ~/ffmpeg_sources
                     wget http://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
                     tar xzvf lame-3.100.tar.gz
+                    Logging "$infoStep1"
                     cd lame-3.100
                     ./configure --prefix="$HOME/ffmpeg_build" --enable-nasm --disable-shared
+                    Logging "$infoStep2"
                     make -j$(nproc)
+                    Logging "$infoStep3"
                     make -j$(nproc) install
+                    Logging "$infoStep4"
                     make -j$(nproc) distclean
+                    Logging "$infoStepEnd"
                 }
                 
                 #libopus
@@ -645,10 +711,15 @@ Logging "#######################################################################
                     wget http://downloads.xiph.org/releases/opus/opus-1.3.1.tar.gz
                     tar xzvf opus-1.3.1.tar.gz
                     cd opus-1.3.1
+                    Logging "$infoStep1"
                     ./configure --prefix="$HOME/ffmpeg_build" --disable-shared
+                    Logging "$infoStep2"
                     make -j$(nproc)
+                    Logging "$infoStep3"
                     make -j$(nproc) install
+                    Logging "$infoStep4"
                     make -j$(nproc) distclean
+                    Logging "$infoStepEnd"
                 }
     
                 #libx265
@@ -657,8 +728,11 @@ Logging "#######################################################################
                     cd ~
                     git clone https://bitbucket.org/multicoreware/x265_git
                     cd x265_git/build/linux
+                    Logging "$infoStep1"
                     cmake -G "Unix Makefiles" ../../source
+                    Logging "$infoStep2"
                     make install
+                    Logging "$infoStepEnd"
                 }
     
                 #libvpx
@@ -667,12 +741,17 @@ Logging "#######################################################################
                     cd ~/ffmpeg_sources
                     git clone https://chromium.googlesource.com/webm/libvpx
                     cd libvpx
+                    Logging "$infoStep1"
                     PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --disable-examples --enable-runtime-cpu-detect --enable-vp9 --enable-vp8 \
                     --enable-postproc --enable-vp9-postproc --enable-multi-res-encoding --enable-webm-io --enable-better-hw-compatibility --enable-vp9-highbitdepth --enable-onthefly-bitpacking --enable-realtime-only \
                     --cpu=native --as=nasm
+                    Logging "$infoStep2"
                     PATH="$HOME/bin:$PATH" make -j$(nproc)
+                    Logging "$infoStep3"
                     make -j$(nproc) install
+                    Logging "$infoStep4"
                     make -j$(nproc) clean
+                    Logging "$infoStepEnd"
                 }
                 
                 #ffmpeg
@@ -681,11 +760,12 @@ Logging "#######################################################################
                     cd ~/ffmpeg_sources
                     git clone https://github.com/FFmpeg/FFmpeg -b master
                     cd FFmpeg
+                    Logging "$infoStep1"
                     apt-get -y install build-essential pkg-config checkinstall git libfaac-dev libgpac-dev ladspa-sdk-dev libunistring-dev libbz2-dev \
                     libjack-jackd2-dev libmp3lame-dev libsdl2-dev libopencore-amrnb-dev libopencore-amrwb-dev libvpx-dev libx264-dev libx265-dev libxvidcore-dev libopenal-dev libopus-dev \
                     libsdl1.2-dev libtheora-dev libva-dev libvdpau-dev libvorbis-dev libx11-dev \
                     libxfixes-dev texi2html yasm zlib1g-dev
-                    
+                    Logging "$infoStep2"
                     PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
                         --prefix="$HOME/ffmpeg_build" \
                         --extra-cflags="-I$HOME/ffmpeg_build/include" \
@@ -711,14 +791,18 @@ Logging "#######################################################################
                         --enable-nonfree \
                         --enable-nvenc \
                         --pkg-config-flags="--static"
-                    
+                    Logging "$infoStep3"
                     ./configure --pkg-config-flags="--static" --enable-nonfree --enable-gpl --enable-version3 --enable-libmp3lame --enable-libvpx --enable-libopus --enable-opencl --enable-libxcb --enable-opengl --enable-nvenc --enable-vaapi --enable-vdpau --enable-ffplay --enable-ffprobe --enable-libxvid --enable-libx264 --enable-libx265 --enable-openal --enable-cuda-nvcc --enable-cuvid --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64ble-openal --enable-cuda-nvcc --enable-cuvid
                      
                     PATH="$HOME/bin:$PATH" make -j$(nproc)
+                    Logging "$infoStep3"
                     make -j$(nproc) install
+                    Logging "$infoStep4"
                     make -j$(nproc) distclean
                     hash -r
+                    Logging "$infoStepEnd"
                 }
+
                 #Bugfixing und Finalisierung
                 BugFixes_Init() {
                     Logging "$installBugfixes"
@@ -728,6 +812,7 @@ Logging "#######################################################################
                     yes | perl -MCPAN -e "upgrade IO::Socket::SSL"
                     cd ~
                     zmupdate.pl -f
+                    Logging "$infoStepEnd"
                 }
                                 
                 Logging "$infoStartInstallation"  
