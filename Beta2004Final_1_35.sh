@@ -442,7 +442,6 @@ Logging "#######################################################################
                                        libopenexr-dev 
                     
                     UpdatePackages
-                    #pip3 install --upgrade pip
                     SetUpMySQL
                     SetUpMySQL /usr/share/zoneminder/db/zm_create.sql
                     AccessRightsZoneminder

@@ -298,9 +298,9 @@
     fi
     
     cd ~
-    if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install python3-testresources; InstallCompiler_v6; fi
-    if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3; InstallCompiler_v7; fi               
-    
+    if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install python3-testresources python3-pip; InstallCompiler_v6; fi
+    if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi               
+    pip3 install --upgrade pip
     DeactivateNouveau
     Logging "$infoEndofInstallation"
     reboot
