@@ -15,6 +15,7 @@
                     declare -r errorcuDNNInstall="Fehler bei InstallCuda, Fehlernummer:"
                     declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV fehlgeschlagen, Abbruch..."
                     declare -r errorLinuxDist="Keine unterstützte Linux-Distribution, Installer wird beendet, Abbruch..."
+                    declare -r errorZMVersion="Keine gültige Zoneminder - Version angegeben, Abbruch..."
                     
                     declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
                     declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
@@ -79,6 +80,7 @@
                     declare -r errorcuDNNInstall="Error with InstallcuDNN, Error:"
                     declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV failed, abort..."
                     declare -r errorLinuxDist="No supported Linux distribution, installer quits, abort..."
+                    declare -r errorZMVersion="No valid Zoneminder version specified, abort..."
                     
                     declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
                     declare -r checkPythonVersion="No supported Python3 version found, abort..."
@@ -149,13 +151,14 @@
                     done  
                 else
                     echo $errorPythonVersion
-                    #exit 255
+                    exit 255
                 fi
                
                 Logging() {
                     echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
                 }
 
+                export ZM_VERSION="1.35" # "1.34"
                 #export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
                 #export CUDA_Script=cuda_10.1.105_418.39_linux.run
                 export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
@@ -336,7 +339,7 @@ Logging "#######################################################################
                         mysql -e "SET GLOBAL time_zone = 'Berlin';"
                         systemctl restart mysql
                     else 
-                        mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
+                        #mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
                         mysql -uroot --skip-password < ~/zoneminder/database/Settings.sql
                         mysqladmin -uroot --skip-password reload
                     fi 
@@ -362,7 +365,7 @@ Logging "#######################################################################
                     chown -R www-data:www-data /usr/share/zoneminder/
                     chown root:www-data /etc/zm/conf.d/*.conf
                     chmod 640 /etc/zm/conf.d/*.conf
-                    chown -R  www-data:www-data /etc/apache2/ssl
+                    
                 }
                
                 SetUpApache2() {
@@ -375,6 +378,7 @@ Logging "#######################################################################
                     mkdir /etc/apache2/ssl/
                     mkdir /etc/zm/apache2/
                     mkdir /etc/zm/apache2/ssl/
+                    chown -R  www-data:www-data /etc/apache2/ssl
                     mv /root/zoneminder/apache/default-ssl.conf    /etc/apache2/sites-enabled/default-ssl.conf
                     cp /etc/apache2/ports.conf                     /etc/apache2/ports.conf.default
                     cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
@@ -416,7 +420,15 @@ Logging "#######################################################################
                 }
                 InstallZoneminder() {
                     Logging "$installZM"  
-                    add-apt-repository -y ppa:iconnor/zoneminder-master
+                    if [ ZM_VERSION="1.35" ]; then add-apt-repository -y ppa:iconnor/zoneminder-master
+                    else
+                        if [ ZM_VERSION="1.34" ]; then add-apt-repository -y ppa:iconnor/zoneminder-1.34
+                            else 
+                              Logging "$errorZMVersion"
+                              exit 255
+                            fi
+                        fi
+                    fi
                     apt-get -y install libcrypt-mysql-perl \
                                        libyaml-perl \
                                        libjson-perl 
@@ -492,7 +504,6 @@ Logging "#######################################################################
                     Logging "$installLAMP" 
                     apt-get -y install tasksel
                     tasksel install lamp-server
-                    #add-apt-repository -y ppa:iconnor/zoneminder-1.34
                 }                        
                 InstallOpenCV(){
                     Logging "$installOpenCV"
