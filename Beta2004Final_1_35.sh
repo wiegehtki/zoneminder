@@ -423,10 +423,9 @@ Logging "#######################################################################
                     if [ ZM_VERSION="1.35" ]; then add-apt-repository -y ppa:iconnor/zoneminder-master
                     else
                         if [ ZM_VERSION="1.34" ]; then add-apt-repository -y ppa:iconnor/zoneminder-1.34
-                            else 
-                              Logging "$errorZMVersion"
-                              exit 255
-                            fi
+                        else 
+                            Logging "$errorZMVersion"
+                            exit 255
                         fi
                     fi
                     apt-get -y install libcrypt-mysql-perl \
