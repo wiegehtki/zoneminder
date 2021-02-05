@@ -720,7 +720,7 @@ Logging "#######################################################################
                     make -j$(nproc) install
                     make -j$(nproc) distclean
                     hash -r
-               }
+                }
                 #Bugfixing und Finalisierung
                 BugFixes_Init() {
                     Logging "$installBugfixes"
@@ -759,7 +759,7 @@ Logging "#######################################################################
            #    cd ~
            #    mkdir ffmpeg_sources
            #    installLibs
-               #InstallCUDASDK
+           #    InstallCUDASDK
            #    installSDK
            #    compileNasm
            #    compileLibX264
@@ -768,13 +768,13 @@ Logging "#######################################################################
            #    compileLibMP3Lame
            #    compileLibOpus
            #    compileLibPvx
-               #The process
+           #    The process
            #    export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
            #    export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-         #      compileFfmpeg
-               #Bei 18.04?
-               #cp ~/bin/ffmpeg  /usr/bin/ -r
-            #   echo "Libraries und ffmpeg kompiliert!"
+           #    compileFfmpeg
+           #    Bei 18.04?
+           #    cp ~/bin/ffmpeg  /usr/bin/ -r
+           #    echo "Libraries und ffmpeg kompiliert!"
                
                 
                 #rm *.zip
