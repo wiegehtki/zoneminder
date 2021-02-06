@@ -22,6 +22,7 @@
         declare -r infoStep5="...Stufe 5"
         declare -r infoStepEnd="...Beendet"
         
+        declare -r installGPUTools="GPU - Tools installieren"
         declare -r installUpdate="Pakete aktualisieren"
         declare -r installImagehandling="Pakete für Imagehandling installieren"
         declare -r installCodecs="Codecs installieren"
@@ -54,6 +55,7 @@
         declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
         declare -r createInstallationLog="Create Installation.log"
         
+        declare -r installGPUTools="Install GPU Tools"
         declare -r installUpdate="Update packages"
         declare -r installImagehandling="Install packages for image handling"
         declare -r installCodecs="Install codecs"
@@ -105,7 +107,7 @@
     
     
     Logging "#####################################################################################################################################"
-    Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu 18.04 LTS und 20.04 LTS                      By WIEGEHTKI.DE #"
+    Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu "$UBUNTU_VER"                                        By WIEGEHTKI.DE #"
     Logging "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #"
     Logging "#                                                                                                                                   #"
     Logging "# v2.0.1 (Rev a), 27.01.2021                                                                                                        #"
@@ -122,6 +124,12 @@
         apt-get -y dist-upgrade
         Logging "$infoStepEnd"
     }
+    InstallGPUTools() {
+        Logging "$installGPUTools"
+        apt-get -y install nvtop
+        Logging "$infoStepEnd"
+    }
+  
     InstallImageHandling() {
         Logging "$installImagehandling"
         apt-get -y install libjpeg-dev \
@@ -279,7 +287,7 @@
                            libeigen3-dev \
                            libopenblas-dev \
                            liblapack-dev \
-                           libblas-dev 
+                           libblas-dev  
         Logging "$infoStepEnd"
     }
     InstallGooglePacks() {
@@ -313,9 +321,9 @@
     InstallGooglePacks
     InstallMathPacks
     InstallDataManagement
-    
+        
     python3 -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
-    if [ -f ~/python.version ];   then 
+    if [ -f ~/python.version ]; then 
         for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
             do  
             export PYTHON_VER=$i
@@ -335,6 +343,9 @@
     if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi               
     #apt-get -y install libzmq3-dev
     pip3 install --upgrade pip
+    InstallGPUTools
+    python3 -m pip install --upgrade --force-reinstall  glances[gpu]
+    if [ -f /usr/local/bin/glances ]; then mv /usr/local/bin/glances /usr/bin/; fi
     DeactivateNouveau
     Logging "$infoEndofInstallation"
     reboot
