@@ -124,12 +124,6 @@
         apt-get -y dist-upgrade
         Logging "$infoStepEnd"
     }
-    InstallGPUTools() {
-        Logging "$installGPUTools"
-        apt-get -y install nvtop
-        Logging "$infoStepEnd"
-    }
-  
     InstallImageHandling() {
         Logging "$installImagehandling"
         apt-get -y install libjpeg-dev \
@@ -343,9 +337,6 @@
     if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi               
     #apt-get -y install libzmq3-dev
     pip3 install --upgrade pip
-    InstallGPUTools
-    python3 -m pip install --upgrade --force-reinstall  glances[gpu]
-    if [ -f /usr/local/bin/glances ]; then mv /usr/local/bin/glances /usr/bin/; fi
     DeactivateNouveau
     Logging "$infoEndofInstallation"
     reboot

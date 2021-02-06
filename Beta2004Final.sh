@@ -245,7 +245,26 @@ Logging "#######################################################################
                     apt-get -y dist-upgrade
                     Logging "UpdatePackages $infoStepEnd"
                 }
-                
+                InstallGPUTools() {
+                    Logging "$installGPUTools"
+                    if [ "$UBUNTU_VER" = "18.04" ]; then 
+                       Logging "$infoStep1"
+                       apt-get -y install libncurses5-dev libncursesw5-dev
+                       cd ~
+                        git clone https://github.com/Syllo/nvtop.git
+                        mkdir -p nvtop/build && cd nvtop/build
+                        cmake .. -DNVML_RETRIEVE_HEADER_ONLINE=True
+                        #cmake ..
+                        make -j$(nproc)
+                        make install
+                    else
+                       Logging "$infoStep2"
+                       if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install nvtop; fi
+                    fi
+                    python3 -m pip install --upgrade --force-reinstall  glances[gpu]
+                    if [ -f /usr/local/bin/glances ]; then mv /usr/local/bin/glances /usr/bin/; fi
+                    Logging "$infoStepEnd"
+                }
                 InstallCuda() {
                     Logging "$installCUDA" 
                     cd ~
@@ -824,6 +843,7 @@ Logging "#######################################################################
                 BugFixes_Init
                 AccessRightsZoneminder
                 CompileFfmpeg
+                InstallGPUTools
                 Logging "Main $infoEndofInstallation"
 
   
