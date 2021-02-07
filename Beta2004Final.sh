@@ -3,6 +3,40 @@
                 Benutzer="root" 
                 Language="German"
                 
+                export ZM_VERSION="1.35" 
+                #export ZM_VERSION="1.34"
+                export OPENCV_VER="4.5.1"
+             
+                ######################### CUDA 11.1.1 - Settings #####################################################################################
+                export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
+                export CUDA_Script=cuda_11.1.1_455.32.00_linux.run
+                export CUDA_PFAD_BASHRC="/usr/local/cuda-11.1/bin"
+                export CUDA_PFAD="/usr/local/cuda-11.1"
+                export CUDA_COMPUTE_CAPABILITY=6.1
+                export CUDA_SEARCH_PATH="/usr/local/cuda-11.1/lib64"
+                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-11.1_Samples"
+
+                ######################### CUDA 10.1 - Settings #######################################################################################
+                #export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
+                #export CUDA_Script=cuda_10.1.105_418.39_linux.run
+                #export CUDA_PFAD_BASHRC="/usr/local/cuda-10.1/bin"
+                #export CUDA_PFAD="/usr/local/cuda-10.1"
+                #export CUDA_COMPUTE_CAPABILITY=6.1
+                #export CUDA_SEARCH_PATH="/usr/local/cuda-10.1/lib64"
+                #export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-10.1_Samples"
+                #export CUDNN_VERSION_1804="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
+
+                ######################## cuDNN - Settings #############################################################################################
+                export CUDNN_VERSION_1804="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
+                export CUDNN_VERSION_2004="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
+                
+                #export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
+                #export CUDA_Script=cuda_11.2.0_460.27.04_linux.run
+                
+                export OPENCV_VER=4.5.1
+                export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
+                export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
+
                 if [ $Language = "German" ]; then
                     declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
                     declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
@@ -40,7 +74,7 @@
                     declare -r infoSharedMemory="Setzen shared memory"
                     declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV erfolgreich durchgeführt"
                     
-                    declare -r createInstallationLog="Installation.log anlegen"
+                    declare -r createInstallationLog="FinalInstall.log anlegen"
                     
                     declare -r installUpdate="Pakete aktualisieren"
                     declare -r installCUDA="CUDA - Download und Installation inklusive Grafiktreiber"
@@ -113,7 +147,7 @@
                     declare -r infoSharedMemory="Configure shared memory"
                     declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV successful."
                     
-                    declare -r createInstallationLog="Create Installation.log"
+                    declare -r createInstallationLog="Create FinalInstall.log"
                     
                     declare -r installUpdate="Update packages"
                     declare -r installCUDA="CUDA - Download and installation including graphics driver"
@@ -155,15 +189,13 @@
                        echo $(date -u) $errorUser
                        exit 255
                 fi
-                export PHP_VERS="7.4"
-                export OPENCV_VER="4.5.1"
-                
-                python -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
+                   
+                python3 -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
                 
                 if [ -f ~/python.version ]; then 
                     for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' ` ; do
                         export PYTHON_VER=$i
-                        if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then  echo $(date -u) $checkPythonVersion  | tee -a  ~/FinalInstall.log; fi
+                        if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then  echo $(date -u) $checkPythonVersion | tee -a  ~/FinalInstall.log; exit 255; fi
                     done  
                 else
                     echo $errorPythonVersion
@@ -174,27 +206,10 @@
                     echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
                 }
 
-                export ZM_VERSION="1.35" # "1.34"
-                #export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
-                #export CUDA_Script=cuda_10.1.105_418.39_linux.run
-                export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
-                export CUDA_Script=cuda_11.1.1_455.32.00_linux.run
-                #export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
-                #export CUDA_Script=cuda_11.2.0_460.27.04_linux.run
                 
-                export CUDA_COMPUTE_CAPABILITY=6.1
-                export CUDA_SEARCH_PATH="/usr/local/cuda-11.1/lib64"
-                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-11.1_Samples"
-                export CUDNN_VERSION_1804="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
-                export CUDNN_VERSION_2004="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
+                
                 export DEBCONF_NONINTERACTIVE_SEEN="true"
-                                
                 export DEBIAN_FRONTEND="noninteractive"
-                export CUDA_PFAD_BASHRC="/usr/local/cuda-11.1/bin"
-                export CUDA_PFAD="/usr/local/cuda-11.1"
-                export OPENCV_VER=4.5.1
-                export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
-                export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
                 export TZ="Europe/Berlin"
                 export PYTHON_INCLUDE_DIRS=/usr/include/python$PYTHON_VER
                 export PYTHON_LIBRARIES=/usr/lib/python$PYTHON_VER/config-$PYTHON_VER-x86_64-linux-gnu/libpython$PYTHON_VER.so
@@ -208,23 +223,25 @@
                 export CPPFLAGS=$CPPFLAGS" -w"
                 export CXXFLAGS=$CXXFLAGS" -w"
                 
-                echo $(date -u) "Test auf bestehende FinalInstall.log"
-                     test -f ~/FinalInstall.log && rm ~/FinalInstall.log
+                echo $(date -u) "$checkInstallationLog"
+                test -f ~/FinalInstall.log && rm ~/FinalInstall.log
                 
-                echo $(date -u) "FinalInstall.log anlegen"
-                     touch ~/FinalInstall.log
+                echo $(date -u) "$createInstallationLog"
+                touch ~/FinalInstall.log
                  
                  
                 if lshw -C display | grep -q 'nouveau'; then
-                      echo $(date -u) $errorGPUDriver
-                      exit 255
+                    echo $(date -u) $errorGPUDriver
+                    exit 255
                 fi
 
                 if [[ ${LINUX_VERSION_NAME} == "18.04" ]]; then
-                   export UBUNTU_VER="18.04"
+                    export UBUNTU_VER="18.04"
+                    export PHP_VERS="7.2"
                 else
                    if [[ ${LINUX_VERSION_NAME} == "20.04" ]]; then
                        export UBUNTU_VER="20.04"
+                       export PHP_VERS="7.2"
                    else
                        echo " "
                        echo $errorLinuxDist
@@ -234,7 +251,7 @@
                  
 
 Logging "########################################################################################################################"
-Looging "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu "$UBUNTU_VER"                       By WIEGEHTKI.DE #"
+Logging "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu $UBUNTU_VER                       By WIEGEHTKI.DE #"
 Logging "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                              #" 
 Logging "#                                                                                                                      #" 
 Logging "# V2.0.0 (Rev a), 30.01.2021                                                                                           #" 
@@ -268,7 +285,7 @@ Logging "#######################################################################
                 InstallCuda() {
                     Logging "$installCUDA" 
                     cd ~
-                    if [ -f ~/cuda*run* ]; then rm ~/cuda*run*^; fi
+                    if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
                     wget $CUDA_Download 
                     if [ -f ~/$CUDA_Script ]; then
                         chmod +x $CUDA_Script
@@ -294,6 +311,7 @@ Logging "#######################################################################
                             for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
                                 do  
                                 export CUDA_COMPUTE_CAPABILITY=$i
+                                awk -v "a=$CUDA_COMPUTE_CAPABILITY" -v "b=10" 'BEGIN {printf "%.0f\n", a*b}' > ~/ComputeCapability.FFMPEG
                             done  
                         else
                             Logging "$errorDeviceQuery"  
@@ -502,7 +520,7 @@ Logging "#######################################################################
                     hostname -I > ~/ip.host
 
                     if [ -f ~/ip.host ]; then 
-                        for i in ` sed s'/=/ /g' ~/IP | awk '{print $1}' ` ; do
+                        for i in ` sed s'/=/ /g' ~/ip.host | awk '{print $1}' ` ; do
                             sed -i "s/<PORTAL-ADRESSE>/${i}/g" /etc/zm/secrets.ini
                         done  
                     else
@@ -799,6 +817,15 @@ Logging "#######################################################################
                     git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/
                     cd ~/ffmpeg
                     Logging "CompileFfmpeg $infoStep3"
+                    if [ -f ~/ffmpeg/configure ]; then 
+                        if [ -f ~/ComputeCapability.FFMPEG ]; then 
+                            for i in ` sed s'/=/ /g' ~/ComputeCapability.FFMPEG | awk '{print $1}' ` ; do
+                                export COMPUTE_COMP=$i
+                            done
+                            sed -i "s/compute_30,code=sm_30/compute_$COMPUTE_COMP,code=sm_$COMPUTE_COMP/g" ~/ffmpeg/configure
+                            sed -i "s/cuda-gpu-arch=sm_30/cuda-gpu-arch=sm_${COMPUTE_COMP}/g" ~/ffmpeg/configure
+                        fi                            
+                    fi
                     ./configure --enable-nonfree --enable-cuda-nvcc --enable-cuda --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
                     make -j$(nproc) 
                     Logging "CompileFfmpeg $infoStep4" 

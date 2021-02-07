@@ -76,6 +76,7 @@
     fi
     echo $(date -u) "$checkInstallationLog"
     test -f ~/Installation.log && rm ~/Installation.log
+
     echo $(date -u) "$createInstallationLog"
     touch ~/Installation.log
     
@@ -107,7 +108,7 @@
     
     
     Logging "#####################################################################################################################################"
-    Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu "$UBUNTU_VER"                                        By WIEGEHTKI.DE #"
+    Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu $UBUNTU_VER                                        By WIEGEHTKI.DE #"
     Logging "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #"
     Logging "#                                                                                                                                   #"
     Logging "# v2.0.1 (Rev a), 27.01.2021                                                                                                        #"
@@ -333,7 +334,13 @@
     fi
     
     cd ~
-    if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install python3-testresources python3-pip; InstallCompiler_v6; fi
+    if [ "$UBUNTU_VER" = "18.04" ]; then  
+        if [ -f /usr/bin/python ]; then rm /usr/bin/python; fi   
+        ln -sv /usr/bin/python3.6 /usr/bin/python 
+        apt-get -y install python3-testresources \
+                           python3-pip \
+                           InstallCompiler_v6
+    fi 
     if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi               
     #apt-get -y install libzmq3-dev
     pip3 install --upgrade pip
