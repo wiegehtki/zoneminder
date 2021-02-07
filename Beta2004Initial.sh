@@ -7,7 +7,7 @@
         declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
         declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
         
-        declare -r checkGPUDriver= "Nouveau - Grafiktreiber de-aktivieren"
+        declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
         declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, installiere Python 3.7.x"
         declare -r checkInstallationLog="Test auf bestehende Installation.log"
         declare -r checkHW_OS="Hardware_und_Linux Check"
@@ -40,7 +40,7 @@
         declare -r errorPythonVersion="Problems reading out the Python version, abort..."
         declare -r errorLinuxDistribution="No valid distribution, installer exits"
         
-        declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
+        declare -r checkGPUDriver="Nouveau - Deactivate graphics drive"
         declare -r checkPythonVersion="No supported Python3 version found, install Python 3.7.x"
         declare -r checkInstallationLog="Test for existing installation.log"
         declare -r checkHW_OS="Hardware_and_Linux check"
@@ -338,8 +338,8 @@
         if [ -f /usr/bin/python ]; then rm /usr/bin/python; fi   
         ln -sv /usr/bin/python3.6 /usr/bin/python 
         apt-get -y install python3-testresources \
-                           python3-pip \
-                           InstallCompiler_v6
+                           python3-pip 
+        InstallCompiler_v6
     fi 
     if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi               
     #apt-get -y install libzmq3-dev
