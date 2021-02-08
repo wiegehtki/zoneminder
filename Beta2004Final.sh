@@ -814,7 +814,7 @@ Logging "#######################################################################
                     make install
                     cd ~
                     Logging "CompileFfmpeg $infoStep2"
-                    git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/
+                    git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg_sources/
                     cd ~/ffmpeg
                     Logging "CompileFfmpeg $infoStep3"
                     if [ -f ~/ffmpeg/configure ]; then 
@@ -869,7 +869,7 @@ Logging "#######################################################################
                 InstallOpenCV
                 BugFixes_Init
                 AccessRightsZoneminder
-                CompileFfmpeg
+                if [ "$UBUNTU_VER" = "20.04" ]; then CompileFfmpeg; fi
                 InstallGPUTools
                 Logging "Main $infoEndofInstallation"
 
@@ -878,8 +878,8 @@ Logging "#######################################################################
                  
                
 
-                # cd ~
-                # mkdir ffmpeg_sources
+                cd ~
+                mkdir ffmpeg_sources
                 # installLibs
                 # InstallCUDASDK
                 # InstallSDK
