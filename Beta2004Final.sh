@@ -831,7 +831,7 @@ Logging "#######################################################################
                     Logging "CompileFfmpeg $infoStep4" 
                     make install
                     if [ -f /usr/local/bin/ffmpeg ]; then cp /usr/local/bin/ffmpeg /usr/bin/ffmpeg; fi
-                    if [ -f /usr/local/bin/ffmpeg ]; then cp /usr/local/bin/ffmpeg /usr/share/ffmpeg; fi
+                    #if [ -f /usr/local/bin/ffmpeg ]; then cp /usr/local/bin/ffmpeg /usr/share/ffmpeg; fi
                    
                     Logging "CompileFfmpeg $infoStepEnd"
                 }
