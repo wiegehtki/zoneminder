@@ -71,9 +71,12 @@
     fi
     
     if [ "$(whoami)" != $Benutzer ]; then
-        echo $(date -u) "$errorUser"
+        ColErr="\033[1;31m"
+        NoColErr="\033[0m"
+        echo -e ${ColErr}$(date -u) $errorUser ${NoColErr}
         exit 255
     fi
+
     echo $(date -u) "$checkInstallationLog"
     test -f ~/Installation.log && rm ~/Installation.log
 
@@ -91,8 +94,10 @@
             export UBUNTU_VER="20.04"
         else
             echo " "
-            echo "$errorLinuxDistribution"
-            exit
+            ColErr="\033[1;31m"
+            NoColErr="\033[0m"
+            echo -e ${ColErr}$(date -u) $errorLinuxDistribution ${NoColErr}
+            exit 255
         fi
     fi
     
@@ -324,7 +329,9 @@
             export PYTHON_VER=$i
         done  
     else
-        echo "$errorPythonVersion"
+        ColErr="\033[1;31m"
+        NoColErr="\033[0m"
+        echo -e ${ColErr}$(date -u) $errorPythonVersion ${NoColErr}
         exit 255
     fi
     

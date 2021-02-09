@@ -3,8 +3,8 @@
                 Benutzer="root" 
                 Language="German"
                 
-                export ZM_VERSION="1.35" 
-                #export ZM_VERSION="1.34"
+                #export ZM_VERSION="1.35" 
+                export ZM_VERSION="1.34"
                 export OPENCV_VER="4.5.1"
              
                 ######################### CUDA 11.1.1 - Settings #####################################################################################
@@ -186,8 +186,10 @@
                 fi
                 
                 if [ "$(whoami)" != $Benutzer ]; then
-                       echo $(date -u) $errorUser
-                       exit 255
+                   ColErr="\033[1;31m"
+                   NoColErr="\033[0m"
+                   echo -e ${ColErr}$(date -u) $errorUser ${NoColErr}
+                   exit 255
                 fi
                    
                 python3 -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
@@ -198,7 +200,9 @@
                         if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then  echo $(date -u) $checkPythonVersion | tee -a  ~/FinalInstall.log; exit 255; fi
                     done  
                 else
-                    echo $errorPythonVersion
+                    ColErr="\033[1;31m"
+                    NoColErr="\033[0m"
+                    echo -e ${ColErr}$(date -u) $errorPythonVersion ${NoColErr}
                     exit 255
                 fi
                
@@ -231,7 +235,9 @@
                  
                  
                 if lshw -C display | grep -q 'nouveau'; then
-                    echo $(date -u) $errorGPUDriver
+                    ColErr="\033[1;31m"
+                    NoColErr="\033[0m"
+                    echo -e ${ColErr}$(date -u) $errorGPUDriver ${NoColErr}
                     exit 255
                 fi
 
@@ -244,7 +250,9 @@
                        export PHP_VERS="7.2"
                    else
                        echo " "
-                       echo $errorLinuxDist
+                       ColErr="\033[1;31m"
+                       NoColErr="\033[0m"
+                       echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
                        exit 255
                    fi
                 fi
@@ -490,7 +498,9 @@ Logging "#######################################################################
                     else
                         if [ ZM_VERSION="1.34" ]; then add-apt-repository -y ppa:iconnor/zoneminder-1.34
                         else 
-                            Logging "$errorZMVersion"
+                            ColErr="\033[1;31m"
+                            NoColErr="\033[0m"
+                            echo -e ${ColErr}$(date -u) $errorZMVersion ${NoColErr}
                             exit 255
                         fi
                     fi
@@ -524,7 +534,9 @@ Logging "#######################################################################
                             sed -i "s/<PORTAL-ADRESSE>/${i}/g" /etc/zm/secrets.ini
                         done  
                     else
-                        Logging "$errorDetectIP"
+                        ColErr="\033[1;31m"
+                        NoColErr="\033[0m"
+                        echo -e ${ColErr}$(date -u) $errorDetectIP ${NoColErr}
                         exit 255
                     fi
                     
@@ -651,7 +663,9 @@ Logging "#######################################################################
                             if [ $i \> "0" ]; then Logging "$infoOpenCVCUDA"; else Logging "$errorOpenCVCUDA"; exit 255; fi
                         done  
                     else
-                        Logging "$checkOpenCVCUDA"
+                        ColErr="\033[1;31m"
+                        NoColErr="\033[0m"
+                        echo -e ${ColErr}$(date -u) $checkOpenCVCUDA ${NoColErr}
                         exit 255
                     fi
                     Logging "InstallOpenCV $infoStepEnd"
@@ -856,8 +870,8 @@ Logging "#######################################################################
                    dpkg-reconfigure tzdata -f noninteractive
                    #echo "Datum: `date`"
                 fi
-                if InstallCuda $1;  then echo "InstallCuda ok"  | tee -a  ~/FinalInstall.log; else echo "$errorCUDAInstall" $1  | tee -a  ~/FinalInstall.log; exit 255; fi
-                if InstallcuDNN $1; then echo "InstallcuDNN ok" | tee -a  ~/FinalInstall.log; else echo "$errorcuDNNInstall" $1 | tee -a  ~/FinalInstall.log; exit 255; fi
+                if InstallCuda $1;  then echo "InstallCuda ok"  | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorCUDAInstall ${NoColErr}; exit 255; fi
+                if InstallcuDNN $1; then echo "InstallcuDNN ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorcuDNNInstall ${NoColErr}; exit 255; fi
                 UpdatePackages
                 InstallLamp
                 SetUpPHP
