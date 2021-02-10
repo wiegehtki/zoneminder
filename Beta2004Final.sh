@@ -860,7 +860,7 @@ Logging "#######################################################################
                                 
                 Logging "Main $infoStartInstallation"  
                 echo ""
-                ColImp="\033[0;34m"
+                ColImp="\033[1;32m"
                 NoColImp="\033[0m"
     
                 echo -e "${ColImp}$infoZMVersion ${NoColImp}$1" 
