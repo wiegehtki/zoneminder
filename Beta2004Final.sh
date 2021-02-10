@@ -494,9 +494,9 @@ Logging "#######################################################################
                 InstallZoneminder() {
                     Logging "$installZM"  
 
-                    if [ ZM_VERSION="1.35" ]; then add-apt-repository -y ppa:iconnor/zoneminder-master
+                    if [ $ZM_VERSION="1.35" ]; then add-apt-repository -y ppa:iconnor/zoneminder-master
                     else
-                        if [ ZM_VERSION="1.34" ]; then add-apt-repository -y ppa:iconnor/zoneminder-1.34
+                        if [ $ZM_VERSION="1.34" ]; then add-apt-repository -y ppa:iconnor/zoneminder-1.34
                         else 
                             ColErr="\033[1;31m"
                             NoColErr="\033[0m"
