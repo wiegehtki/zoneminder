@@ -859,9 +859,14 @@ Logging "#######################################################################
                 }
                                 
                 Logging "Main $infoStartInstallation"  
-                echo $infoZMVersion
                 echo ""
-                echo $infoZMSelect
+                ColImp="\033[0;34m"
+                NoColImp="\033[0m"
+    
+                echo -e "${ColImp}$infoZMVersion ${NoColImp}$1" 
+                echo ""
+                echo -e "${ColImp}$infoZMSelect ${NoColImp}$1" 
+    
                 read -rsn1 input
                 if [ "$input" = "1" ]; then export ZM_VERSION="1.34"; else export ZM_VERSION="1.35"; fi
 
