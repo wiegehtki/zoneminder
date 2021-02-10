@@ -65,6 +65,8 @@
                     declare -r infoStep4="...Stufe 4"
                     declare -r infoStep5="...Stufe 5"
                     declare -r infoStepEnd="...Beendet"
+                    declare -r infoZMVersion="Wollen Sie die Zoneminder - Version 1.34 (stable) oder die neueste Version 1.35 installieren?"
+                    declare -r infoZMSelect="Drücken Sie ( 1 ) für Version 1.34.x oder irgendeine andere Taste für die Version 1.35.x"
                     
                     declare -r infoStartInstallation="Start der Installation"
                     declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
@@ -138,6 +140,8 @@
                     declare -r infoStep4="...Step 4"
                     declare -r infoStep5="...Step 5"
                     declare -r infoStepEnd="...completed"
+                    declare -r infoZMVersion="Do you want to install Zoneminder - version 1.34 (stable) or the latest version 1.35?"
+                    declare -r infoZMSelect="Press ( 1 ) for version 1.34.x or any other key for version 1.35.x"
                     
                     declare -r infoStartInstallation="Start der Installation"
                     declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
@@ -494,16 +498,8 @@ Logging "#######################################################################
                 InstallZoneminder() {
                     Logging "$installZM"  
 
-                    if [ $ZM_VERSION="1.35" ]; then add-apt-repository -y ppa:iconnor/zoneminder-master
-                    else
-                        if [ $ZM_VERSION="1.34" ]; then add-apt-repository -y ppa:iconnor/zoneminder-1.34
-                        else 
-                            ColErr="\033[1;31m"
-                            NoColErr="\033[0m"
-                            echo -e ${ColErr}$(date -u) $errorZMVersion ${NoColErr}
-                            exit 255
-                        fi
-                    fi
+                    VERSION = "1.34"
+                    [[ "$ZM_VERSION" == "$VERSION" ]] && add-apt-repository -y ppa:iconnor/zoneminder-1.34 || add-apt-repository -y ppa:iconnor/zoneminder-master
 
                     apt-get -y install libcrypt-mysql-perl \
                                        libyaml-perl \
@@ -863,6 +859,12 @@ Logging "#######################################################################
                 }
                                 
                 Logging "Main $infoStartInstallation"  
+                echo $infoZMVersion
+                echo ""
+                echo $infoZMSelect
+                read -rsn1 input
+                if [ "$input" = "1" ]; then export ZM_VERSION="1.34"; else export ZM_VERSION="1.35"; fi
+
                 if [[ $(cat /etc/timezone) != "$TZ" ]] ; then
                    echo "Setzen der Zeitzone auf: $TZ"
                    echo $TZ > /etc/timezone
