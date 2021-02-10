@@ -889,10 +889,6 @@ Logging "#######################################################################
                 InstallGPUTools
                 Logging "Main $infoEndofInstallation"
 
-  
-
-                 
-               
 
                 cd ~
                 mkdir ffmpeg_sources
