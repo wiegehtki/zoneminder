@@ -18,16 +18,18 @@
 
                 ######################### CUDA 10.1 - Settings #######################################################################################
 
-                export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run
-                export CUDA_Script=cuda_10.1.243_418.87.00_linux.run
-                export CUDA_PFAD_BASHRC="/usr/local/cuda-10.1/bin"
-                export CUDA_PFAD="/usr/local/cuda-10.1"
+                export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
+                #https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run
+                export CUDA_Script=cuda_10.2.89_440.33.01_linux.run
+                #cuda_10.1.243_418.87.00_linux.run
+                export CUDA_PFAD_BASHRC="/usr/local/cuda-10.2/bin"
+                export CUDA_PFAD="/usr/local/cuda-10.2"
                 export CUDA_COMPUTE_CAPABILITY=6.1
-                export CUDA_SEARCH_PATH="/usr/local/cuda-10.1/lib64"
-                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-10.1_Samples"
+                export CUDA_SEARCH_PATH="/usr/local/cuda-10.2/lib64"
+                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-10.2_Samples"
                 
                 ######################## cuDNN - Settings #############################################################################################
-                export CUDNN_VERSION_1804="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
+                export CUDNN_VERSION_1804="cudnn-10.2-linux-x64-v8.1.0.77.tgz"
                 export CUDNN_VERSION_2004="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
                 
                 export OPENCV_VER=4.5.1
@@ -295,7 +297,7 @@ Logging "#######################################################################
                     Logging "$installCUDA" 
                     cd ~
                     if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
-                    wget $CUDA_Download 
+                    if [ -f ~/$CUDA_Script ]; then chmod +x ~/$CUDA_Script; else wget $CUDA_Download; fi
                     if [ -f ~/$CUDA_Script ]; then
                         chmod +x $CUDA_Script
                         ./$CUDA_Script --silent
