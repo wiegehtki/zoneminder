@@ -17,8 +17,9 @@
                # export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-11.1_Samples"
 
                 ######################### CUDA 10.1 - Settings #######################################################################################
-                export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
-                export CUDA_Script=cuda_10.1.105_418.39_linux.run
+
+                export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run
+                export CUDA_Script=cuda_10.1.243_418.87.00_linux.run
                 export CUDA_PFAD_BASHRC="/usr/local/cuda-10.1/bin"
                 export CUDA_PFAD="/usr/local/cuda-10.1"
                 export CUDA_COMPUTE_CAPABILITY=6.1
@@ -323,6 +324,7 @@ Logging "#######################################################################
                             done  
                         else
                             Logging "$errorDeviceQuery"  
+                            exit 255
                         fi
                         # PATH includes /usr/local/cuda-11.2/bin
                         # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
