@@ -618,7 +618,6 @@ Logging "#######################################################################
                     export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
                     export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
                     #Wichtig: Je nach Karte anpassen - CUDA_ARCH_BIN = https://en.wikipedia.org/wiki/CUDA 
-
                     Logging "InstallOpenCV $infoStep1"
                     cmake -D CMAKE_BUILD_TYPE=RELEASE \
                           -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -647,7 +646,6 @@ Logging "#######################################################################
                     make install
                     pkg-config --cflags --libs opencv4
                     pkg-config --modversion opencv4
-
                     Logging "InstallOpenCV $checkOpenCV"
                     python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)' >  ~/devices.cuda
                    
