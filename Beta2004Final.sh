@@ -8,30 +8,26 @@
                 export OPENCV_VER="4.5.1"
              
                 ######################### CUDA 11.1.1 - Settings #####################################################################################
-                export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
-                export CUDA_Script=cuda_11.1.1_455.32.00_linux.run
-                export CUDA_PFAD_BASHRC="/usr/local/cuda-11.1/bin"
-                export CUDA_PFAD="/usr/local/cuda-11.1"
-                export CUDA_COMPUTE_CAPABILITY=6.1
-                export CUDA_SEARCH_PATH="/usr/local/cuda-11.1/lib64"
-                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-11.1_Samples"
+               # export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
+               # export CUDA_Script=cuda_11.1.1_455.32.00_linux.run
+               # export CUDA_PFAD_BASHRC="/usr/local/cuda-11.1/bin"
+               # export CUDA_PFAD="/usr/local/cuda-11.1"
+               # export CUDA_COMPUTE_CAPABILITY=6.1
+               # export CUDA_SEARCH_PATH="/usr/local/cuda-11.1/lib64"
+               # export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-11.1_Samples"
 
                 ######################### CUDA 10.1 - Settings #######################################################################################
-                #export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
-                #export CUDA_Script=cuda_10.1.105_418.39_linux.run
-                #export CUDA_PFAD_BASHRC="/usr/local/cuda-10.1/bin"
-                #export CUDA_PFAD="/usr/local/cuda-10.1"
-                #export CUDA_COMPUTE_CAPABILITY=6.1
-                #export CUDA_SEARCH_PATH="/usr/local/cuda-10.1/lib64"
-                #export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-10.1_Samples"
-                #export CUDNN_VERSION_1804="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
-
-                ######################## cuDNN - Settings #############################################################################################
-                export CUDNN_VERSION_1804="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
-                export CUDNN_VERSION_2004="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
+                export CUDA_Download=https://developer.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.105_418.39_linux.run
+                export CUDA_Script=cuda_10.1.105_418.39_linux.run
+                export CUDA_PFAD_BASHRC="/usr/local/cuda-10.1/bin"
+                export CUDA_PFAD="/usr/local/cuda-10.1"
+                export CUDA_COMPUTE_CAPABILITY=6.1
+                export CUDA_SEARCH_PATH="/usr/local/cuda-10.1/lib64"
+                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-10.1_Samples"
                 
-                #export CUDA_Download=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
-                #export CUDA_Script=cuda_11.2.0_460.27.04_linux.run
+                ######################## cuDNN - Settings #############################################################################################
+                export CUDNN_VERSION_1804="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
+                export CUDNN_VERSION_2004="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
                 
                 export OPENCV_VER=4.5.1
                 export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
@@ -820,26 +816,41 @@ Logging "#######################################################################
                     cd ~
                     Logging "CompileFfmpeg $infoStep2"
                     git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg_sources/
-                    cd ~/ffmpeg
+                    cd ~/ffmpeg_sources
                     Logging "CompileFfmpeg $infoStep3"
-                    if [ -f ~/ffmpeg/configure ]; then 
+                    if [ -f ~/ffmpeg_sources/configure ]; then 
                         if [ -f ~/ComputeCapability.FFMPEG ]; then 
                             for i in ` sed s'/=/ /g' ~/ComputeCapability.FFMPEG | awk '{print $1}' ` ; do
                                 export COMPUTE_COMP=$i
                             done
-                            sed -i "s/compute_30,code=sm_30/compute_$COMPUTE_COMP,code=sm_$COMPUTE_COMP/g" ~/ffmpeg/configure
-                            sed -i "s/cuda-gpu-arch=sm_30/cuda-gpu-arch=sm_${COMPUTE_COMP}/g" ~/ffmpeg/configure
+                            sed -i "s/compute_30,code=sm_30/compute_$COMPUTE_COMP,code=sm_$COMPUTE_COMP/g" ~/ffmpeg_sources/configure
+                            sed -i "s/cuda-gpu-arch=sm_30/cuda-gpu-arch=sm_${COMPUTE_COMP}/g" ~/ffmpeg_sources/configure
                         fi                            
                     fi
                     ./configure --enable-nonfree --enable-cuda-nvcc --enable-cuda --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
                     make -j$(nproc) 
                     Logging "CompileFfmpeg $infoStep4" 
                     make install
-                    if [ -f /usr/local/bin/ffmpeg ]; then cp /usr/local/bin/ffmpeg /usr/bin/ffmpeg; fi
+                    if [ -f /usr/local/bin/ffmpeg ]; then mv /usr/local/bin/ffmpeg /usr/bin/ffmpeg; fi
                     #if [ -f /usr/local/bin/ffmpeg ]; then cp /usr/local/bin/ffmpeg /usr/share/ffmpeg; fi
                    
                     Logging "CompileFfmpeg $infoStepEnd"
                 }
+
+
+#./configure --enable-cuda \
+#             --enable-cuvid \
+#             --enable-nvenc \
+#             --enable-nonfree \
+#             --enable-libnpp \
+#             --enable-opengl \
+#             --enable-vaapi \
+#             --enable-vdpau \
+#             --enable-libvorbis \
+#             --enable-libmp3lame \
+#             --enable-libx264 \
+#             --enable-libx265 \
+#             --enable-gpl
 
                 #Bugfixing und Finalisierung
                 BugFixes_Init() {

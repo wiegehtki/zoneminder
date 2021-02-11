@@ -160,7 +160,8 @@
                            libv4l-dev \
                            v4l-utils \
                            libraw1394-doc \
-                           libgphoto2-dev
+                           libgphoto2-dev \
+                           libva-dev
         Logging "$infoStep1"
         cd /usr/include/linux
         ln -s -f ../libv4l1-videodev.h videodev.h 
