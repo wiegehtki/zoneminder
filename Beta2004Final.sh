@@ -14,6 +14,7 @@
                # export CUDA_COMPUTE_CAPABILITY=6.1
                # export CUDA_SEARCH_PATH="/usr/local/cuda-11.1/lib64"
                # export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-11.1_Samples"
+			   # export CUDA_VERSION="cuda-11.2"
 
                 ######################### CUDA 10.1 - Settings #######################################################################################
 
@@ -24,6 +25,7 @@
                 export CUDA_COMPUTE_CAPABILITY=6.1
                 export CUDA_SEARCH_PATH="/usr/local/cuda-10.2/lib64"
                 export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-10.2_Samples"
+	            export CUDA_VERSION="cuda-10.2"
                 
                 ######################## cuDNN - Settings #############################################################################################
                 export CUDNN_VERSION_1804="cudnn-10.2-linux-x64-v8.1.0.77.tgz"
@@ -326,7 +328,7 @@ Logging "#######################################################################
                             Logging "$errorDeviceQuery"  
                             exit 255
                         fi
-                        # PATH includes /usr/local/cuda-11.2/bin
+                        # PATH includes /usr/local/$CUDA_VERSION/bin
                         # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
                         #return 0
                     else
@@ -365,7 +367,7 @@ Logging "#######################################################################
                     ln libcudnn.so.8 libcudnn.so
                     
                     Logging "InstallcuDNN $infoStep2"
-                    cd  /usr/local/cuda-11.2/targets/x86_64-linux/lib
+                    cd  /usr/local/$CUDA_VERSION/targets/x86_64-linux/lib
                     if [ -f libcudnn_adv_infer.so ];   then rm libcudnn_adv_infer.so;   fi 
                     if [ -f libcudnn_ops_train.so ];   then rm libcudnn_ops_train.so;   fi 
                     if [ -f libcudnn_cnn_train.so ];   then rm libcudnn_cnn_train.so;   fi 
