@@ -310,7 +310,7 @@ Logging "#######################################################################
                         export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} >> ~/.bashrc
                         echo 'cd ~' >> ~/.bashrc
                         source ~/.bashrc
-                        apt-get -y install nvidia-cuda-toolkit
+                        #apt-get -y install nvidia-cuda-toolkit
                         Logging "$infoCompileCUDAExamples" 
                                     
                         cd ~/$CUDA_EXAMPLES_PATH
