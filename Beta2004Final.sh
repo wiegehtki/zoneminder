@@ -189,7 +189,7 @@
                 export CUDA_PFAD="/usr/local/cuda-$CUDA_VERSION"
                 export CUDA_COMPUTE_CAPABILITY=6.1
                 export CUDA_SEARCH_PATH="/usr/local/cuda-$CUDA_VERSION/lib64"
-                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-$CUDA_VER_Samples"
+                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-$CUDA_VERSION_Samples"
                 
                 ######################## cuDNN - Settings #############################################################################################
                 export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
@@ -253,11 +253,11 @@
                     exit 255
                 fi
 
-                if [[ ${LINUX_VERSION_NAME} == "18.04" ]]; then
+                if [[ ${LINUX_VERSION_NAME} = "18.04" ]]; then
                     export UBUNTU_VER="18.04"
                     export PHP_VERS="7.2"
                 else
-                   if [[ ${LINUX_VERSION_NAME} == "20.04" ]]; then
+                   if [[ ${LINUX_VERSION_NAME} = "20.04" ]]; then
                        export UBUNTU_VER="20.04"
                        export PHP_VERS="7.2"
                    else
@@ -306,7 +306,7 @@ Logging "#######################################################################
                     Logging "$installCUDA" 
                     cd ~
                     if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
-                    if [ -f ~/$CUDA_Script ]; then chmod +x ~/$CUDA_Script; else wget $CUDA_DOWNLOAD; fi
+                    wget $CUDA_DOWNLOAD
                     if [ -f ~/$CUDA_Script ]; then
                         chmod +x $CUDA_Script
                         ./$CUDA_Script --silent
