@@ -1,47 +1,16 @@
 #!/usr/bin/env bash
-                # Es wird empfohlen root als Benutzer zu verwenden
-                Benutzer="root" 
+                #Select
+                export OPENCV_VER="4.5.1"
+                export CUDA_VERSION="10.2"   
                 Language="German"
                 
-                #export ZM_VERSION="1.35" 
-                export ZM_VERSION="1.34"
-                export OPENCV_VER="4.5.1"
-             
-                ######################### CUDA 11.1.1 - Settings #####################################################################################
-               # export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run
-               # export CUDA_PFAD_BASHRC="/usr/local/cuda-11.1/bin"
-               # export CUDA_PFAD="/usr/local/cuda-11.1"
-               # export CUDA_COMPUTE_CAPABILITY=6.1
-               # export CUDA_SEARCH_PATH="/usr/local/cuda-11.1/lib64"
-               # export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-11.1_Samples"
-			   # export CUDA_VERSION="cuda-11.2"
-
-                ######################### CUDA 10.1 - Settings #######################################################################################
-
-                export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run
-                #https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run
-                export CUDA_PFAD_BASHRC="/usr/local/cuda-10.2/bin"
-                export CUDA_PFAD="/usr/local/cuda-10.2"
-                export CUDA_COMPUTE_CAPABILITY=6.1
-                export CUDA_SEARCH_PATH="/usr/local/cuda-10.2/lib64"
-                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-10.2_Samples"
-	            export CUDA_VERSION="cuda-10.2"
-                
-                ######################## cuDNN - Settings #############################################################################################
-                export CUDNN_VERSION_1804="cudnn-10.2-linux-x64-v8.1.0.77.tgz"
-                export CUDNN_VERSION_2004="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
-                
-                export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
-                export OPENCV_VER=4.5.1
-                export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
-                export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
-
                 if [ $Language = "German" ]; then
                     declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
                     declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
                     declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
                     declare -r errorGPUDriver="NOUVEAU - Grafiktreiber muss de-aktiviert sein! Bitte Initial-Script pruefen bzw. vorher laufen lassen."
                     declare -r errorDeviceQuery="Fehler beim  Ausfuehren von deviceQuery! Standardwert fuer CUDA_COMPUTE_CAPABILITY wird beibehalten!"
+                    declare -r errorCudaVersion="Angegebene CUDA - Version wird nicht unterstützt, Abbruch..."
                     declare -r errorcuDNN="cuDNN - Installationsdatei konnte nicht gefunden werden, Abbruch..."
                     declare -r errorDownload="konnte nicht herunter geladen werden, Abbruch..."
                     declare -r errorCUDAInstall="Fehler bei InstallCuda, Fehlernummer:"
@@ -117,6 +86,7 @@
                     declare -r errorLinuxDistribution="No valid distribution, installer exits"
                     declare -r errorGPUDriver="NOUVEAU - Graphics driver must be deactivated! Please check initial script or run it first."
                     declare -r errorDeviceQuery="Error when executing deviceQuery! Default value for CUDA_COMPUTE_CAPABILITY is retained!"
+                    declare -r errorCudaVersion="Specified CUDA version is not supported, abort..."
                     declare -r errorcuDNN="cuDNN - Installation file could not be found, abort..."
                     declare -r errorDownload="could not be downloaded, abort..."
                     declare -r errorCUDAInstall="Error with InstallCuda, Error:"
@@ -187,6 +157,47 @@
                     declare -r installFFMPEG="Compile ffmpeg"
                     declare -r installBugfixes="Apply bug fixes"
                 fi
+
+                # Es wird empfohlen root als Benutzer zu verwenden
+                Benutzer="root" 
+                
+                #export ZM_VERSION="1.35" 
+                export ZM_VERSION="1.34"
+                
+                ######################### CUDA / cuDNN - Settings ############################################################################################
+                if [ $CUDA_VERSION = "10.1" ]; then 
+                    export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run; 
+                    export CUDNN_VERSION="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
+                else 
+                    if [ $CUDA_VERSION = "10.2" ]; then 
+                        export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run; 
+                        export CUDNN_VERSION="cudnn-10.2-linux-x64-v8.1.0.77.tgz"
+                    else 
+                        if [ $CUDA_VERSION = "11.1" ]; then 
+                            export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run; 
+                            export CUDNN_VERSION="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
+                        else
+                            ColErr="\033[1;31m"
+                            NoColErr="\033[0m"
+                            echo -e ${ColErr}$(date -u) $errorCudaVersion ${NoColErr}
+                            exit 255
+                        fi
+                    fi
+                fi
+                
+                export CUDA_PFAD_BASHRC="/usr/local/cuda-$CUDA_VERSION/bin"
+                export CUDA_PFAD="/usr/local/cuda-$CUDA_VERSION"
+                export CUDA_COMPUTE_CAPABILITY=6.1
+                export CUDA_SEARCH_PATH="/usr/local/cuda-$CUDA_VERSION/lib64"
+                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-$CUDA_VER_Samples"
+                
+                ######################## cuDNN - Settings #############################################################################################
+                export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
+                export OPENCV_VER=4.5.1
+                export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
+                export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
+
+                
                 
                 if [ "$(whoami)" != $Benutzer ]; then
                    ColErr="\033[1;31m"
@@ -212,8 +223,6 @@
                 Logging() {
                     echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
                 }
-
-                
                 
                 export DEBCONF_NONINTERACTIVE_SEEN="true"
                 export DEBIAN_FRONTEND="noninteractive"
@@ -328,7 +337,7 @@ Logging "#######################################################################
                             Logging "$errorDeviceQuery"  
                             exit 255
                         fi
-                        # PATH includes /usr/local/$CUDA_VERSION/bin
+                        # PATH includes /usr/local/cuda-$CUDA_VERSION/bin
                         # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
                         #return 0
                     else
@@ -343,19 +352,16 @@ Logging "#######################################################################
                     Logging "$installcuDNN" 
                     local cuDNNFile
                     cd ~
-                    if [ -f ~/$CUDNN_VERSION_1804 ] && [ "$UBUNTU_VER" = "18.04" ]; then
-                          cuDNNFile=$CUDNN_VERSION_1804
+                    if [ -f ~/$CUDNN_VERSION ]; then 
+                        cuDNNFile=$CUDNN_VERSION
                     else
-                        if [ -f ~/$CUDNN_VERSION_2004 ] && [ "$UBUNTU_VER" = "20.04" ]; then
-                            cuDNNFile=$CUDNN_VERSION_2004
-                        else
-                            Logging "$errorcuDNN"
-                            echo " "
-                            echo $errorcuDNN
-                            return 1
-                        fi
+                        Logging "$errorcuDNN"
+                        echo " "
+                        echo $errorcuDNN
+                        return 1
                     fi
-                    Logging "$infoStep1"
+                   
+                   Logging "$infoStep1"
                     tar -xzvf $cuDNNFile
                     cp cuda/include/cudnn*.h /usr/local/cuda/include
                     cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
@@ -367,7 +373,7 @@ Logging "#######################################################################
                     ln libcudnn.so.8 libcudnn.so
                     
                     Logging "InstallcuDNN $infoStep2"
-                    cd  /usr/local/$CUDA_VERSION/targets/x86_64-linux/lib
+                    cd  /usr/local/cuda-$CUDA_VERSION/targets/x86_64-linux/lib
                     if [ -f libcudnn_adv_infer.so ];   then rm libcudnn_adv_infer.so;   fi 
                     if [ -f libcudnn_ops_train.so ];   then rm libcudnn_ops_train.so;   fi 
                     if [ -f libcudnn_cnn_train.so ];   then rm libcudnn_cnn_train.so;   fi 
