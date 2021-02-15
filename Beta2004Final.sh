@@ -185,11 +185,11 @@
                     fi
                 fi
                 
-                export CUDA_PFAD_BASHRC="/usr/local/cuda-$CUDA_VERSION/bin"
-                export CUDA_PFAD="/usr/local/cuda-$CUDA_VERSION"
+                export CUDA_PFAD_BASHRC="/usr/local/cuda-"$CUDA_VERSION"/bin"
+                export CUDA_PFAD="/usr/local/cuda-"$CUDA_VERSION
                 export CUDA_COMPUTE_CAPABILITY=6.1
-                export CUDA_SEARCH_PATH="/usr/local/cuda-$CUDA_VERSION/lib64"
-                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-$CUDA_VERSION_Samples"
+                export CUDA_SEARCH_PATH="/usr/local/cuda-"$CUDA_VERSION"/lib64"
+                export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-"$CUDA_VERSION"_Samples"
                 
                 ######################## cuDNN - Settings #############################################################################################
                 export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
@@ -305,8 +305,8 @@ Logging "#######################################################################
                 InstallCuda() {
                     Logging "$installCUDA" 
                     cd ~
-                    if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
-                    wget $CUDA_DOWNLOAD
+                    #if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
+                    #wget $CUDA_DOWNLOAD
                     if [ -f ~/$CUDA_Script ]; then
                         chmod +x $CUDA_Script
                         ./$CUDA_Script --silent
