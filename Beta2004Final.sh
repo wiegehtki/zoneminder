@@ -914,8 +914,8 @@ Logging "#######################################################################
                 Logging "Main $infoEndofInstallation"
 
 
-                cd ~
-                mkdir ffmpeg_sources
+                # cd ~
+                # mkdir ffmpeg_sources
                 # installLibs
                 # InstallCUDASDK
                 # InstallSDK
