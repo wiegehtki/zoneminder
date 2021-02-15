@@ -157,7 +157,7 @@
                     declare -r installFFMPEG="Compile ffmpeg"
                     declare -r installBugfixes="Apply bug fixes"
                 fi
-
+ 
                 # Es wird empfohlen root als Benutzer zu verwenden
                 Benutzer="root" 
                 
