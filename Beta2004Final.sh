@@ -19,6 +19,7 @@
                     declare -r errorLinuxDist="Keine unterstützte Linux-Distribution, Installer wird beendet, Abbruch..."
                     declare -r errorZMVersion="Keine gültige Zoneminder - Version angegeben, Abbruch..."
                     declare -r errorDetectIP="IP-Adresse kann nicht ermittelt werden, Abbruch..."
+                    declare -r errorDetectPHP="PHP-Version kann nicht ermittelt werden, Abbruch..."
                     
                     declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
                     declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
@@ -95,6 +96,7 @@
                     declare -r errorLinuxDist="No supported Linux distribution, installer quits, abort..."
                     declare -r errorZMVersion="No valid Zoneminder version specified, abort..."
                     declare -r errorDetectIP="IP address cannot be determined, abort..."
+                    declare -r errorDetectPHP="PHP version cannot be determined, abort..."
                     
                     declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
                     declare -r checkPythonVersion="No supported Python3 version found, abort..."
@@ -245,21 +247,30 @@
                 echo $(date -u) "$createInstallationLog"
                 touch ~/FinalInstall.log
                  
-                 
                 if lshw -C display | grep -q 'nouveau'; then
                     ColErr="\033[1;31m"
                     NoColErr="\033[0m"
                     echo -e ${ColErr}$(date -u) $errorGPUDriver ${NoColErr}
                     exit 255
                 fi
+                
+                php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'';" > ~/php.version
+                if [ -f ~/php.version ]; then
+                    for i in ` sed s'/=/ /g' ~/php.version | awk '{print $1}' ` ; do
+                        PHP_VERS=$i
+                    done
+                else
+                    ColErr="\033[1;31m"
+                    NoColErr="\033[0m"
+                    echo -e ${ColErr}$(date -u) $errorDetectPHP ${NoColErr}
+                    exit 255
+                fi
 
                 if [[ ${LINUX_VERSION_NAME} = "18.04" ]]; then
                     export UBUNTU_VER="18.04"
-                    export PHP_VERS="7.2"
                 else
                    if [[ ${LINUX_VERSION_NAME} = "20.04" ]]; then
                        export UBUNTU_VER="20.04"
-                       export PHP_VERS="7.2"
                    else
                        echo " "
                        ColErr="\033[1;31m"
@@ -273,8 +284,8 @@
 Logging "########################################################################################################################"
 Logging "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu $UBUNTU_VER                       By WIEGEHTKI.DE #"
 Logging "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                              #" 
-Logging "#                                                                                                                      #" 
-Logging "# V2.0.0 (Rev a), 30.01.2021                                                                                           #" 
+Logging "# For free use. Without warranty and to be used only on test systems                                                   #" 
+Logging "# V2.1.0 (Rev a), 30.01.2021                                                                                           #" 
 Logging "########################################################################################################################" 
                 UpdatePackages() {
                     Logging "$installUpdate"                  
