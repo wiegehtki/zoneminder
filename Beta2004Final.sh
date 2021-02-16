@@ -304,8 +304,8 @@ Logging "#######################################################################
                 InstallCuda() {
                     Logging "$installCUDA" 
                     cd ~
-                    #if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
-                    #wget $CUDA_DOWNLOAD
+                    if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
+                    wget $CUDA_DOWNLOAD
                     if [ -f ~/$CUDA_Script ]; then
                         chmod +x $CUDA_Script
                         ./$CUDA_Script --silent
@@ -343,7 +343,7 @@ Logging "#######################################################################
                        Logging "$CUDA_Script $errorDownload"
                        echo " "
                        echo $CUDA_Script $errorDownload
-                       #return 1
+                       return 1
                     fi
                     Logging "InstallCuda $infoStepEnd"
                 }
