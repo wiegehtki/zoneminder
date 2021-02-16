@@ -254,18 +254,6 @@
                     exit 255
                 fi
                 
-                php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'';" > ~/php.version
-                if [ -f ~/php.version ]; then
-                    for i in ` sed s'/=/ /g' ~/php.version | awk '{print $1}' ` ; do
-                        PHP_VERS=$i
-                    done
-                else
-                    ColErr="\033[1;31m"
-                    NoColErr="\033[0m"
-                    echo -e ${ColErr}$(date -u) $errorDetectPHP ${NoColErr}
-                    exit 255
-                fi
-
                 if [[ ${LINUX_VERSION_NAME} = "18.04" ]]; then
                     export UBUNTU_VER="18.04"
                 else
@@ -436,6 +424,20 @@ Logging "#######################################################################
                 }
                 SetUpPHP() {
                     Logging "$installPHP"  
+                    php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'';" > ~/php.version
+                    if [ -f ~/php.version ]; then
+                        for i in ` sed s'/=/ /g' ~/php.version | awk '{print $1}' ` ; do
+                            PHP_VERS=$i
+                        done
+                    else 
+                        export PHP_VERS="7.4"
+                    fi
+                    if [ $PHP_VERS \< "7.0" ] || [ $PHP_VERS \> "7.9" ]; then
+                        ColErr="\033[1;31m"
+                        NoColErr="\033[0m"
+                        echo -e ${ColErr}$(date -u) $errorDetectPHP ${NoColErr}
+                        exit 255
+                    fi
                     apt -y install php$PHP_VERS php$PHP_VERS-fpm libapache2-mod-php$PHP_VERS php$PHP_VERS-mysql php$PHP_VERS-gd
                     if [ -f /etc/php/$PHP_VERS/cli/php.ini ]; then
                         sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/$PHP_VERS/cli/php.ini
