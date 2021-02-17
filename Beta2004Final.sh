@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
                 #Select
+                touch ~/ExportControl.log
                 export OPENCV_VER="4.5.1"
-                export CUDA_VERSION="10.2"   
+                export CUDA_VERSION="10.2"
+                echo "OPENCV_VER "$OPENCV_VER  | tee -a  ~/ExportControl.log
+                echo "CUDA_VERSION "$CUDA_VERSION | tee -a  ~/ExportControl.log
+                
                 Language="German"
                 
                 if [ $Language = "German" ]; then
@@ -195,11 +199,18 @@
                 
                 ######################## cuDNN - Settings #############################################################################################
                 export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
-                export OPENCV_VER=4.5.1
                 export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
                 export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
 
-                
+                echo "CUDA_DOWNLOAD "$CUDA_DOWNLOAD | tee -a  ~/ExportControl.log
+                echo "CUDNN_VERSION "$CUDNN_VERSION | tee -a  ~/ExportControl.log
+                echo "CUDA_PFAD_BASHRC "$CUDA_PFAD_BASHRC | tee -a  ~/ExportControl.log
+                echo "CUDA_PFAD "$CUDA_PFAD | tee -a  ~/ExportControl.log
+                echo "CUDA_SEARCH_PATH "$CUDA_SEARCH_PATH | tee -a  ~/ExportControl.log
+                echo "CUDA_EXAMPLES_PATH "$CUDA_EXAMPLES_PATH | tee -a  ~/ExportControl.log
+                echo "CUDA_Script "$CUDA_Script | tee -a  ~/ExportControl.log
+                echo "OPENCV_URL "$OPENCV_URL | tee -a  ~/ExportControl.log
+                echo "OPENCV_CONTRIB_URL "$OPENCV_CONTRIB_URL | tee -a  ~/ExportControl.log
                 
                 if [ "$(whoami)" != $Benutzer ]; then
                    ColErr="\033[1;31m"
@@ -221,7 +232,8 @@
                     echo -e ${ColErr}$(date -u) $errorPythonVersion ${NoColErr}
                     exit 255
                 fi
-               
+                echo "PYTHON_VER "$PYTHON_VER | tee -a  ~/ExportControl.log               
+
                 Logging() {
                     echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
                 }
@@ -330,6 +342,7 @@ Logging "#######################################################################
                             for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
                                 do  
                                 export CUDA_COMPUTE_CAPABILITY=$i
+                                echo "CUDA_COMPUTE_CAPABILITY "$CUDA_COMPUTE_CAPABILITY | tee -a  ~/ExportControl.log               
                                 awk -v "a=$CUDA_COMPUTE_CAPABILITY" -v "b=10" 'BEGIN {printf "%.0f\n", a*b}' > ~/ComputeCapability.FFMPEG
                             done  
                         else
@@ -426,12 +439,21 @@ Logging "#######################################################################
                     Logging "$installPHP"  
                     php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'';" > ~/php.version
                     if [ -f ~/php.version ]; then
-                        for i in ` sed s'/=/ /g' ~/php.version | awk '{print $1}' ` ; do
-                            PHP_VERS=$i
-                        done
+                        FILESIZE=$(stat -c%s ~/php.version)
+                        if [ $FILESIZE -eq 0 ]; then 
+                            export PHP_VERS="7.4"
+                        else
+                            for i in ` sed s'/=/ /g' ~/php.version | awk '{print $1}' ` ; do
+                                PHP_VERS=$i
+                                echo ${#PHP_VERS} 
+                                echo "LULU"
+                            done
+                        fi
                     else 
                         export PHP_VERS="7.4"
                     fi
+                    echo "PHP_VERS "$PHP_VERS | tee -a  ~/ExportControl.log               
+
                     if [ $PHP_VERS \< "7.0" ] || [ $PHP_VERS \> "7.9" ]; then
                         ColErr="\033[1;31m"
                         NoColErr="\033[0m"
@@ -669,9 +691,17 @@ Logging "#######################################################################
                     python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)' >  ~/devices.cuda
                    
                     if [ -f ~/devices.cuda ]; then 
-                        for i in ` sed s'/=/ /g' ~/devices.cuda | awk '{print $1}' ` ; do
-                            if [ $i \> "0" ]; then Logging "$infoOpenCVCUDA"; else Logging "$errorOpenCVCUDA"; exit 255; fi
-                        done  
+                        FILESIZE=$(stat -c%s ~/devices.cuda)
+                        if [ $FILESIZE -eq 0 ]; then 
+                            ColErr="\033[1;31m"
+                            NoColErr="\033[0m"
+                            echo -e ${ColErr}$(date -u) $checkOpenCVCUDA ${NoColErr}
+                            exit 255
+                        else
+                            for i in ` sed s'/=/ /g' ~/devices.cuda | awk '{print $1}' ` ; do
+                                if [ $i \> "0" ]; then Logging "$infoOpenCVCUDA"; else Logging "$errorOpenCVCUDA"; exit 255; fi
+                            done  
+                        fi
                     else
                         ColErr="\033[1;31m"
                         NoColErr="\033[0m"
