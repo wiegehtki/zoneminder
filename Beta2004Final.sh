@@ -174,14 +174,17 @@
                 if [ $CUDA_VERSION = "10.1" ]; then 
                     export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run; 
                     export CUDNN_VERSION="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
+                    export cuDNN_MajorVersion="8.0.5"
                 else 
                     if [ $CUDA_VERSION = "10.2" ]; then 
                         export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run; 
                         export CUDNN_VERSION="cudnn-10.2-linux-x64-v8.1.0.77.tgz"
+                        export cuDNN_MajorVersion="8.1.0"
                     else 
                         if [ $CUDA_VERSION = "11.1" ]; then 
                             export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run; 
                             export CUDNN_VERSION="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
+                            export cuDNN_MajorVersion="8.0.5"
                         else
                             ColErr="\033[1;31m"
                             NoColErr="\033[0m"
@@ -204,6 +207,7 @@
 
                 echo "CUDA_DOWNLOAD "$CUDA_DOWNLOAD | tee -a  ~/ExportControl.log
                 echo "CUDNN_VERSION "$CUDNN_VERSION | tee -a  ~/ExportControl.log
+                echo "cuDNN_MajorVersion "$cuDNN_MajorVersion | tee -a  ~/ExportControl.log
                 echo "CUDA_PFAD_BASHRC "$CUDA_PFAD_BASHRC | tee -a  ~/ExportControl.log
                 echo "CUDA_PFAD "$CUDA_PFAD | tee -a  ~/ExportControl.log
                 echo "CUDA_SEARCH_PATH "$CUDA_SEARCH_PATH | tee -a  ~/ExportControl.log
@@ -399,12 +403,12 @@ Logging "#######################################################################
                     if [ -f libcudnn_adv_train.so.8 ]; then rm libcudnn_adv_train.so.8; fi 
                     if [ -f libcudnn_ops_infer.so.8 ]; then rm libcudnn_ops_infer.so.8; fi 
                     Logging "InstallcuDNN $infoStep3"
-                    ln libcudnn_adv_infer.so.8.0.5 libcudnn_adv_infer.so.8
-                    ln libcudnn_ops_train.so.8.0.5 libcudnn_ops_train.so.8
-                    ln libcudnn_cnn_train.so.8.0.5 libcudnn_cnn_train.so.8
-                    ln libcudnn_cnn_infer.so.8.0.5 libcudnn_cnn_infer.so.8
-                    ln libcudnn_adv_train.so.8.0.5 libcudnn_adv_train.so.8
-                    ln libcudnn_ops_infer.so.8.0.5 libcudnn_ops_infer.so.8
+                    ln libcudnn_adv_infer.so.$cuDNN_MajorVersion libcudnn_adv_infer.so.8
+                    ln libcudnn_ops_train.so.$cuDNN_MajorVersion libcudnn_ops_train.so.8
+                    ln libcudnn_cnn_train.so.$cuDNN_MajorVersion libcudnn_cnn_train.so.8
+                    ln libcudnn_cnn_infer.so.$cuDNN_MajorVersion libcudnn_cnn_infer.so.8
+                    ln libcudnn_adv_train.so.$cuDNN_MajorVersion libcudnn_adv_train.so.8
+                    ln libcudnn_ops_infer.so.$cuDNN_MajorVersion libcudnn_ops_infer.so.8
                     ln libcudnn_adv_infer.so.8 libcudnn_adv_infer.so
                     ln libcudnn_ops_train.so.8 libcudnn_ops_train.so
                     ln libcudnn_cnn_train.so.8 libcudnn_cnn_train.so
