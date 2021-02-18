@@ -2,7 +2,6 @@
     #Select
     touch ~/ExportControl.log
     export OPENCV_VER="4.5.1"
-    export CUDA_VERSION="10.2"
     echo "OPENCV_VER "$OPENCV_VER  | tee -a  ~/ExportControl.log
     echo "CUDA_VERSION "$CUDA_VERSION | tee -a  ~/ExportControl.log
     
@@ -167,7 +166,22 @@
     # Es wird empfohlen root als Benutzer zu verwenden
     Benutzer="root" 
     #export ZM_VERSION="1.35" 
+    export LINUX_VERSION_NAME=`lsb_release -sr`
     export ZM_VERSION="1.34"
+
+    if [[ ${LINUX_VERSION_NAME} = "18.04" ]]; then
+        export CUDA_VERSION="10.2"
+    else
+       if [[ ${LINUX_VERSION_NAME} = "20.04" ]]; then
+           export CUDA_VERSION="11.1"
+       else
+           echo " "
+           ColErr="\033[1;31m"
+           NoColErr="\033[0m"
+           echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
+           exit 255
+       fi
+    fi
     
     ######################### CUDA / cuDNN - Settings ############################################################################################
     if [ $CUDA_VERSION = "10.1" ]; then 
@@ -249,8 +263,7 @@
     export SHMEM="50%"
     export MULTI_PORT_START="0"
     export MULTI_PORT_END="0"
-    export LINUX_VERSION_NAME=`lsb_release -sr`
-                     
+                         
     #Vorbelegung CompilerFlags und Warnungen zu unterdrücken die durch automatisch generierten Code schnell mal entstehen können und keine wirkliche Relevanz haben
     export CFLAGS=$CFLAGS" -w"
     export CPPFLAGS=$CPPFLAGS" -w"
