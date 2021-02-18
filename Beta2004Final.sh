@@ -166,7 +166,6 @@
 
     # Es wird empfohlen root als Benutzer zu verwenden
     Benutzer="root" 
-    
     #export ZM_VERSION="1.35" 
     export ZM_VERSION="1.34"
     
@@ -297,6 +296,7 @@ Logging "#######################################################################
         apt-get -y dist-upgrade
         Logging "UpdatePackages $infoStepEnd"
     }
+
     InstallGPUTools() {
         Logging "$installGPUTools"
         if [ "$UBUNTU_VER" = "18.04" ]; then 
@@ -317,6 +317,7 @@ Logging "#######################################################################
         if [ -f /usr/local/bin/glances ]; then mv /usr/local/bin/glances /usr/bin/; fi
         Logging "$infoStepEnd"
     }
+
     InstallCuda() {
         Logging "$installCUDA" 
         cd ~
@@ -364,6 +365,7 @@ Logging "#######################################################################
         fi
         Logging "InstallCuda $infoStepEnd"
     }
+
     InstallcuDNN() {
         Logging "$installcuDNN" 
         local cuDNNFile
@@ -385,7 +387,7 @@ Logging "#######################################################################
         cd /usr/local/cuda/lib64
         if [ -f libcudnn.so ];   then rm libcudnn.so;   fi 
         if [ -f libcudnn.so.8 ]; then rm libcudnn.so.8; fi 
-        ln libcudnn.so.8.0.5 libcudnn.so.8
+        ln libcudnn.so.$cuDNN_MajorVersion libcudnn.so.8
         ln libcudnn.so.8 libcudnn.so
         
         Logging "InstallcuDNN $infoStep2"
@@ -419,6 +421,7 @@ Logging "#######################################################################
         Logging "InstallcuDNN $infoStepEnd"
         return 0                    
     }
+
     SetUpMySQL() {
         Logging "$installMySQL"  
         if [ $# -eq 0 ]; then
@@ -439,6 +442,7 @@ Logging "#######################################################################
         fi 
         Logging "SetUpMySQL $infoStepEnd"
     }
+
     SetUpPHP() {
         Logging "$installPHP"  
         php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'';" > ~/php.version
@@ -478,6 +482,7 @@ Logging "#######################################################################
         echo "extension=mcrypt.so" > /etc/php/$PHP_VERS/mods-available/mcrypt.ini
         Logging "SetUpPHP $infoStepEnd"
     }
+
     AccessRightsZoneminder() {
         Logging "$installZMAccessRights"  
         chown root:www-data /etc/zm/zm.conf
@@ -486,6 +491,7 @@ Logging "#######################################################################
         chmod 640 /etc/zm/conf.d/*.conf
         Logging "AccessRightsZoneminder $infoStepEnd"
     }
+
     SetUpApache2() {
         Logging "$installApacheSetup" 
         a2enmod cgi
@@ -539,6 +545,7 @@ Logging "#######################################################################
         systemctl reload apache2
         Logging "SetUpApache2 $infoStepEnd"
     }
+
     InstallZoneminder() {
         Logging "$installZM"  
  
@@ -581,6 +588,7 @@ Logging "#######################################################################
         systemctl start zoneminder
         Logging "$infoStepEnd"
     }
+
     #EventServer installieren
     InstallEventserver() {
         Logging "$installEventServer"  
@@ -623,6 +631,7 @@ Logging "#######################################################################
         systemctl restart apache2  
         Logging "InstallEventserver $infoStepEnd"
     }
+
     #Apache, MySQL, PHP 
     InstallFaceRecognition() {
         Logging "$installFaceRecognition"  
