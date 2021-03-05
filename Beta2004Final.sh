@@ -173,7 +173,7 @@
         export CUDA_VERSION="10.2"
     else
        if [[ ${LINUX_VERSION_NAME} = "20.04" ]]; then
-           export CUDA_VERSION="11.1"
+           export CUDA_VERSION="11.2"
        else
            echo " "
            ColErr="\033[1;31m"
@@ -194,10 +194,11 @@
             export CUDNN_VERSION="cudnn-10.2-linux-x64-v8.1.0.77.tgz"
             export cuDNN_MajorVersion="8.1.0"
         else 
-            if [ $CUDA_VERSION = "11.1" ]; then 
-                export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run; 
-                export CUDNN_VERSION="cudnn-11.1-linux-x64-v8.0.5.39.tgz"
-                export cuDNN_MajorVersion="8.0.5"
+            if [ $CUDA_VERSION = "11.2" ]; then 
+                export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.2.1/local_installers/cuda_11.2.1_460.32.03_linux.run
+                #11.1 https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run; 
+                export CUDNN_VERSION="cudnn-11.2-linux-x64-v8.1.1.33.tgz"
+                export cuDNN_MajorVersion="8.1.1"
             else
                 ColErr="\033[1;31m"
                 NoColErr="\033[0m"
