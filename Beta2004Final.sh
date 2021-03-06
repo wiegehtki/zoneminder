@@ -54,7 +54,7 @@
         
         declare -r installUpdate="Pakete aktualisieren"
         declare -r installCUDA="CUDA - Download und Installation inklusive Grafiktreiber"
-        declare -r installYOLO="YOLOv-v4 - Download und Installation"
+        declare -r installYOLO="YOLOv2-v4 - Download und Installation"
         declare -r installcuDNN="Installation cuDNN"
         declare -r installImagehandling="Pakete für Imagehandling installieren"
         declare -r installCodecs="Codecs installieren"
@@ -157,7 +157,7 @@
         declare -r installFaceRecognition="Face recognition - Setup" 
         declare -r installLAMP="LAMP - Setup"
         declare -r installOpenCV="Compile OpenCV with Compute Capability $CUDA_COMPUTE_CAPABILITY"
-        declare -r installYOLO="YOLOv-v4 - Download and Installation"
+        declare -r installYOLO="YOLOv2-v4 - Download and Installation"
         declare -r installLibs="Install necessary packages"
         declare -r installNASM="Compile nasm"
         declare -r installx264="Compile libx264"
@@ -769,6 +769,9 @@ Logging "#######################################################################
         (ls ~/darknet/YoloWeights/yolov3.weights >> /dev/null 2>&1 && echo "yolov3.weights ok") || echo "Download: yolov3.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A" -O ~/darknet/YoloWeights/yolov3.weights && rm -rf /tmp/cookies.txt
         (ls ~/darknet/YoloWeights/yolov3-tiny.weights >> /dev/null 2>&1 && echo "yolov3-tiny.weights ok") || echo "Download: yolov3-tiny.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt" -O ~/darknet/YoloWeights/yolov3-tiny.weights && rm -rf /tmp/cookies.txt
    
+        cd ~/darknet/data
+        if [ ! -f ~/darknet/data/darknet53.conv.74 ]; then wget https://pjreddie.com/media/files/darknet53.conv.74; fi
+
         Logging "InstallYOLO $infoStep2"
         cd ~/darknet
         make
