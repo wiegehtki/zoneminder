@@ -345,9 +345,11 @@ Logging "#######################################################################
             echo $CUDA_SEARCH_PATH >> /etc/ld.so.conf
             ldconfig
             echo 'export PATH='$CUDA_SEARCH_PATH':'$PATH >> ~/.bashrc
-            export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} >> ~/.bashrc
-            export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} >> ~/.bashrc
+            echo 'LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
+            export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
+            export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
             echo 'cd ~' >> ~/.bashrc
+            ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
             source ~/.bashrc
             #apt-get -y install nvidia-cuda-toolkit
             Logging "$infoCompileCUDAExamples" 
