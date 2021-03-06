@@ -23,6 +23,7 @@
         declare -r errorZMVersion="Keine gültige Zoneminder - Version angegeben, Abbruch..."
         declare -r errorDetectIP="IP-Adresse kann nicht ermittelt werden, Abbruch..."
         declare -r errorDetectPHP="PHP-Version kann nicht ermittelt werden, Abbruch..."
+        declare -r errorDarknetRepo="darknet - Verzeichnis existiert bereits, Abbruch..."
         
         declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
         declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
@@ -101,6 +102,7 @@
         declare -r errorZMVersion="No valid Zoneminder version specified, abort..."
         declare -r errorDetectIP="IP address cannot be determined, abort..."
         declare -r errorDetectPHP="PHP version cannot be determined, abort..."
+        declare -r errorDarknetRepo="darknet - directory already exist, abort..."
         
         declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
         declare -r checkPythonVersion="No supported Python3 version found, abort..."
@@ -741,16 +743,35 @@ Logging "#######################################################################
         Logging "InstallOpenCV $infoStepEnd"
     }
  
- InstallYOLO() {
+    InstallYOLO() {
         Logging "$installYOLO"
         apt-get -y install xrdp \
                    adduser xrdp ssl-cert
         systemctl restart xrdp
-        
+
+        #Disbale Power Management
+        systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
         cd ~
-        
+        if [ -f ~/darknet ]; then 
+            Loggging "$errorDarknetRepo"
+            return 1
+        else
+            mv ~/darknet.repo ~/darknet
+        fi 
+
+        Logging "InstallYOLO $infoStep1"
+        (ls ~/darknet/YoloWeights >> /dev/null 2>&1 && echo "YoloWeights ok)" || mkdir ~/darknet/YoloWeights
+        (ls ~/darknet/YoloWeights/yolov4.weights >> /dev/null 2>&1 && echo "yolov4.weights ok") || echo "Download: yolov4.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT" -O ~/darknet/YoloWeights/yolov4.weights && rm -rf /tmp/cookies.txt
+        (ls ~/darknet/YoloWeights/yolov3.weights >> /dev/null 2>&1 && echo "yolov3.weights ok") || echo "Download: yolov3.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A" -O ~/darknet/YoloWeights/yolov3.weights && rm -rf /tmp/cookies.txt
+        (ls ~/darknet/YoloWeights/yolov3-tiny.weights >> /dev/null 2>&1 && echo "yolov3-tiny.weights ok") || echo "Download: yolov3-tiny.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt" -O ~/darknet/YoloWeights/yolov3-tiny.weights && rm -rf /tmp/cookies.txt
+   
+        Logging "InstallYOLO $infoStep2"
+        cd ~/darknet
+        make
         Logging "InstallYOLO $infoStepEnd"
     }
+    
  
     InstallLibs() {
         Logging "$installLibs"

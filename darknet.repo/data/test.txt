@@ -1,0 +1,12 @@
+./training/img/Audi_19.jpg
+./training/img/Audi_1.jpg
+./training/img/Audi_20.jpg
+./training/img/Audi_30.jpg
+./training/img/BMW_15.jpg
+./training/img/BMW_1.jpg
+./training/img/BMW_20.jpg
+./training/img/BMW_32.jpg
+./training/img/BMW_40.jpg
+./training/img/BMW_53.jpg
+./training/img/BMW_61.jpg
+./training/img/BMW_62.jpg

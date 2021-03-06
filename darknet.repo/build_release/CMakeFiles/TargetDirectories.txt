@@ -1,0 +1,10 @@
+/home/uwuertz/darknet/build_release/CMakeFiles/install.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/list_install_components.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/rebuild_cache.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/edit_cache.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/install/local.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/darknet.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/install/strip.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/uselib.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/uselib_track.dir
+/home/uwuertz/darknet/build_release/CMakeFiles/dark.dir

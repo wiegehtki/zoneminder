@@ -1,0 +1,5 @@
+classes= 2
+train  = /root/darknet/data/train.txt
+valid  = /root/darknet/data/test.txt
+names  = /root/darknet/data/obj.names
+backup = backup/

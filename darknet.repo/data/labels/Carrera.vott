@@ -1,0 +1,38 @@
+{
+    "name": "Carrera",
+    "sourceConnection": {
+        "name": "Local_Img",
+        "providerType": "localFileSystemProxy",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiNzY3OWY5MTE5NTZlODUxMjVhZWI4ODY4MWU0YThhN2M0YjNiODhkMmExYWRkOTg5ODAxMTU1M2Q0MjMzNzE3MjlmMzM4MDViYzA4NDZhNzFjZDIyNTU1MGE5NmM1ZGFlMDVmMDBhZjAyNTZhMWE2ZTIwOTY3MTA2YmMzZjY5NmE4MGVlYTNiZTZiMDJjY2Y3YzMyNzVkZjkwMGE3ZTFmZiIsIml2IjoiNjFmYTk2NDAzMDY2NTU1MDQ5ZDlmOWNjNTQ3N2ZjNjA5OTRiNGFlMWFhZWZlODgyIn0="
+        },
+        "id": "onqS63c6L"
+    },
+    "targetConnection": {
+        "name": "Local_Img_Output",
+        "providerType": "localFileSystemProxy",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiZGY0NGRkMTczYmM0ODViMTM4YjlhNjMwNWEyNmMxMzkxYTVmYTI3ZGIzMzNhOTQ4MjhmZDI0MmY4MzM0MWZkYTNhODAzM2U1Nzg3OTE3ZDRkMGY4ODBmMDE3NWMyM2RmY2JhOGQ4ZjM1YWNiMWZmMTcxNDdhNDEwMjk1ODU1NjJlNzg3NmIwOWRhM2RkNzVmY2VhZGY1NmFmYzhmZTQzYyIsIml2IjoiYmM0NjYxNTBhMDQwNzE4NTNmMDQwZTgyNGFjN2M5OTNjMDIyNGM1NWJiNGQxNjFiIn0="
+        },
+        "id": "FbeeYo-PK"
+    },
+    "videoSettings": {
+        "frameExtractionRate": 15
+    },
+    "tags": [],
+    "useSecurityToken": true,
+    "securityToken": "Carrera",
+    "id": "7fTENLY2V",
+    "activeLearningSettings": {
+        "autoDetect": false,
+        "predictTag": true,
+        "modelPathType": "coco"
+    },
+    "exportFormat": {
+        "providerType": "vottJson",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiNTAxYzlkYmUwM2RiYWRkYzA1YjE3ZmQ2YjVmNGNmNTY2MTJlYTU0Yzk2NjFjNzM0NThmMzJjNTQ0YTQ3ODIxZTgzMTQyMWY5OWU1MDU1OTA4ZDI3OWQ5ZDhkOTdkNjEzIiwiaXYiOiI0MWY3ODhhODVjZDBhNTdiYmI1NjM3ZmY2ZjFkYTAyMDRmMTJhMzMxYzk0NzM5NTcifQ=="
+        }
+    },
+    "version": "2.2.0"
+}

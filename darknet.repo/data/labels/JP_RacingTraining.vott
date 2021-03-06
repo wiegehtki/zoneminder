@@ -1,0 +1,41 @@
+{
+    "name": "JP_RacingTraining",
+    "sourceConnection": {
+        "name": "Carrera",
+        "description": "Training der Carrera - DTM Autos",
+        "providerType": "localFileSystemProxy",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiYTc3MjI5ZGM3NGRmNmZmZjkxMWI3ZDBlMWJkYWRhZGUwNWUzYWQ4NzBhMjk3ZDFjZTc3MmE1YmFlYzQzM2MyNzk3NTM2OGNkYjE1YjYwMmE2Y2E5Y2FjZGRkNDI4ZDkyNTcyMTVmMjc0ZDczMjFiY2I5ZjVmMjM2MzdhNWJmOWU2ZmIyZjhlMjExNzEzNTBhMGI2ZGVjNTk1YTM2ODhmOSIsIml2IjoiYzkyZTlmN2Y5MDU1NDkzOWM0NjEzNzMzOGZjMzM3MGZjMmIwODBiZTMzYzljYzE1In0="
+        },
+        "id": "oErDyfOBu"
+    },
+    "targetConnection": {
+        "name": "Carrera_ImgReady",
+        "description": "Fertig gelabelte Images",
+        "providerType": "localFileSystemProxy",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiY2UwMDFmMTVjZTA3YTljNWZjM2MxYmY4OTVkN2ExNDI4ZmY2MzM1NmI5ZGE0MjI1MTA0OTBiMTI4MWMwMWFmN2MyMzI4Y2M2ZGYyNzYzMGY1MTczMzFjOGNhNmI5YzA1OWY1ZDEzZThmZmU1NzNkYmVjYjI5Y2RhMDMzY2ZjODcxN2QxNzZmZTMyNDM3NDk3OTkzN2UwODk3YjM2N2Y5YiIsIml2IjoiNjE0NjA4NDJiZmU2NDUzNDU0N2M3NTI2MzA3MWJhMmYzZTk4ZDBjNTcwNWE5N2M1In0="
+        },
+        "id": "_WAsCZBWI"
+    },
+    "description": "Training der Carrera-Rennwagen (DTM)",
+    "videoSettings": {
+        "frameExtractionRate": 15
+    },
+    "tags": [],
+    "useSecurityToken": true,
+    "securityToken": "JP_RacingTraining Token",
+    "id": "MNbUHVc1y",
+    "activeLearningSettings": {
+        "autoDetect": false,
+        "predictTag": true,
+        "modelPathType": "coco"
+    },
+    "exportFormat": {
+        "providerType": "vottJson",
+        "providerOptions": {
+            "encrypted": "eyJjaXBoZXJ0ZXh0IjoiNWU5NTFmNzMxZDAzYzY3ZDY3Y2E2MmFmZmRkMDk0NjdiY2JkZmJlYjgxMjg5YzI2NmRlM2JmNTQ3OGU3Njc0ZDQ0YzNlYjYwNjE4MzI3N2U1NjMwODBmZjE2NWQ4MTExIiwiaXYiOiI0ODNkMWRkZjkyYjYxODA1ZDNiNjk3MjY5ZjZkNTZmMmQ1MGE0MGVhZDJkNGZmMGIifQ=="
+        }
+    },
+    "version": "2.2.0"
+}

@@ -1,0 +1,10 @@
+/home/uwuertz/darknet/libdark.so
+/home/uwuertz/darknet/include/darknet/darknet.h
+/home/uwuertz/darknet/include/darknet/yolo_v2_class.hpp
+/home/uwuertz/darknet/uselib
+/home/uwuertz/darknet/darknet
+/home/uwuertz/darknet/uselib_track
+/home/uwuertz/darknet/share/darknet/DarknetTargets.cmake
+/home/uwuertz/darknet/share/darknet/DarknetTargets-release.cmake
+/home/uwuertz/darknet/share/darknet/DarknetConfig.cmake
+/home/uwuertz/darknet/share/darknet/DarknetConfigVersion.cmake

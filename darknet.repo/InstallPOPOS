@@ -1,0 +1,1000 @@
+  267  cp ~/Documents/darknet.works/build.sh .
+  268  cp ~/Documents/darknet.works/Makefile .
+  269  cp ~/Documents/darknet.works/CMakefile .
+  270  cp ~/Documents/darknet.works/CMakeLists.txt .
+  271  ls
+  272  mv * ../
+  273  ls
+  274  cd ..
+  275  rm darknet
+  276  rm darknet -rf
+  277  ls
+  278  cd ..
+  279  ls#
+  280  ls
+  281  git commit -m "Upload darknet-repos 14052020"
+  282  git clone *
+  283  git add *
+  284  git commit -m "Upload darknet-repos 14052020"
+  285  git push origin master
+  286  ls
+  287  ls -la
+  288  cp /media/uwuertz/5488-3AFC/Installv2.3.6.sh .
+  289  sudo apt -y update
+  290  sudo apt -y dist-upgrade
+  291  sudo apt-get install pidgin pidgin-sipe
+  292  dpkg -l | grep pidgin
+  293  nano 192.168.254.47
+  294  ssh nvidia@192.168.254.47
+  295  ssh-keygen -f "/home/uwuertz/.ssh/known_hosts" -R "192.168.254.47"
+  296  ssh nvidia@192.168.254.47
+  297  cd Documents/WIEGEHTKI.DE/Github
+  298  git add *
+  299  history
+  300  git commit -m "Update darknet"
+  301  history
+  302  git push origin master
+  303  git help -a | grep credential-
+  304  credential-store
+  305  git help -a | grep credential-store
+  306  git help credential-store
+  307  git help -a | grep credential-
+  308  git help credential-store
+  309  sudo apt -y update
+  310  ssh nvidia@192.168.254.47
+  311  ssj pi@192.168.254.231
+  312  ssh pi@192.168.254.231
+  313  cd Downloads/
+  314  scp -r pi@192.168.254.231:/home/pi/.homebridge .
+  315  mv .homebridge homebridge.pi
+  316  scp -r root@192.168.254.231:/home/pi/.homebridge .
+  317  scp -r root@192.168.254.231:/root/.homebridge .
+  318  rm -rf .homebridge
+  319  scp -r root@192.168.254.231:/root/.homebridge .
+  320  mv .homebridge homebridge.root
+  321  ls
+  322  ping homebriodge.local
+  323  ping homebridge.local
+  324  ssh admin@192.168.254.231
+  325  ssh-keygen -f "/home/uwuertz/.ssh/known_hosts" -R "192.168.254.231"
+  326  ssh admin@192.168.254.231
+  327  ssh pi@192.168.254.231
+  328  sudo apt -y update
+  329  sudo apt -y upgrade
+  330  sudo apt -y dist-upgrade 
+  331  sudo apt -y dist-upgrade --allow-downgrades
+  332  exit
+  333  openvpn
+  334  history
+  335  appimaged
+  336  mkdir vpn
+  337  cd vpn/
+  338  cp ../Downloads/firewall-UDP4-1194-udo.wuertz-android-config.ovpn HO1194.ovpn
+  339  openvpn
+  340  sudo apt install openvpn
+  341  open
+  342  openvpn 
+  343  ls
+  344  chmod +x *
+  345  openvpn –config HO1194.ovpn
+  346  openvpn –.config HO1194.ovpn
+  347  openvpn –-config HO1194.ovpn
+  348  sudo apt-get install openvpn easy-rsa
+  349  sudo openvpn HO1194.ovpn
+  350  sudo apt-get install network-manager-openvpn-gnome
+  351  sudo su
+  352  sudosu
+  353  sudo su
+  354  mkdir -p ~/.local/share/gnome-shell/extensions
+  355  rm -rf ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io
+  356  unzip -o gsconnect@andyholmes.github.io.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io
+  357  unzip -o Downloads/gsconnect@andyholmes.github.io.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io
+  358  unzip -o Downloads/gsconnectandyholmes.github.io.v38.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io
+  359  sudo install meson
+  360  sudo apt -y install meson
+  361  sudo apt -y install libglib2.0-dev
+  362  git clone https://github.com/andyholmes/gnome-shell-extension-gsconnect.git
+  363  cd gnome-shell-extension-gsconnect/
+  364  meson _build .
+  365  sudo meson _build .
+  366  ninja -C _build install-zip
+  367  ls -la /home/uwuertz/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io
+  368  sudo reboot
+  369  rm -rf ~/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io
+  370  sudo apt install gnome-shell-extension-gsconnect
+  371  sudo apt install gnome-shell-extension-gsconnect-browsers
+  372  sudo add-apt-repository -u universe
+  373  sudo apt install gnome gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0 
+  374  reboot
+  375  sudo apt install chrome-gnome-shell
+  376  sudo ufw allow 1714:1764/udp
+  377  sudo ufw allow 1714:1764/tcp
+  378  sudo ufw reload
+  379  sudo su
+  380  sudo apt-get install evolution-ews
+  381  ssh pi@172.16.0.240
+  382  ssh pi@172.16.0.240
+  383  ssh pi@172.16.0.240
+  384  sudo apt -y update
+  385  ssh pi@172.16.0.240
+  386  sudo apt update && sudo apt install nautilus-reduceimages
+  387  sudo add-apt-repository ppa:atareao/nautilus-extensions
+  388  sudo apt update && sudo apt install nautilus-reduceimages
+  389  nautilus --version
+  390  sudo nautilus --version
+  391  sudo del-apt-repository ppa:atareao/nautilus-extensions
+  392  sudo rem-apt-repository ppa:atareao/nautilus-extensions
+  393  ls /etc/ld.so.conf
+  394  cat /etc/ld.so.conf
+  395  ls /etc/apt/sources.list
+  396  cat /etc/apt/sources.list
+  397  nano /etc/apt/sources.list
+  398  ls /etc/apt/
+  399  nano /etc/apt/sources.list.d/
+  400  ls /etc/apt/sources.list.d/
+  401  rm /etc/apt/sources.list.d/atareao-ubuntu-nautilus-extensions-focal.list 
+  402  rm /etc/apt/sources.list.d/atareao-ubuntu-nautilus-extensions-focal.list  -y
+  403  rm /etc/apt/sources.list.d/atareao-ubuntu-nautilus-extensions-focal.list -rf 
+  404  sudo rm /etc/apt/sources.list.d/atareao-ubuntu-nautilus-extensions-focal.list 
+  405  apt -y update
+  406  sudo apt -y update
+  407  sudo nautilus --version
+  408  nautilus
+  409  sudo apt install imagemagick
+  410  sudo apt install nautilus-image-converter
+  411  nautilus -q
+  412  nautilus
+  413  ssh pi@172.16.0.240
+  414  sudo apt install nautilus-reduceimages
+  415  sudo apt-get install jpegoptim
+  416  cd Documents/WIEGEHTKI.DE/ai-training.guru/
+  417  ls
+  418  jpegoptim homebackground.jpeg 
+  419  ls
+  420  ls -la
+  421  jpegoptim --size=15k homebackground.jpeg --dest ~/Desktop
+  422  jpegoptim --size=100k homebackground.jpeg --dest ~/Desktop
+  423  jpegoptim --size=300k homebackground.jpeg --dest ~/Desktop
+  424  jpegoptim --size=100k homebackground.jpeg --dest ~/Desktop
+  425  jpegoptim --size=100k partnerdays-01-min-1408x.jpg --dest ~/Desktop
+  426  jpegoptim --size=100k basics-min-1408x.jpg --dest ~/Desktop
+  427  jpegoptim --size=100k ai-glossary-min-1408x.jpg --dest ~/Desktop
+  428  jpegoptim --size=100k eggs-min-1408x.jpg --dest ~/Desktop
+  429  jpegoptim --size=100k woodencase-min-1408x.jpg --dest ~/Desktop
+  430  jpegoptim --size=100k ml2go-architecture-min-1408x.jpg --dest ~/Desktop
+  431  jpegoptim --size=100k ml2go-components-min-1408x.jpg --dest ~/Desktop
+  432  jpegoptim --size=100k ml2go-diagram-1408x.jpg --dest ~/Desktop
+  433  sudo apt install webp 
+  434  ls
+  435  cwebp -q 60 partnerdays-01-min-1408x.jpg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  436  cwebp -q 80 partnerdays-01-min-1408x.jpg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  437  cwebp -q 100 partnerdays-01-min-1408x.jpg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  438  cwebp -q 80 partnerdays-01-min-1408x.jpg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  439  ls
+  440  ls -la
+  441  cwebp -q 80 partnerdays_01.jpeg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  442  cwebp -q 70 partnerdays_01.jpeg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  443  cwebp -q 60 partnerdays_01.jpeg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  444  cwebp -q 50 partnerdays_01.jpeg -o ~/Desktop/partnerdays-01-min-1408x.webp
+  445  cd ..
+  446  cd ki-training.guru/
+  447  ls
+  448  cwebp -q 50 facebook-logos-png19748-1408x-1408x.png -o ~/Desktop/facebook-logos-png19748-1408x-1408x.webp
+  449  cwebp -q 50 instagram-appicon-aug2017-1408x-1408x.png -o ~/Desktop/instagram-appicon-aug2017-1408x-1408x.webp
+  450  cwebp -q 50 logo.svg -o ~/Desktop/logo.webp
+  451  cwebp -q 50 logo.png -o ~/Desktop/logo.webp
+  452  cwebp -q 50 logo-1408x.png -o ~/Desktop/logo.webp
+  453  cd ..
+  454  cd udowuertz.com/
+  455  cwebp -q 50 fna_01.png -o ~/Desktop/fna_01.webp
+  456  ls
+  457  cwebp -q 50 ai-blog-min.jpg -o ~/Desktop/ai-blog.webp
+  458  history
+  459  jpegoptim --size=30k ai-blog-min.jpg ~/Desktop/ai-blog-min.jpg
+  460  ls
+  461  ls -la
+  462  jpegoptim --size=30k ai-blog-min.jpg --dest ~/Desktop
+  463  rm ~/Desktop/ai-blog-min.jpg 
+  464  jpegoptim --size=30k ai-blog-min.jpg --dest ~/Desktop
+  465  rm ~/Desktop/ai-blog-min.jpg 
+  466  jpegoptim --size=60k ai-blog-min.jpg --dest ~/Desktop
+  467  jpegoptim   --dest ~/Desktop
+  468  rm ~/Desktop/ai-blog-min.jpg 
+  469  jpegoptim  ai-blog-min.jpg --dest ~/Desktop
+  470  rm ~/Desktop/ai-blog-min.jpg 
+  471  jpegoptim  fna --dest ~/Desktop
+  472  jpegoptim  --size 80 a.jpg --dest ~/Desktop
+  473  rm ~/Desktop/ai-blog-min.jpg 
+  474  cwebp -q 50 fna_01.png -o ~/Desktop/fna_01.png
+  475  ls ~/Desktop/ -la
+  476  cd Documents/WIEGEHTKI.DE/udowuertz.de/
+  477  history
+  478  cwebp -q 60 Udo_Wuertz_2020-5663.jpg ~/Desktop/Udo_Wuertz_2020-5663.webp
+  479  cwebp -q 60 Udo_Wuertz_2020-5663.jpg -o ~/Desktop/Udo_Wuertz_2020-5663.webp
+  480  history
+  481  jpegoptim --size=60k Udo_Wuertz_2020-5663.jpg --dest ~/Desktop
+  482  jpegoptim --size=150k Udo_Wuertz_2020-5663.jpg --dest ~/Desktop
+  483  rm /home/uwuertz/Desktop/Udo_Wuertz_2020-5663.jpg
+  484  jpegoptim --size=150k Udo_Wuertz_2020-5663.jpg --dest ~/Desktop
+  485  jpegoptim --size=450k Udo_Wuertz_2020-5663.jpg --dest ~/Desktop
+  486  rm /home/uwuertz/Desktop/Udo_Wuertz_2020-5663.jpg
+  487  jpegoptim --size=450k Udo_Wuertz_2020-5663.jpg --dest ~/Desktop
+  488  jpegoptim --size=450k Udo_Wuertz_2020-5661.jpg --dest ~/Desktop
+  489  ls
+  490  history
+  491  x-special/nautilus-clipboard
+  492  copy
+  493  file:///home/uwuertz/Downloads/Thumbnail_Enf%C3%BChrung-min.png
+  494  cwebp -q 60 Thumbnail_Enführung.png -o WIEGEHTKI-Einfuehrung.png
+  495  ls
+  496  cwebp -q 60 Thumbnail_Enführung.png -o WIEGEHTKI-Einfuehrung.webq
+  497  cwebp -q 60 Thumbnail_Enführung.png -o WIEGEHTKI-Einfuehrung.webp
+  498  cwep
+  499  cwebp
+  500  cwebp -longhelp
+  501  cwebp -q 60 Hintergrundbild.png -o WIEGEHTKI-Hintergrund.webp
+  502  ls
+  503  mkdir Mish
+  504  cd Mish
+  505  git clone https://github.com/digantamisra98/Mish.git
+  506  ls
+  507  conda activate matplot
+  508  ls
+  509  cd ..
+  510  cd Mish/
+  511  ls
+  512  python mish
+  513  python mish.py 
+  514  pip install pandas
+  515  python mish.py 
+  516  pip install seaborn
+  517  python mish.py 
+  518  python
+  519  python mish.py 
+  520  conda
+  521  conda env list
+  522  conda create --name matplot python=3.6 -y
+  523  conda activate matplot
+  524  pip install matplotlib
+  525  pip install torch torchvision
+  526  dir
+  527  cd Mish/
+  528  chmod +x *
+  529  cd ..
+  530  mv Mish Mish.old
+  531  mv Mish.old/Mish ~/
+  532  rm Mish.old
+  533  rm Mish.old -rf
+  534  cd Mish/
+  535  chmod +x *
+  536  pip install -r requirements.txt 
+  537  ls
+  538  python output_landscape.py 
+  539  notepadqq 
+  540  ls
+  541  chmod +x *
+  542  ls
+  543  ls Mish/
+  544  cp Mish/mish.py .
+  545  chmod +x *
+  546  python mish.py 
+  547  pip install sklearn
+  548  python mish.py 
+  549  notepadqq mish.py 
+  550  python mish.py 
+  551  notepadqq mish.py 
+  552  sudo su
+  553  conda activate matplot
+  554  ls
+  555  cd Mish/
+  556  ls
+  557  cat mish.py 
+  558  python mish.py 
+  559  nano mish.py 
+  560  python mish.py 
+  561  nano mish.py 
+  562  python mish.py 
+  563  nano mish.py 
+  564  python mish.py 
+  565  sudo su
+  566  cd vpn
+  567  ls
+  568  ls ..
+  569  apt -y update
+  570  sudo apt -y update
+  571  ping 8.8.8.8
+  572  ping 192.168.100.10
+  573  ping 192.168.100.218
+  574  ssh pi@172.16.0.240
+  575  sudo su
+  576  ssh volumio@192.168.254.34
+  577  sudo apt -y update
+  578  sudo apt -y dist-upgrade
+  579  sudo su
+  580  apt -y update
+  581  sudo apt -y update
+  582  sudo apt -y dist-upgrade
+  583  sudo su
+  584  cd Documents/WIEGEHTKI.DE/Github
+  585  history
+  586  sudo su
+  587  cd Documents/WIEGEHTKI.DE/Github
+  588  sudo su
+  589  cd Documents/WIEGEHTKI.DE/Github
+  590  sudo su
+  591  cd Documents/WIEGEHTKI.DE/
+  592  cd Github
+  593  nano Installv2.3.6.sh 
+  594  sudo su
+  595  cd Documents/WIEGEHTKI.DE/Github
+  596  ls
+  597  cat LadeYoloWeights.sh 
+  598  sudo su
+  599  cd Documents/
+  600  cd WIEGEHTKI.DE/
+  601  cd Github
+  602  nano Installv2.3.6.sh 
+  603  git add .
+  604  sudo su
+  605  ssh-keygen
+  606  ssh-copy-id pi@172
+  607  ssh pi@192.168.254.50
+  608  ssh pi@172.16.0.240
+  609  ssh-copy-id pi@192.168.254.50
+  610  ssh pi@192.168.254.50
+  611  sudo su
+  612  ssh pi@192.168.254.50
+  613  ssh pi@172.16.0.240
+  614  ssh pi@192.168.100.12
+  615  ssh-copy-id pi@192.168.100.12
+  616  ssh 'pi@192.168.100.12'
+  617  ssh-copy-id pi@192.168.100.218
+  618  ssh pi@192.168.254.50
+  619  ssh pi@172.16.0.240
+  620  cd Documents/
+  621  cd WIEGEHTKI.DE/
+  622  cd Github
+  623  sudo su
+  624  cd Documents/WIEGEHTKI.DE/Github
+  625  sudo su
+  626  wget -O - http://linux-clients.seafile.com/seafile.key | sudo apt-key add -
+  627  sudo bash -c "echo 'deb [arch=amd64] http://linux-clients.seafile.com/seafile-deb/focal/ stable main' > /etc/apt/sources.list.d/seafile.list"
+  628  sudo apt update
+  629  sudo apt dist-upgrade
+  630  cd Documents/WIEGEHTKI.DE/Github
+  631  sudo su
+  632  term
+  633  cd Doc
+  634  cd Documents/WIEGEHTKI.DE/Github
+  635  cat 
+  636  ssh nvidia@192.168.254.47
+  637  ssh nvidia@192.168.254.42
+  638  ssh nvidia@192.168.254.47
+  639  ssh nvidia@192.168.254.38
+  640  ssh nvidia@192.168.254.26
+  641  cd Documents/WIEGEHTKI.DE/Github
+  642  sudo su
+  643  cd Documents/Backup/WEBServer1/www/html/
+  644  scp -r udowuertz.de pi@192.168.254.50:/var/www/html/
+  645  ssh pi@192.168.265.50
+  646  ssh pi@192.168.254.50
+  647  cd Documents/Backup/
+  648  cd WEBServer1/www/html/
+  649  ls
+  650  scp -r udowuertz.de pi@192.168.254.50:/var/www/html/
+  651  ssh pi@192.168.254.12
+  652  ssh pi@192.168.100.12
+  653  ssh pi@192.168.254.50
+  654  ssh pi@192.168.100.12
+  655  ssh pi@192.168.100.12
+  656  scp pi@192.168.100.12:renew* .
+  657  scp renewcerts.sh pi@192.168.100.12:renew* 
+  658  sudo su
+  659  sh pi@192.168.100.12
+  660  ssh pi@192.168.100.12
+  661  cd /dtc
+  662  cd /etc
+  663  sudo nano hosts
+  664  ping udowuertz.de
+  665  ssh pi@192.168.100.12
+  666  sudo su
+  667  sudo su
+  668  ssh pi@192.168.100.12
+  669  ssh pi@192.168.100.12
+  670  whois udowuertz.de
+  671  ping udowuertz.de
+  672  ssh pi@192.168.100.12
+  673  sudo apt remove teams
+  674  sudp apt -y update
+  675  sudo apt -y update
+  676  sudo apt -y dist-upgrade
+  677  reboot
+  678  ssh nvidia@192.168.254.42
+  679  ssh nvidia@192.168.254.47
+  680  ssh nvidia@192.168.254.62
+  681  ssh nvidia@192.168.254.26
+  682  scp nvidia@192.168.254.26:videoanalyse.sh .
+  683  ls ~/nvjetson_opencv_gsi/Objekterkennung/
+  684  ssh nvidia@192.168.254.26
+  685  cd Documents/
+  686  cd WIEGEHTKI.DE/
+  687  cd Git
+  688  cd Github
+  689  sudo su
+  690  sudo apt -y install
+  691  sudo apt -y dist-upgrade
+  692  sudo reboot
+  693  sudo su
+  694  ssh pi@192.168.100.12
+  695  ping 192.168.100.1
+  696  ping 8.8.8.8
+  697  ping udowuertz.de
+  698  ping seafile.udowuertz.com
+  699  nano /etc/hosts
+  700  ping udowuertz.com
+  701  ssh pi@172.16.0.240
+  702  ssh pi@172.16.0.240
+  703  ssh pi@192.168.100.12
+  704  ssh 192.168.100.12
+  705  sudo su
+  706  ssh pi@192.168.100.12
+  707  ssh pi@172.16.0.240
+  708  cd Downloads/
+  709  ls
+  710  ls z*
+  711  scp zero-one-kirby-theme-2.4.1.zip pi@192.168.254.50:
+  712  ls
+  713  ping seafile.udowuertz.com
+  714  ping udowuertz.de
+  715  ping 192.168.254.34
+  716  ping 192.168.254.222
+  717  +
+  718  ping 192.168.254.222
+  719  sudo su
+  720  ping 192.168.254.222
+  721  sudo su
+  722  ping seafile.udowuertz.com
+  723  ifconfig
+  724  ssh pi@172.16.0.240
+  725  mkdir /card
+  726  sudo su
+  727  ssh pi@172.16.0.240
+  728  cd Documents/
+  729  cd Backup/
+  730  ls
+  731  cd WEBServer1/
+  732  ls
+  733  cd www/
+  734  ls
+  735  cd ..
+  736  ls -la
+  737  cd Downloads/
+  738  ls -la
+  739  scp zero-one-kirby-theme-2.4.2.zip pi@192.168.254.50:
+  740  ping playground.udowuertz.com
+  741  ping ml.wiegehtki.de
+  742  sudo su
+  743  ping 192.168.254.224
+  744  ssh pi@192.168.100.218
+  745  ssh pi@192.168.100.222
+  746  ssh pi@172.16.0.240
+  747  ssh pi@172.16.0.240
+  748  ping 192.168.254.224
+  749  ifconfig
+  750  ssh pi@172.16.0.240
+  751  ssh pi@172.16.0.240
+  752  sudo su
+  753  ssh pi@172.16.0.240
+  754  ping www.libri.de
+  755  ssh pi@172.16.0.240
+  756  ping 192.168.254.222
+  757  ping 192.168.254.224
+  758  trace route 192.168.254.224
+  759  traceroute 192.168.254.224
+  760  sudo apt install inetutils-traceroute
+  761  traceroute 192.168.254.224
+  762  sudo apt install inetutils-traceroute
+  763  ping 8.8.8.8
+  764  ping 8.8.8.8#
+  765  ping 8.8.8.8
+  766  shutdown -h now
+  767  sudo su
+  768  anaconda-navigator 
+  769  conda activate tf
+  770  jupyter-notebook 
+  771  conda env list
+  772  conda create -n tf python=3.7
+  773  conda activate tf
+  774  pip install tensorflow
+  775  pip install keras
+  776  ls Documents/Kunden/Fackelmann/AI-Scripte/
+  777  python Documents/Kunden/Fackelmann/AI-Scripte/AI-Example_01.py 
+  778  pip install numpy
+  779  python Documents/Kunden/Fackelmann/AI-Scripte/AI-Example_01.py 
+  780  pip install numpy
+  781  python Documents/Kunden/Fackelmann/AI-Scripte/AI-Example_01.py 
+  782  python Documents/Kunden/Fackelmann/AI-Scripte/AI-Example_02.py 
+  783  python Documents/Kunden/Fackelmann/AI-Scripte/AI-Example_03.py 
+  784  ls
+  785  pip install jupyter-notebook
+  786  conda activate tf
+  787  cd Documents/
+  788  ls
+  789  cd SyncOff/Fackelmann/
+  790  ls
+  791  ls -la
+  792  cd AI-Scripte/
+  793  ls
+  794  python AI-Example_01.py 
+  795  python AI-Example_02.py 
+  796  jupyter-notebook 
+  797  pip install matplotlib
+  798  jupyter-notebook 
+  799  nvidia-smi
+  800  ssh pi@192.158.100.12
+  801  ssh pi@192.168.100.12
+  802  ssh pi@192.168.100.218
+  803  sudo su
+  804  ping 172.16.0.111
+  805  ping 172.16.0.110
+  806  iperf3 -c thusemann.spdns.de -t 120
+  807  sudo apt install iperf3
+  808  iperf3 -c thusemann.spdns.de -t 120
+  809  iperf3 -c thusemann.spdns.de -t 1204
+  810  exit
+  811  cd /rootfs
+  812  cd /media/uwuertz/rootfs/etc/
+  813  nano dhcpcd.conf 
+  814  sudo nano dhcpcd.conf 
+  815  cd /media/uwuertz/rootfs/lib/ufw/
+  816  ls
+  817  cd ..
+  818  cd etc/
+  819  cd ufw
+  820  nano ufw.conf 
+  821  sudo nano ufw.conf 
+  822  exit
+  823  ping 192.168.100.218
+  824  ping 192.168.100.12
+  825  ping 192.168.100.218
+  826  ping 192.168.100.222
+  827  ping 192.168.100.223
+  828  ssh pi@172.16.0.240
+  829  ssh pi@192.168.100.218
+  830  ssh pi@192.168.100.240
+  831  ifconfig
+  832  ssh pi@192.168.100.222
+  833  ping 192.168.100.222
+  834  sudo nano /etc
+  835  sudo nano /etc/ufw/ufw.conf
+  836  sudo nano /media/uwuertz/rootfs/etc/ufw/ufw.conf
+  837  sudo nano /media/uwuertz/rootfs/etc/dhcpcd.conf 
+  838  sudo nano /media/uwuertz/rootfs/etc/ufw/ufw.conf
+  839  sudo nano /media/uwuertz/rootfs/etc/dhcpcd.conf 
+  840  sudo nano /media/uwuertz/rootfs/etc/ufw/ufw.conf
+  841  sudo nano /media/uwuertz/rootfs/etc/dhcpcd.conf 
+  842  ssh pi@192.168.100.222
+  843  sudo su
+  844  sudo nano /media/uwuertz/rootfs/etc/ssh/sshd_config
+  845  ssh pi@192.168.100.240
+  846  ping 192.168.100.224
+  847  ping 172.16.100.110
+  848  ping 172.16.100.111
+  849  ping 172.16.0.110
+  850  ssh pi@192.168.100.12
+  851  ssh pi@192.168.100.12
+  852  ssh pi@192.168.100.12
+  853  ssh pi@192.168.100.222
+  854  sudo su
+  855  ssh pi@192.168.100.222
+  856  ssh pi@192.168.100.240
+  857  ssh pi@192.168.100.218
+  858  sudo su
+  859  ping 192.168.100.13
+  860  ping 192.168.100.31
+  861  cd Documents/WIEGEHTKI.DE/Github
+  862  git add .
+  863  history
+  864  sudo su
+  865  cd Documents/WIEGEHTKI.DE/Github
+  866  nano Installv2.3.6.sh 
+  867  sudo su
+  868  cd Documents/WIEGEHTKI.DE/Github
+  869  sudo su
+  870  apt install python3.8-venv
+  871  sudo apt install python3.8-venv
+  872  sudo apt install python3.8-setuptools
+  873  sudo apt install apt-tools
+  874  sudo apt install apt-utils
+  875  cd Documents/WIEGEHTKI.DE/Github
+  876  sudo su
+  877  cd Documents/WIEGEHTKI.DE/Github
+  878  sudo su
+  879  cd Documents/WIEGEHTKI.DE/Github
+  880  sudo su
+  881  cd Documents/WIEGEHTKI.DE/Github
+  882  sudo su
+  883  sudo gparted
+  884  sudo su
+  885  cd Documents/WIEGEHTKI.DE/Github
+  886  sudo su
+  887  chmod +x *
+  888  ./Test.sh 
+  889  cd Documents/WIEGEHTKI.DE/Github
+  890  sudo su
+  891  cd Documents/WIEGEHTKI.DE/Github
+  892  sudo su
+  893  wget https://www.cmake.org/files/v3.17/cmake-3.17.1.tar.gz
+  894  wget http://www.cmake.org/files/v3.17/cmake-3.17.1.tar.gz
+  895  wget https://www.cmake.org/files/v3.17/cmake-3.17.1.tar.gz
+  896  cd Documents/WIEGEHTKI.DE/Github
+  897  nani Installv2.3.8.sh 
+  898  nano Installv2.3.8.sh 
+  899  ls
+  900  sudo su
+  901  sudo su
+  902  cd Documents/
+  903  cd WIEGEHTKI.DE/
+  904  cd Github
+  905  ls
+  906  cd ..
+  907  mkdir Github.Zoneminder
+  908  cd Github.Zoneminder/
+  909  git clone https://github.com/dlandon/zoneminder.master-docker.git
+  910  ls
+  911  gh repo clone dlandon/zoneminder.master-docker
+  912  sudo apt install gitsome
+  913  ls
+  914  ls zoneminder.master-docker/
+  915  cp . ../. -r
+  916  ls
+  917  ls ..
+  918  ls
+  919  copy zoneminder.master-docker/. . -r
+  920  ls -la
+  921  cd zoneminder.master-docker/
+  922  ls
+  923  cp -r . ../.
+  924  ls
+  925  cd ..
+  926  ls
+  927  rm -rf zoneminder.master-docker
+  928  cd ..
+  929  rm -rd zoneminder.master-docker
+  930  rm -rd zoneminder.master-docker -rf
+  931  cd Github.Zoneminder/
+  932  ls
+  933  nano docker-compose.yaml 
+  934  ls
+  935  cat docker-run.sh 
+  936  nano docker-run.sh 
+  937  ls -la
+  938  cat LICENSE 
+  939  ls
+  940  cat Dockerfile 
+  941  nano Dockerfile 
+  942  ls
+  943  cat docker-run.sh 
+  944  ls
+  945  ls -
+  946  cd ..
+  947  git clone wiegehtki.de/zoneminder
+  948  git clone wiegehtki/zoneminder
+  949  git clone zoneminder
+  950  sudo su
+  951  ssh 192.168.100.222
+  952  ssh root@192.168.100.222
+  953  ssh pi@192.168.100.240
+  954  find / -name V2765*
+  955  sudo find / -name V2765*
+  956  pinh g 8.8.8.8
+  957  ping 8.8.8.8
+  958  ping 185.103.193.73
+  959  ping 185.103.193.1
+  960  ping 185.103.193.73
+  961  ping 8.8.8.8
+  962  ping 4.4.4.4
+  963  ping 8.8.8.8
+  964  ping 185.103.193.73
+  965  ping 185.103.193.1
+  966  ping 185.103.193.73
+  967  ping 8.8.8.8
+  968  ping www.libri.de
+  969  ping 185.103.192.1
+  970  ping 8.8.8.8
+  971  ifconfig
+  972  ping 192.168.1.1
+  973  sudo apt -y update
+  974  sudo su
+  975  nvidia-smi 
+  976  cd Downloads/
+  977  ls
+  978  ./Anaconda3-2020.02-Linux-x86_64.sh 
+  979  conda update conda
+  980  conda update anaconda
+  981  ls
+  982  conda create -n JP python=3.7.4 numpy=1.16.4 matplotlib=3.1.0 scipy=1.2.1
+  983  conda activate JP
+  984  apt-get -y update
+  985  sudo su
+  986  ls -la
+  987  ls *.so
+  988  ls *so
+  989  sudo find / -name libcudnn.so* 
+  990  nvidia-smi 
+  991  cd Downloads/
+  992  ls
+  993  export cuDNNFile=cudnn-11.2-linux-x64-v8.1.0.77.tgz
+  994  mv cudnn-11.2-linux-x64-v8.1.0.77.tgz ~/.
+  995  cd ~
+  996  ls
+  997  sudo su
+  998  anaconda-navigator 
+  999  conda activate JP_YOLO
+ 1000  apt-get -y install python3-pip                    python3-dev
+ 1001  sudo apt-get -y install python3-pip                    python3-dev
+ 1002  cd ~
+ 1003  export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
+ 1004  wget  -O opencv.zip $OPENCV_URL
+ 1005  echo $OPENCV_URL
+ 1006  wget  -O opencv.zip $OPENCV_URL
+ 1007  export OPENCV_VER="4.5.1"
+ 1008  export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
+ 1009  export OPENCV_CONTRIB_URL=https://github.com/opencv/opencv_contrib/archive/$OPENCV_VER.zip
+ 1010  unzip opencv.zip
+ 1011  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1012  find / -name cuda/bin
+ 1013  sudo find / -name cuda/bin
+ 1014  nvcc
+ 1015  sudo nvcc
+ 1016  exit
+ 1017  nvcc
+ 1018  nvidia-smi 
+ 1019  nvcc
+ 1020  cuda
+ 1021  sudo find / -name cuda
+ 1022  ls /usr/lib/cuda-11.2/
+ 1023  ls /usr/lib/cuda
+ 1024  ls /usr/lib/cuda/lib64/
+ 1025  export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+ 1026  export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+ 1027  ls
+ 1028  conda activate JP_YOLO
+ 1029  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1030  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1031  nvcc
+ 1032  find / -name nvcc
+ 1033  export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+ 1034  export PATH=/usr/local/cuda-11.2/bin${PATH:+:${PATH}}
+ 1035  rm * -rf
+ 1036  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1037  nvcc
+ 1038  echo $PATH
+ 1039  ls cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
+ 1040  ls /usr/local/cuda-11.2/bin
+ 1041* ls /usr/
+ 1042  find / -name nvcc
+ 1043  ls /usr/lib/cuda
+ 1044  export PATH=/usr/lib/cuda/bin${PATH:+:${PATH}}
+ 1045  export LD_LIBRARY_PATH=/usr/lib/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+ 1046  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1047  find / -name cudnn
+ 1048  sudo find / -name cudnn
+ 1049  cp cuda/include/cudnn*.h /usr/lib/cuda/include
+ 1050  cd ~
+ 1051  cp cuda/include/cudnn*.h /usr/lib/cuda/include
+ 1052  sudo cp cuda/include/cudnn*.h /usr/lib/cuda/include
+ 1053  sudo cp cuda/lib64/libcudnn* /usr/lib/local/cuda/lib64
+ 1054  sudo cp cuda/lib64/libcudnn* /usr/lib/cuda/lib64
+ 1055  chmod a+r /usr/lib/cuda/include/cudnn*.h /usr/lib/cuda/lib64/libcudnn*
+ 1056  sudo chmod a+r /usr/lib/cuda/include/cudnn*.h /usr/lib/cuda/lib64/libcudnn*
+ 1057  cd /usr/lib/cuda/lib64
+ 1058  if [ -f libcudnn.so.8 ]; then rm libcudnn.so.8; fi 
+ 1059  sudo if [ -f libcudnn.so ];   then rm libcudnn.so;   fi 
+ 1060  sudo if [ -f libcudnn.so.8 ]; then rm libcudnn.so.8; fi
+ 1061  rm libcudnn.so
+ 1062  sudo rm libcudnn.so
+ 1063  sudo rm libcudnn.so.8
+ 1064  sudo ln libcudnn.so.$cuDNN_MajorVersion libcudnn.so.8
+ 1065  sudo ln libcudnn.so.8.1.0 libcudnn.so.8
+ 1066  sudo  ln libcudnn.so.8 libcudnn.so
+ 1067  cd  /usr/lib/cuda-11.2/targets/x86_64-linux/lib
+ 1068  sudo su
+ 1069  cd ~
+ 1070  cd ~/opencv
+ 1071  ls
+ 1072  df-h
+ 1073  df -h
+ 1074  cd ..
+ 1075  cd Dowbn
+ 1076  cd Downloads/
+ 1077  ls
+ 1078  ls -la
+ 1079  rm seafile*
+ 1080  ls
+ 1081  ls -la
+ 1082  rm nv-jetson-nano-sd-card-image-r32*
+ 1083  rm 'Synology Surveillance Station Client-1.2.9-1082_x64.exe'
+ 1084  rm teams_1.3.00.5153_amd64.deb
+ 1085  df -h
+ 1086  sudo df -h
+ 1087  ls
+ 1088  nvcc
+ 1089  nvcc -- version
+ 1090  nvcc -v
+ 1091  nvcc --v
+ 1092  nvcc --version
+ 1093  cd ~/opencv
+ 1094  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1095  sudo apt install -y build-essential cmake git gcc g++ yasm checkinstall gfortran libatlas-base-dev libavcodec-dev libavformat-dev libavresample-dev libcanberra-gtk3-module libdc1394-22-dev libeigen3-dev libglew-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer1.0-dev libgtk-3-dev libjpeg-dev libjpeg8-dev libjpeg-turbo8-dev liblapack-dev liblapacke-dev libopenblas-dev libpng-dev libpostproc-dev libswscale-dev libtbb-dev libtbb2 libtesseract-dev libtiff-dev libv4l-dev libxine2-dev libxvidcore-dev libx264-dev pkg-config python3-dev python3-pip python3-numpy python3-matplotlib python3-testresources qv4l2 unzip v4l-utils zlib1g-dev libfaac-dev libmp3lame-dev libtheora-dev libfaac-dev libvorbis-dev libopencore-amrnb-dev libopencore-amrwb-dev libopenexr-dev libprotobuf-dev protobuf-compiler libgoogle-glog-dev libgflags-dev libgphoto2-dev libhdf5-dev doxygen libwebp-dev
+ 1096  cd ~/opencv
+ 1097  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1098  make -j$(nproc)
+ 1099  make install
+ 1100  python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)'
+ 1101  sudo make install
+ 1102  sudo pkg-config --cflags --libs opencv4
+ 1103  sudo pkg-config --modversion opencv4
+ 1104  python
+ 1105  sudo ldconfig
+ 1106  python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)'
+ 1107  sudo find / -name cv2.so
+ 1108  python3 -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)'
+ 1109  rm * -rf
+ 1110  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/lib -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1111  sudo make -j$(nproc)
+ 1112  sudo make install
+ 1113  sudo pkg-config --cflags --libs opencv4
+ 1114  sudo pkg-config --modversion opencv4
+ 1115  python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)'
+ 1116  deactivate
+ 1117  conda deactivate
+ 1118  conda activate JP_YOLO
+ 1119  python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)'
+ 1120  sudo find / -name cv2*
+ 1121  which python3
+ 1122  python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))"
+ 1123  python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())"
+ 1124  ls /usr/local/lib/python3.8/site-packages/cv2/python-3.8/
+ 1125  ls /usr/lib/python3.8/site-packages/cv2/python-3.8/
+ 1126  which python3
+ 1127  pip install --upgrade pip
+ 1128  python -c "import sys; print(next(p for p in sys.path if 'site-packages' in p))"
+ 1129  sudo find / -name cv2.*.so
+ 1130  python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())"
+ 1131  cp -r /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv2 
+ 1132  ls /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv2/
+ 1133  ls /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages -la
+ 1134  ls /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv*
+ 1135  ls /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv2/
+ 1136  ls /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/c*
+ 1137  cp -r /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv2 /home/uwuertz/anaconda3/envs/JP_YOLO/lib/python3.7/site-packages
+ 1138  sudo find / -name cv2.*.so
+ 1139  python
+ 1140  find / -name cv2.cv2
+ 1141  sudo find / -name cv2.cv2
+ 1142  python
+ 1143  nano  /home/uwuertz/anaconda3/envs/JP_YOLO/lib/python3.7/site-packages/cv2/__init__.py
+ 1144  conda deactivate
+ 1145  conda activate JP_YOLO
+ 1146  python
+ 1147  find / -name cv2 .pyd
+ 1148  find / -name cv2.pyd
+ 1149  sudo find / -name cv2.pyd
+ 1150  cd ~
+ 1151  python
+ 1152  export PYTHONPATH=
+ 1153  python -c "import sys; print(next(p for p in sys.path if 'site-packages' in p))"
+ 1154  export PYTHONPATH=/home/uwuertz/anaconda3/envs/JP_YOLO/lib/python3.7/site-packages:$PYTHONPATH
+ 1155  python -c "import sys; print(next(p for p in sys.path if 'site-packages' in p))"
+ 1156  python
+ 1157  python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))"
+ 1158  which python3
+ 1159  cd ~/opencv
+ 1160  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/local               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON -D BUILD_EXAMPLES=OFF ..
+ 1161  make -j$(nproc)
+ 1162  sudo make install
+ 1163  python
+ 1164  sudo find / -name cv2*.*so
+ 1165  ls -la /home/uwuertz/anaconda3/envs/JP_YOLO/lib/python3.7/site-packages/cv2
+ 1166  ls -la /home/uwuertz/anaconda3/envs/JP_YOLO/lib/python3.7/site-packages/cv2/.libs/
+ 1167  ls -la /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv2/cv2.cpython-36m-x86_64-linux-gnu.so
+ 1168  ls -la /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv2/
+ 1169  cd /home/uwuertz/anaconda3/envs/matplot/lib/python3.6/site-packages/cv2/
+ 1170  python
+ 1171  cat __init__.py 
+ 1172  cd ~
+ 1173  sudo find / -name .cv2
+ 1174  ls opencv/build/
+ 1175  ls opencv/build/ -la
+ 1176  ls opencv/build/opencv2/
+ 1177  ls /usr/local/lib/
+ 1178  python
+ 1179  cd opencv
+ 1180  cd build/
+ 1181  ls
+ 1182  export CUDA_COMPUTE_CAPABILITY=6.1
+ 1183  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/lib               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1184  sudo make install
+ 1185  cd ~
+ 1186  python
+ 1187  sudo find / -name cv2*.*so
+ 1188  sudo find / -name cv2*.*py
+ 1189  sudo find / -name cv2*.*pyd
+ 1190  python
+ 1191  pip install numpy
+ 1192  cd ~/opencv
+ 1193  cmake -D CMAKE_BUILD_TYPE=RELEASE               -D CMAKE_INSTALL_PREFIX=/usr/lib               -D INSTALL_PYTHON_EXAMPLES=OFF               -D INSTALL_C_EXAMPLES=OFF               -D OPENCV_ENABLE_NONFREE=ON               -D OPENCV_GENERATE_PKGCONFIG=ON               -D WITH_CUDA=ON               -D WITH_CUDNN=ON               -D OPENCV_DNN_CUDA=ON               -D ENABLE_FAST_MATH=1               -D CUDA_FAST_MATH=1               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY"               -D WITH_CUBLAS=1               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules               -D HAVE_opencv_python3=ON               -D PYTHON_EXECUTABLE=/usr/bin/python3               -D PYTHON2_EXECUTABLE=/usr/bin/python2               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3)               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")                -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")               -D BUILD_EXAMPLES=OFF ..
+ 1194  make -j$(nproc)
+ 1195  sudo make install
+ 1196  pkg-config --cflags --libs opencv4
+ 1197  sudo find / -name cv2*.*so
+ 1198  python
+ 1199  cp -r /usr/lib/lib/python3.7/site-packages/cv2 /home/uwuertz/anaconda3/envs/JP_YOLO/lib/python3.7/site-packages/
+ 1200  python
+ 1201  cd ~
+ 1202  python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)'
+ 1203  sudo apt -y install libdc1394-22-dev libv4l-dev v4l-utils qv4l2 v4l2ucp
+ 1204  sudo apt -y install libdc1394-22-dev libv4l-dev v4l-utils qv4l2 
+ 1205  cd ~
+ 1206  pip install dlib --verbose
+ 1207  pip install facerecognition
+ 1208  python3 -m pip install face_recognition
+ 1209  ls
+ 1210  ls darknet/
+ 1211  cd ~
+ 1212  echo $(date -u) "30 von 30: Pfad eintragen und reboot."  | tee -a  ~/Installation.log
+ 1213  echo $(date -u) "....................................................................................................................................." | tee -a  ~/Installation.log
+ 1214  echo $(date -u) "Ende der Installation. "   | tee -a  ~/Installation.log
+ 1215  echo $(date -u) "Bitte als root den Script nvidiaNOsudoers.sh ausführen!"   | tee -a  ~/Installation.log
+ 1216  echo $(date -u) "Bitte als root den Script Finalisieren.sh ausführen!"      | tee -a  ~/Installation.log
+ 1217  echo $(date -u) "Bei Problemen mit YOLO: Terminal aufrufen, in darknet wechseln und make aufrufen."   | tee -a  ~/Installation.log
+ 1218  echo $(date -u) "================================================================================="   | tee -a  ~/Installation.log
+ 1219  cd darknet/
+ 1220  ls
+ 1221  cd weights
+ 1222  cd YoloWeights/
+ 1223  ls
+ 1224  cd ..
+ 1225  cd cfg
+ 1226  ls
+ 1227  nano yolov4.cfg
+ 1228  ls
+ 1229  cd ..
+ 1230  ls
+ 1231  ls -la
+ 1232  nano Makefile 
+ 1233  cat build.
+ 1234  cat build.sh
+ 1235  ./build.sh 
+ 1236  make install
+ 1237  ls *sh
+ 1238  cat smartcam.sh 
+ 1239  nano smartcam.sh 
+ 1240  ./smartcam.sh 
+ 1241  nano smartcam.sh 
+ 1242  ./smartcam.sh 
+ 1243  ls
+ 1244  ls *sh
+ 1245  nano video_v2.sh 
+ 1246  cat net_cam_v3.sh 
+ 1247  cat image_yolov
+ 1248  cat image_yolov3.sh 
+ 1249  ls *sh
+ 1250  cp smartcam.sh webcam.sh
+ 1251  chmod +x *
+ 1252  nano webcam.sh 
+ 1253  ./webcam.sh 
+ 1254  nano webcam.sh 
+ 1255  ./webcam.sh 
+ 1256  ls -ltrh /dev/video*
+ 1257  nano listWebCams.sh
+ 1258  lsusb
+ 1259  nano webcam.sh 
+ 1260  ./webcam.sh 
+ 1261  ls -ltrh /dev/video*
+ 1262  ./webcam.sh 
+ 1263  conda activate JP_YOLO
+ 1264  ./webcam.sh 
+ 1265  ls
+ 1266  history > InstallPOPOS
