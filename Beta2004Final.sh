@@ -52,6 +52,7 @@
         
         declare -r installUpdate="Pakete aktualisieren"
         declare -r installCUDA="CUDA - Download und Installation inklusive Grafiktreiber"
+        declare -r installYOLO="YOLOv-v4 - Download und Installation"
         declare -r installcuDNN="Installation cuDNN"
         declare -r installImagehandling="Pakete für Imagehandling installieren"
         declare -r installCodecs="Codecs installieren"
@@ -151,6 +152,7 @@
         declare -r installFaceRecognition="Face recognition - Setup" 
         declare -r installLAMP="LAMP - Setup"
         declare -r installOpenCV="Compile OpenCV with Compute Capability $CUDA_COMPUTE_CAPABILITY"
+        declare -r installYOLO="YOLOv-v4 - Download and Installation"
         declare -r installLibs="Install necessary packages"
         declare -r installNASM="Compile nasm"
         declare -r installx264="Compile libx264"
@@ -737,6 +739,17 @@ Logging "#######################################################################
             exit 255
         fi
         Logging "InstallOpenCV $infoStepEnd"
+    }
+ 
+ InstallYOLO() {
+        Logging "$installYOLO"
+        apt-get -y install xrdp \
+                   adduser xrdp ssl-cert
+        systemctl restart xrdp
+        
+        cd ~
+        
+        Logging "InstallYOLO $infoStepEnd"
     }
  
     InstallLibs() {
