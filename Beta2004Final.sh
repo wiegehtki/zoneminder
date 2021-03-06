@@ -24,7 +24,7 @@
         declare -r errorDetectIP="IP-Adresse kann nicht ermittelt werden, Abbruch..."
         declare -r errorDetectPHP="PHP-Version kann nicht ermittelt werden, Abbruch..."
         declare -r errorDarknetRepo="darknet - Verzeichnis existiert bereits, Abbruch..."
-        
+        declare -r errorMakeYOLO="Fehler bei make - YOLO, Abbruch..."
         declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
         declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
         declare -r checkInstallationLog="Test auf bestehende Installation.log"
@@ -48,6 +48,7 @@
         declare -r infoCompileCUDAExamples="Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen"
         declare -r infoSharedMemory="Setzen shared memory"
         declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV erfolgreich durchgeführt"
+        declare -r infoMakeYOLO="make - YOLO erfolgreich beendet."
         
         declare -r createInstallationLog="FinalInstall.log anlegen"
         
@@ -103,7 +104,8 @@
         declare -r errorDetectIP="IP address cannot be determined, abort..."
         declare -r errorDetectPHP="PHP version cannot be determined, abort..."
         declare -r errorDarknetRepo="darknet - directory already exist, abort..."
-        
+        declare -r errorMakeYOLO="Error make - YOLO, abort..."
+
         declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
         declare -r checkPythonVersion="No supported Python3 version found, abort..."
         declare -r checkInstallationLog="Test for existing installation.log"
@@ -127,7 +129,8 @@
         declare -r infoCompileCUDAExamples="Compiling the CUDA examples to enable DeviceQuery"
         declare -r infoSharedMemory="Configure shared memory"
         declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV successful."
-        
+        declare -r infoMakeYOLO="make - YOLO successful."
+
         declare -r createInstallationLog="Create FinalInstall.log"
         
         declare -r installUpdate="Update packages"
@@ -769,6 +772,7 @@ Logging "#######################################################################
         Logging "InstallYOLO $infoStep2"
         cd ~/darknet
         make
+        ([ $? -eq 0 ] && Logging "$infoMakeYOLO") || Logging "$errorMakeYOLO" && return 1
         Logging "InstallYOLO $infoStepEnd"
     }
     
