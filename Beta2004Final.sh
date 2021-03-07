@@ -782,8 +782,7 @@ Logging "#######################################################################
         ([ $? -eq 0 ] && Logging "$infoMakeYOLO") || Logging "$errorMakeYOLO" && return 1
         Logging "InstallYOLO $infoStepEnd"
     }
-    
-    #Desktop - GUI needed! 
+     
     InstallYOLO_mark() {
         Logging "$installYOLO_mark"
         mv ~/darknet/mark ~/YOLO_mark
