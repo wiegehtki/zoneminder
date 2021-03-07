@@ -23,7 +23,8 @@
         declare -r errorZMVersion="Keine gültige Zoneminder - Version angegeben, Abbruch..."
         declare -r errorDetectIP="IP-Adresse kann nicht ermittelt werden, Abbruch..."
         declare -r errorDetectPHP="PHP-Version kann nicht ermittelt werden, Abbruch..."
-        declare -r errorDarknetRepo="darknet - Verzeichnis existiert bereits, Abbruch..."
+        declare -r errorDarknetRepoExist="darknet - Verzeichnis existiert bereits, Abbruch..."
+        declare -r errorDarknetRepoNotExist="darknet - directory existiert nicht, Abbruch..."
         declare -r errorMakeYOLO="Fehler bei make - YOLO, Abbruch..."
         declare -r errorMakeYOLO_mark="Fehler bei make - YOLO_mark, Abbruch..."
         declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
@@ -106,7 +107,8 @@
         declare -r errorZMVersion="No valid Zoneminder version specified, abort..."
         declare -r errorDetectIP="IP address cannot be determined, abort..."
         declare -r errorDetectPHP="PHP version cannot be determined, abort..."
-        declare -r errorDarknetRepo="darknet - directory already exist, abort..."
+        declare -r errorDarknetRepoExist="darknet - directory already exist, abort..."
+        declare -r errorDarknetRepoNotExist="darknet - directory does not exist, abort..."
         declare -r errorMakeYOLO="Error make - YOLO, abort..."
         declare -r errorMakeYOLO_mark="Error make - YOLO_mark, abort..."
 
@@ -761,11 +763,11 @@ Logging "#######################################################################
         systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
         cd ~
-        if [ -f ~/darknet ]; then 
-            Loggging "$errorDarknetRepo"
+        if [ -d ~/darknet ]; then 
+            Loggging "$errorDarknetRepoExist"
             return 1
-        else
-            mv ~/darknet.repo ~/darknet
+        else  
+            mv ~/zoneminder/darknet.repo ~/darknet
         fi 
 
         Logging "InstallYOLO $infoStep1"
@@ -787,6 +789,14 @@ Logging "#######################################################################
 
     InstallYOLO_mark() {
         Logging "$installYOLO_mark"
+        if [ ! -d ~/darknet ]; then 
+            if [ -d ~/zoneminder/darknet.repo ]; then
+                mv ~/zoneminder/darknet.repo ~/darknet
+            else
+                Loggging "$errorDarknetRepoNotExist"
+                return 1
+            fi
+        fi 
         mv ~/darknet/mark ~/YOLO_mark
         chmod -R +x * ~/YOLO_mark
         cd ~/YOLO_mark
