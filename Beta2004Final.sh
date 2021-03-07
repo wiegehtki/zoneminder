@@ -25,6 +25,7 @@
         declare -r errorDetectPHP="PHP-Version kann nicht ermittelt werden, Abbruch..."
         declare -r errorDarknetRepo="darknet - Verzeichnis existiert bereits, Abbruch..."
         declare -r errorMakeYOLO="Fehler bei make - YOLO, Abbruch..."
+        declare -r errorMakeYOLO_mark="Fehler bei make - YOLO_mark, Abbruch..."
         declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
         declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, Abbruch..."
         declare -r checkInstallationLog="Test auf bestehende Installation.log"
@@ -49,12 +50,14 @@
         declare -r infoSharedMemory="Setzen shared memory"
         declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV erfolgreich durchgeführt"
         declare -r infoMakeYOLO="make - YOLO erfolgreich beendet."
-        
+        declare -r infoMakeYOLO_mark="make - YOLO_mark erfolgreich beendet."
+
         declare -r createInstallationLog="FinalInstall.log anlegen"
         
         declare -r installUpdate="Pakete aktualisieren"
         declare -r installCUDA="CUDA - Download und Installation inklusive Grafiktreiber"
         declare -r installYOLO="YOLOv2-v4 - Download und Installation"
+        declare -r installYOLO_mark="YOLO_mark Installation"
         declare -r installcuDNN="Installation cuDNN"
         declare -r installImagehandling="Pakete für Imagehandling installieren"
         declare -r installCodecs="Codecs installieren"
@@ -105,6 +108,7 @@
         declare -r errorDetectPHP="PHP version cannot be determined, abort..."
         declare -r errorDarknetRepo="darknet - directory already exist, abort..."
         declare -r errorMakeYOLO="Error make - YOLO, abort..."
+        declare -r errorMakeYOLO_mark="Error make - YOLO_mark, abort..."
 
         declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
         declare -r checkPythonVersion="No supported Python3 version found, abort..."
@@ -130,6 +134,7 @@
         declare -r infoSharedMemory="Configure shared memory"
         declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV successful."
         declare -r infoMakeYOLO="make - YOLO successful."
+		declare -r infoMakeYOLO_mark="make - YOLO_mark successful."
 
         declare -r createInstallationLog="Create FinalInstall.log"
         
@@ -158,6 +163,7 @@
         declare -r installLAMP="LAMP - Setup"
         declare -r installOpenCV="Compile OpenCV with Compute Capability $CUDA_COMPUTE_CAPABILITY"
         declare -r installYOLO="YOLOv2-v4 - Download and Installation"
+        declare -r installYOLO_mark="YOLO_mark Installation"
         declare -r installLibs="Install necessary packages"
         declare -r installNASM="Compile nasm"
         declare -r installx264="Compile libx264"
@@ -174,12 +180,14 @@
     Benutzer="root" 
     #export ZM_VERSION="1.35" 
     export LINUX_VERSION_NAME=`lsb_release -sr`
+    LINUX_MAJOR_VERSION="${LINUX_VERSION_NAME:0:2}"
     export ZM_VERSION="1.34"
+    
 
-    if [[ ${LINUX_VERSION_NAME} = "18.04" ]]; then
+    if [[ ${LINUX_MAJOR_VERSION} = "18" ]]; then
         export CUDA_VERSION="10.2"
     else
-       if [[ ${LINUX_VERSION_NAME} = "20.04" ]]; then
+       if [[ ${LINUX_MAJOR_VERSION} = "20" ]]; then
            export CUDA_VERSION="11.2"
        else
            echo " "
@@ -377,9 +385,6 @@ Logging "#######################################################################
                 Logging "$errorDeviceQuery"  
                 exit 255
             fi
-            # PATH includes /usr/local/cuda-$CUDA_VERSION/bin
-            # LD_LIBRARY_PATH includes /usr/local/cuda-11.2/lib64, or, add /usr/local/cuda-11.2/lib64 to /etc/ld.so.conf and run ldconfig as root
-            #return 0
         else
            Logging "$CUDA_Script $errorDownload"
            echo " "
@@ -477,7 +482,6 @@ Logging "#######################################################################
                 for i in ` sed s'/=/ /g' ~/php.version | awk '{print $1}' ` ; do
                     PHP_VERS=$i
                     echo ${#PHP_VERS} 
-                    echo "LULU"
                 done
             fi
         else 
@@ -779,6 +783,19 @@ Logging "#######################################################################
         Logging "InstallYOLO $infoStepEnd"
     }
     
+    #Desktop - GUI needed! 
+    InstallYOLO_mark() {
+        Logging "$installYOLO_mark"
+        mv ~/darknet/mark ~/YOLO_mark
+        chmod -R +x * ~/YOLO_mark
+        cd ~/YOLO_mark
+        Logging "InstallYOLO_mark $infoStep1"
+        cmake .
+        Logging "InstallYOLO_mark $infoStep2"
+        make
+        ([ $? -eq 0 ] && Logging "$infoMakeYOLO_mark") || Logging "$errorMakeYOLO_mark" && return 1
+        Logging "InstallYOLO_mark $infoStepEnd"
+    }
  
     InstallLibs() {
         Logging "$installLibs"
@@ -1023,6 +1040,8 @@ Logging "#######################################################################
     AccessRightsZoneminder
     if [ "$UBUNTU_VER" = "20.04" ]; then CompileFfmpeg; fi
     InstallGPUTools
+    InstallYOLO
+    InstallYOLO_mark
     Logging "Main $infoEndofInstallation"
 
 
@@ -1063,19 +1082,19 @@ Logging "#######################################################################
 
     ##### Link für Reolink Kameras, getestet mit RL410 #####
     #rtmp://<KAMERA_IP>/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password=<Dein Passwort>
-
-#Test:
-#https://zm.wiegehtki.de/zm/api/host/getVersion.json
-#https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=snapshot
-#https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=alarm
-
-#/var/lib/zmeventnotification/known_faces
-#sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
-#sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 1 --monitorid 1 --debug
-#chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
-#echo "zm.wiegehtki.de" >> /etc/hosts
-
-#rtmp://192.168.100.164/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password=<Dein Passwort>
+    
+    #Test Chromebrowser:
+    #https://zm.wiegehtki.de/zm/api/host/getVersion.json
+    #https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=snapshot
+    #https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=alarm
+    
+    #/var/lib/zmeventnotification/known_faces
+    #sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+    #sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 1 --monitorid 1 --debug
+    #chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
+    #echo "zm.wiegehtki.de" >> /etc/hosts
+    
+    #rtmp://192.168.100.164/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password=<Dein Passwort>
 
 
 
