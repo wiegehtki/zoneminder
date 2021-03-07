@@ -134,7 +134,7 @@
         declare -r infoSharedMemory="Configure shared memory"
         declare -r infoOpenCVCUDA="CUDA - Integration in OpenCV successful."
         declare -r infoMakeYOLO="make - YOLO successful."
-		declare -r infoMakeYOLO_mark="make - YOLO_mark successful."
+        declare -r infoMakeYOLO_mark="make - YOLO_mark successful."
 
         declare -r createInstallationLog="Create FinalInstall.log"
         
@@ -392,6 +392,7 @@ Logging "#######################################################################
            return 1
         fi
         Logging "InstallCuda $infoStepEnd"
+        return 0
     }
 
     InstallcuDNN() {
@@ -768,7 +769,7 @@ Logging "#######################################################################
         fi 
 
         Logging "InstallYOLO $infoStep1"
-        (ls ~/darknet/YoloWeights >> /dev/null 2>&1 && echo "YoloWeights ok)" || mkdir ~/darknet/YoloWeights
+        (ls ~/darknet/YoloWeights >> /dev/null 2>&1 && echo "YoloWeights ok") || mkdir ~/darknet/YoloWeights
         (ls ~/darknet/YoloWeights/yolov4.weights >> /dev/null 2>&1 && echo "yolov4.weights ok") || echo "Download: yolov4.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT" -O ~/darknet/YoloWeights/yolov4.weights && rm -rf /tmp/cookies.txt
         (ls ~/darknet/YoloWeights/yolov3.weights >> /dev/null 2>&1 && echo "yolov3.weights ok") || echo "Download: yolov3.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A" -O ~/darknet/YoloWeights/yolov3.weights && rm -rf /tmp/cookies.txt
         (ls ~/darknet/YoloWeights/yolov3-tiny.weights >> /dev/null 2>&1 && echo "yolov3-tiny.weights ok") || echo "Download: yolov3-tiny.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt" -O ~/darknet/YoloWeights/yolov3-tiny.weights && rm -rf /tmp/cookies.txt
@@ -781,8 +782,9 @@ Logging "#######################################################################
         make
         ([ $? -eq 0 ] && Logging "$infoMakeYOLO") || Logging "$errorMakeYOLO" && return 1
         Logging "InstallYOLO $infoStepEnd"
+        return 0
     }
-     
+
     InstallYOLO_mark() {
         Logging "$installYOLO_mark"
         mv ~/darknet/mark ~/YOLO_mark
@@ -794,6 +796,7 @@ Logging "#######################################################################
         make
         ([ $? -eq 0 ] && Logging "$infoMakeYOLO_mark") || Logging "$errorMakeYOLO_mark" && return 1
         Logging "InstallYOLO_mark $infoStepEnd"
+        return 0
     }
  
     InstallLibs() {
@@ -1039,8 +1042,8 @@ Logging "#######################################################################
     AccessRightsZoneminder
     if [ "$UBUNTU_VER" = "20.04" ]; then CompileFfmpeg; fi
     InstallGPUTools
-    InstallYOLO
-    InstallYOLO_mark
+    if InstallYOLO $1; then echo "Installation YOLO ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO ${NoColErr}; exit 255; fi
+    if InstallYOLO_mark $1; then echo "Installation YOLO_mark ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO_mark ${NoColErr}; exit 255; fi
     Logging "Main $infoEndofInstallation"
 
 
