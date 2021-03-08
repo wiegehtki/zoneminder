@@ -353,7 +353,7 @@ Logging "#######################################################################
         Logging "$installCUDA" 
         cd ~
         if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
-        wget $CUDA_DOWNLOAD
+        if [ ! -f ~/$CUDA_Script ]; then wget $CUDA_DOWNLOAD; fi
         if [ -f ~/$CUDA_Script ]; then
             chmod +x $CUDA_Script
             ./$CUDA_Script --silent
