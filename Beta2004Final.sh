@@ -362,9 +362,10 @@ Logging "#######################################################################
             echo $CUDA_SEARCH_PATH >> /etc/ld.so.conf
             ldconfig
             echo 'export PATH='$CUDA_SEARCH_PATH':'$PATH >> ~/.bashrc
+            echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
             echo 'LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
             export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
-            export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+            export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} 
             echo 'cd ~' >> ~/.bashrc
             ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
             source ~/.bashrc
@@ -1056,6 +1057,8 @@ Logging "#######################################################################
     if InstallYOLO_mark $1; then echo "Installation YOLO_mark ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO_mark ${NoColErr}; exit 255; fi
     Logging "Main $infoEndofInstallation"
 
+Mon 08 Mar 2021 08:51:59 AM UTC make - YOLO erfolgreich beendet.
+Mon 08 Mar 2021 08:51:59 AM UTC Fehler bei make - YOLO, Abbruch...
 
     # cd ~
     # mkdir ffmpeg_sources
