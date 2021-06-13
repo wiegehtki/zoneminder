@@ -283,7 +283,7 @@ echo $(date -u) "06 von 07: Gesichtserkennung und cuDNN installieren"  | tee -a 
 
 echo $(date -u) "........................................................................................................................" | tee -a  ~/FinalInstall.log
 echo $(date -u) "07 von 07: Bugfixes kopieren und Ende"  | tee -a  ~/FinalInstall.log
-                cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
+                #cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python3.6/dist-packages/pyzm/ml/face_train.py
                 echo "Installation beendet, bitte Rechner neu starten (reboot)"
                 echo ""
 
