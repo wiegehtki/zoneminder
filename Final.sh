@@ -765,7 +765,7 @@ Logging "#######################################################################
 
         cd ~
         if [ -d ~/darknet ]; then 
-            Loggging "$errorDarknetRepoExist"
+            Logging "$errorDarknetRepoExist"
             return 1
         else  
             mv ~/zoneminder/darknet.repo ~/darknet
@@ -794,7 +794,7 @@ Logging "#######################################################################
             if [ -d ~/zoneminder/darknet.repo ]; then
                 mv ~/zoneminder/darknet.repo ~/darknet
             else
-                Loggging "$errorDarknetRepoNotExist"
+                Logging "$errorDarknetRepoNotExist"
                 return 1
             fi
         fi 
