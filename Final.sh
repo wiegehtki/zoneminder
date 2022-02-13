@@ -351,48 +351,63 @@ Logging "#######################################################################
     InstallCuda() {
         Logging "$installCUDA" 
         cd ~
-        if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
-        if [ ! -f ~/$CUDA_Script ]; then wget $CUDA_DOWNLOAD; fi
-        if [ -f ~/$CUDA_Script ]; then
-            chmod +x $CUDA_Script
-            ./$CUDA_Script --silent
-            lshw -C display | tee -a  ~/FinalInstall.log
-            #Pfade setzen
-            echo $CUDA_SEARCH_PATH >> /etc/ld.so.conf
-            ldconfig
-            echo 'export PATH='$CUDA_SEARCH_PATH':'$PATH >> ~/.bashrc
-            echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
-            echo 'LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
-            export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
-            export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} 
-            echo 'cd ~' >> ~/.bashrc
-            ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
-            source ~/.bashrc
-            #apt-get -y install nvidia-cuda-toolkit
-            Logging "$infoCompileCUDAExamples" 
-                        
-            cd ~/$CUDA_EXAMPLES_PATH
-            make -j$(nproc) 
-            cd ~
-            if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
-                ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | tee -a  ~/FinalInstall.log
-                ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
-                for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
-                    do  
-                    export CUDA_COMPUTE_CAPABILITY=$i
-                    echo "CUDA_COMPUTE_CAPABILITY "$CUDA_COMPUTE_CAPABILITY | tee -a  ~/ExportControl.log               
-                    awk -v "a=$CUDA_COMPUTE_CAPABILITY" -v "b=10" 'BEGIN {printf "%.0f\n", a*b}' > ~/ComputeCapability.FFMPEG
-                done  
-            else
-                Logging "$errorDeviceQuery"  
-                exit 255
-            fi
-        else
-           Logging "$CUDA_Script $errorDownload"
-           echo " "
-           echo $CUDA_Script $errorDownload
-           return 1
+        apt -y install nvidia-cuda-toolkit
+        cp ~/zoneminder/cuda_version.out ~/.
+        ./cuda_version.out
+        
+        if [ -f ~/cuda.version ]; then 
+            for i in ` sed s'/=/ /g' ~/cuda.version | awk '{print $1}' ` ; 
+                do
+                export CUDA_VER=$i
+                echo "CUDA_Version "$CUDA_VER | tee -a  ~/ExportControl.log
+			done
         fi
+        
+        if [ "$CUDA_VER" == "NA" ]; then 
+           if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
+              if [ ! -f ~/$CUDA_Script ]; then wget $CUDA_DOWNLOAD; fi
+              if [ -f ~/$CUDA_Script ]; then
+                 chmod +x $CUDA_Script
+                 ./$CUDA_Script --silent
+                 lshw -C display | tee -a  ~/FinalInstall.log
+                 #Pfade setzen
+                 echo $CUDA_SEARCH_PATH >> /etc/ld.so.conf
+                 ldconfig
+                 echo 'export PATH='$CUDA_SEARCH_PATH':'$PATH >> ~/.bashrc
+                 echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
+                 echo 'LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
+                 export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
+                 export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} 
+                 echo 'cd ~' >> ~/.bashrc
+                 ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
+                 source ~/.bashrc
+                 #apt-get -y install nvidia-cuda-toolkit
+                 Logging "$infoCompileCUDAExamples" 
+                        
+                 cd ~/$CUDA_EXAMPLES_PATH
+                 make -j$(nproc) 
+                 cd ~
+                 if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
+                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | tee -a  ~/FinalInstall.log
+                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
+                     for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
+                         do  
+                         export CUDA_COMPUTE_CAPABILITY=$i
+                         echo "CUDA_COMPUTE_CAPABILITY "$CUDA_COMPUTE_CAPABILITY | tee -a  ~/ExportControl.log               
+                         awk -v "a=$CUDA_COMPUTE_CAPABILITY" -v "b=10" 'BEGIN {printf "%.0f\n", a*b}' > ~/ComputeCapability.FFMPEG
+                     done  
+                 else
+                     Logging "$errorDeviceQuery"  
+                     exit 255
+                 fi
+             else
+                 Logging "$CUDA_Script $errorDownload"
+                 echo " "
+                 echo $CUDA_Script $errorDownload
+                 return 1
+             fi
+             # ELSE CUDA SCHON INSTALLIERT!
+        fi        
         Logging "InstallCuda $infoStepEnd"
         return 0
     }
