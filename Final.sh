@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
     #Select
     touch ~/ExportControl.log
-    export OPENCV_VER="4.5.1"
+    export OPENCV_VER="4.5.5"
     echo "OPENCV_VER "$OPENCV_VER  | tee -a  ~/ExportControl.log
     echo "CUDA_VERSION "$CUDA_VERSION | tee -a  ~/ExportControl.log
     
@@ -187,41 +187,40 @@
     
 
     if [[ ${LINUX_MAJOR_VERSION} = "18" ]]; then
-        export CUDA_VERSION="10.2"
+        export CUDA_VERSION="11.6"
     else
        if [[ ${LINUX_MAJOR_VERSION} = "20" ]]; then
-           export CUDA_VERSION="11.2"
+           export CUDA_VERSION="11.6"
        else
-           echo " "
-           ColErr="\033[1;31m"
-           NoColErr="\033[0m"
-           echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
-           exit 255
+            if [[ ${LINUX_MAJOR_VERSION} = "21" ]]; then
+               export CUDA_VERSION="11.6"
+            else
+               echo " "
+               ColErr="\033[1;31m"
+               NoColErr="\033[0m"
+               echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
+               exit 255
+            fi   
        fi
     fi
     
     ######################### CUDA / cuDNN - Settings ############################################################################################
-    if [ $CUDA_VERSION = "10.1" ]; then 
-        export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run; 
-        export CUDNN_VERSION="cudnn-10.1-linux-x64-v8.0.5.39.tgz"
-        export cuDNN_MajorVersion="8.0.5"
+    if [ $CUDA_VERSION = "10.2" ]; then 
+        export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run; 
+        export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive.tar.xz"
+        export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive"
+        export cuDNN_MajorVersion="8.3.2"
     else 
-        if [ $CUDA_VERSION = "10.2" ]; then 
-            export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run; 
-            export CUDNN_VERSION="cudnn-10.2-linux-x64-v8.1.0.77.tgz"
-            export cuDNN_MajorVersion="8.1.0"
-        else 
-            if [ $CUDA_VERSION = "11.2" ]; then 
-                export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.2.1/local_installers/cuda_11.2.1_460.32.03_linux.run
-                #11.1 https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run; 
-                export CUDNN_VERSION="cudnn-11.2-linux-x64-v8.1.1.33.tgz"
-                export cuDNN_MajorVersion="8.1.1"
-            else
-                ColErr="\033[1;31m"
-                NoColErr="\033[0m"
-                echo -e ${ColErr}$(date -u) $errorCudaVersion ${NoColErr}
-                exit 255
-            fi
+        if [ $CUDA_VERSION = "11.6" ]; then 
+            export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run
+            export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz"
+            export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive"
+            export cuDNN_MajorVersion="8.3.2"
+        else
+            ColErr="\033[1;31m"
+            NoColErr="\033[0m"
+            echo -e ${ColErr}$(date -u) $errorCudaVersion ${NoColErr}
+            exit 255
         fi
     fi
     
@@ -319,7 +318,7 @@ Logging "#######################################################################
 Logging "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu $UBUNTU_VER                       By WIEGEHTKI.DE #"
 Logging "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                              #" 
 Logging "# For free use. Without warranty and to be used only on test systems                                                   #" 
-Logging "# V2.1.0 (Rev a), 30.01.2021                                                                                           #" 
+Logging "# V2.2.0 (Rev a), 12.02.2022                                                                                           #" 
 Logging "########################################################################################################################" 
     UpdatePackages() {
         Logging "$installUpdate"                  
@@ -412,9 +411,11 @@ Logging "#######################################################################
         fi
        
         Logging "$infoStep1"
-        tar -xzvf $cuDNNFile
-        cp cuda/include/cudnn*.h /usr/local/cuda/include
-        cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+        tar -xf $cuDNNFile
+        
+        cp $CUDNN_DIRECTORY/include/cudnn*.h /usr/local/cuda/include
+        cp $CUDNN_DIRECTORY/lib64/libcudnn* /usr/local/cuda/lib64
+              
         chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
         cd /usr/local/cuda/lib64
         if [ -f libcudnn.so ];   then rm libcudnn.so;   fi 
