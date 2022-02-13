@@ -1,5 +1,5 @@
 # Kameraüberwachung mit Objekt- und Gesichtserkennung mittels Zoneminder, YOLO und OpenCV auf x86 - Plattformen, benötigt NVIDIA® - GPU mit CUDA® und cuDNN®
-### Installation von Zoneminder 1.34.x, OpenCV 4.5.1 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04 LTS
+### Installation von Zoneminder 1.34.x, OpenCV 4.5.1 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04/20.04 LTS
 
 
 #### Nach der Installation dieser Software könnt Ihr:
@@ -20,12 +20,18 @@
 
 
 #### Aufsetzen des Systems:
-Benötigt wird eine Ubuntu 18.04 LTS Umgebung. Ihr solltet eine Maschine explizit und nur dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür eiegns bereitgestellten Test-Systemen durchführen.
+Benötigt wird eine Ubuntu 18.04 oder 20.04 LTS Umgebung. Ihr solltet eine Maschine explizit und nur dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür eiegns bereitgestellten Test-Systemen durchführen.
 
-Ihr könnt den Ubuntu Server unter https://releases.ubuntu.com/18.04/ runter laden. Anschließend das Image auf einen USB-Stick übertragen, zum Beispiel mit balenaEtcher (https://www.balena.io/etcher/) oder einem anderem Tool welches dafür geeignet ist.
+Ihr könnt das gewünschte System (Desktop oder Server) unter https://ubuntu.com/download runter laden. Anschließend das Image auf einen USB-Stick übertragen, zum Beispiel mit balenaEtcher (https://www.balena.io/etcher/) oder einem anderem Tool welches dafür geeignet ist.
 
 Unter WIEGEHTKI.DE (https://www.youtube.com/channel/UC_OeEKyvDfCVdhYrEKYf1lA) findet Ihr den Video zur Installation
 
+#### Ubuntu 21.10:
+21.10 ist mit Stand 02-2022 noch realtive neu und die benötigten CUDA Treiber sind noch nicht im offiziellen Repository verfügbar. Insofern bereite ich die Scripte sukzessive auf 21.10 vor auch wenn es noch nicht voll unterstützt ist. Daher würde ich (noch) nicht empfehlen 21.10 bereits jetzt im Rahmen dieses Projekts einzusetzen.
+Falls 21.10 installiert wird (Beispiel: Desktop minimal), dann sind die folgenden Pakete nützlich:
+```
+       sudo apt -y install git nano ssh     
+```
 
 #### Notwendige Schritte VOR der weiteren Installation:
 In diesem Projekt kommt eine NVIDIA® Grafikkarte zum Einsatz um den Prozessor von rechenintensiven Verarbeitungen zu befreien. Dazu setzen wir NVIDIA®'s CUDA® und cuDNN® ein. CUDA® ist eine Technologie, die es erlaubt Programmteile durch den Grafikprozessor abarbeiten zu lassen während die NVIDIA® CUDA® Deep Neural Network Bibliothek (cuDNN) eine GPU-beschleunigte Bibliothek mit Primitiven für tiefe neuronale Netzwerke darstellt. Solche Primitive, typischerweise neuronale Netzwerkschichten genannt, sind die grundlegenden Bausteine tiefer Netzwerke.

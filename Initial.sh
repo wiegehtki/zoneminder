@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
     Benutzer="root"
     Language="German"
-    
+
     if [ $Language = "German" ]; then
         declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
         declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
         declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
-        
+
         declare -r checkGPUDriver="Nouveau - Grafiktreiber de-aktivieren"
         declare -r checkPythonVersion="Keine unterstützte Python3 - Version gefunden, installiere Python 3.7.x"
         declare -r checkInstallationLog="Test auf bestehende Installation.log"
         declare -r checkHW_OS="Hardware_und_Linux Check"
-        
+
         declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
         declare -r createInstallationLog="Installation.log anlegen"
-     
+
         declare -r infoStep1="...Stufe 1"
         declare -r infoStep2="...Stufe 2"
         declare -r infoStep3="...Stufe 3"
         declare -r infoStep4="...Stufe 4"
         declare -r infoStep5="...Stufe 5"
         declare -r infoStepEnd="...Beendet"
-        
+
         declare -r installGPUTools="GPU - Tools installieren"
         declare -r installUpdate="Pakete aktualisieren"
         declare -r installImagehandling="Pakete für Imagehandling installieren"
@@ -39,7 +39,7 @@
         declare -r errorUser="Script must be executed as user: $Benutzer !"
         declare -r errorPythonVersion="Problems reading out the Python version, abort..."
         declare -r errorLinuxDistribution="No valid distribution, installer exits"
-        
+
         declare -r checkGPUDriver="Nouveau - Deactivate graphics drive"
         declare -r checkPythonVersion="No supported Python3 version found, install Python 3.7.x"
         declare -r checkInstallationLog="Test for existing installation.log"
@@ -51,10 +51,10 @@
         declare -r infoStep4="...Step 4"
         declare -r infoStep5="...Step 5"
         declare -r infoStepEnd="...completed"
-                    
+
         declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
         declare -r createInstallationLog="Create Installation.log"
-        
+
         declare -r installGPUTools="Install GPU Tools"
         declare -r installUpdate="Update packages"
         declare -r installImagehandling="Install packages for image handling"
@@ -69,7 +69,7 @@
         declare -r installGoogle="Install Google Open Source Packages"
         declare -r installDataManagement="Install packages for data management"
     fi
-    
+
     if [ "$(whoami)" != $Benutzer ]; then
         ColErr="\033[1;31m"
         NoColErr="\033[0m"
@@ -82,47 +82,48 @@
 
     echo $(date -u) "$createInstallationLog"
     touch ~/Installation.log
-    
     #Linux-Version erkennen
     export LINUX_VERSION_NAME=`lsb_release -sr`
-    
-    
+
     if [[ ${LINUX_VERSION_NAME} == "18.04" ]]; then
         export UBUNTU_VER="18.04"
     else
         if [[ ${LINUX_VERSION_NAME} == "20.04" ]]; then
             export UBUNTU_VER="20.04"
         else
-            echo " "
-            ColErr="\033[1;31m"
-            NoColErr="\033[0m"
-            echo -e ${ColErr}$(date -u) $errorLinuxDistribution ${NoColErr}
-            exit 255
+            if [[ ${LINUX_VERSION_NAME} == "21.10" ]]; then
+                export UBUNTU_VER="22.10"
+            else
+                echo " "
+                ColErr="\033[1;31m"
+                NoColErr="\033[0m"
+                echo -e ${ColErr}$(date -u) $errorLinuxDistribution ${NoColErr}
+                exit 255
+            fi
         fi
     fi
-    
+
     Logging() {
         echo $(date -u) "$1"  | tee -a  ~/Installation.log
     }
-    
+
     #Debug Modus: -x = an, +x = aus
     set +x
-    
+
     #Stoppen, sobald ein Fehler auftritt
     set -e
-    
-    
+
     Logging "#####################################################################################################################################"
-    Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu $UBUNTU_VER                                        By WIEGEHTKI.DE #"
+    Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu $UBUNTU_VER                                  By WIEGEHTKI.DE #"
     Logging "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #"
     Logging "#                                                                                                                                   #"
-    Logging "# v2.0.1 (Rev a), 27.01.2021                                                                                                        #"
+    Logging "# v2.2.0 (Rev a), 12.02.2022                                                                                                        #"
     Logging "#####################################################################################################################################"
     Logging "....................................................................................................................................."
     Logging "$checkHW_OS"
     lshw -C display | tee -a  ~/Installation.log
     uname -m && cat /etc/*release | tee -a  ~/Installation.log
-    
+
     Logging "....................................................................................................................................."
     UpdatePackages() {
     Logging "$installUpdate"
@@ -134,7 +135,7 @@
         Logging "$installImagehandling"
         apt-get -y install libjpeg-dev \
                        libpng-dev \
-                       libtiff-dev 
+                       libtiff-dev
         Logging "$infoStepEnd"
     }
     InstallCodecs() {
@@ -154,8 +155,10 @@
     }
     InstallVideo4Camera() {
         Logging "$installCameras"
-        apt-get -y install libdc1394-22 \
-                           libdc1394-22-dev \
+        if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install libdc1394-22; fi
+        if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install libdc1394-22; fi
+
+        apt-get -y install libdc1394-22-dev \
                            libxine2-dev \
                            libv4l-dev \
                            v4l-utils \
@@ -164,11 +167,11 @@
                            libva-dev
         Logging "$infoStep1"
         cd /usr/include/linux
-        ln -s -f ../libv4l1-videodev.h videodev.h 
+        ln -s -f ../libv4l1-videodev.h videodev.h
         Logging "$infoStepEnd"
     }
     InstallCompiler() {
-        Logging "$installCompiler"               
+        Logging "$installCompiler"
         apt-get -y install linux-headers-$(uname -r) \
                            pkg-config \
                            gcc \
@@ -180,20 +183,20 @@
         Logging "$infoStepEnd"
     }
     InstallCompiler_v7() {
-        Logging "$installCompilerv7"           
-        apt-get -y install build-essential 
-        apt-get -y install gcc-7 
-        apt-get -y install g++-7 
-        apt-get -y install zlib1g-dev 
-        apt-get -y install libncurses5-dev 
-        apt-get -y install libgdbm-dev 
-        apt-get -y install libnss3-dev 
-        apt-get -y install libssl-dev 
-        apt-get -y install libreadline-dev 
-        apt-get -y install libffi-dev 
+        Logging "$installCompilerv7"
+        apt-get -y install build-essential
+        apt-get -y install gcc-7
+        apt-get -y install g++-7
+        apt-get -y install zlib1g-dev
+        apt-get -y install libncurses5-dev
+        apt-get -y install libgdbm-dev
+        apt-get -y install libnss3-dev
+        apt-get -y install libssl-dev
+        apt-get -y install libreadline-dev
+        apt-get -y install libffi-dev
         apt-get -y install libtbb2
-        apt-get -y install libtbb-dev 
-        apt-get -y install libtbb-doc 
+        apt-get -y install libtbb-dev
+        apt-get -y install libtbb-doc
         apt-get -y install libgflags-dev
         Logging "$infoStep1"
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 99
@@ -207,18 +210,18 @@
     }
     InstallCompiler_v6() {
         Logging "$installCompilerv6"
-        apt-get -y install gcc-6 
-        apt-get -y install g++-6 
-        apt-get -y install build-essential 
-        apt-get -y install zlib1g-dev  
-        apt-get -y install libncurses5-dev  
-        apt-get -y install libgdbm-dev 
-        apt-get -y install libnss3-dev 
-        apt-get -y install libssl-dev 
-        apt-get -y install libreadline-dev  
-        apt-get -y install libffi-dev 
-        apt-get -y install libtbb-dev 
-        apt-get -y install libtbb-doc 
+        apt-get -y install gcc-6
+        apt-get -y install g++-6
+        apt-get -y install build-essential
+        apt-get -y install zlib1g-dev
+        apt-get -y install libncurses5-dev
+        apt-get -y install libgdbm-dev
+        apt-get -y install libnss3-dev
+        apt-get -y install libssl-dev
+        apt-get -y install libreadline-dev
+        apt-get -y install libffi-dev
+        apt-get -y install libtbb-dev
+        apt-get -y install libtbb-doc
         apt-get -y install libgflags-dev
         Logging "$infoStep1"
         update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 99
@@ -261,19 +264,19 @@
         Logging "$infoStep1"
         sudo ./configure --enable-optimizations
         sudo make altinstall
-    
+
         #apt-get update --fix-missing
-        #apt-get -y install python3.7 
-        #apt-get -y install python3.7-dev 
-        #apt-get -y install python3-testresources 
+        #apt-get -y install python3.7
+        #apt-get -y install python3.7-dev
+        #apt-get -y install python3-testresources
         #apt-get -y install python3-pip
-        
+
         Logging "$infoStep2"
         if [ -f /usr/bin/python ];  then rm /usr/bin/python;  fi
         if [ -f /usr/bin/python3 ]; then rm /usr/bin/python3; fi
         ln -sf python3.7 /usr/bin/python
         ln -sf python3.7 /usr/bin/python3
-        
+
         #apt-get -y remove --purge python3-apt
         #apt-get -y autoremove
         #apt-get -y install python3-apt
@@ -281,14 +284,14 @@
         echo "3.7" > ~/python.version
         Logging "$infoStepEnd"
     }
-    
+
     InstallMathPacks() {
         Logging "$installMathPacks"
         apt-get -y install libatlas-base-dev \
                            libeigen3-dev \
                            libopenblas-dev \
                            liblapack-dev \
-                           libblas-dev  
+                           libblas-dev
         Logging "$infoStepEnd"
     }
     InstallGooglePacks() {
@@ -322,34 +325,36 @@
     InstallGooglePacks
     InstallMathPacks
     InstallDataManagement
-        
+
     python3 -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
-    if [ -f ~/python.version ]; then 
+    if [ -f ~/python.version ]; then
         for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
-            do  
+            do
             export PYTHON_VER=$i
-        done  
+        done
     else
         ColErr="\033[1;31m"
         NoColErr="\033[0m"
         echo -e ${ColErr}$(date -u) $errorPythonVersion ${NoColErr}
         exit 255
     fi
-    
+
     if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then
         Logging "$checkPythonVersion"
         InstallPython3.7
     fi
-    
+
     cd ~
-    if [ "$UBUNTU_VER" = "18.04" ]; then  
-        if [ -f /usr/bin/python ]; then rm /usr/bin/python; fi   
-        ln -sv /usr/bin/python3.6 /usr/bin/python 
+    if [ "$UBUNTU_VER" = "18.04" ]; then
+        if [ -f /usr/bin/python ]; then rm /usr/bin/python; fi
+        ln -sv /usr/bin/python3.6 /usr/bin/python
         apt-get -y install python3-testresources \
-                           python3-pip 
+                           python3-pip
         InstallCompiler_v6
-    fi 
-    if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi               
+    fi
+    if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi
+    if [ "$UBUNTU_VER" = "21.10" ]; then apt-get -y install python-is-python3 python3-pip; fi
+
     #apt-get -y install libzmq3-dev
     pip3 install --upgrade pip
     DeactivateNouveau
