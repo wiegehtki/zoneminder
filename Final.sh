@@ -214,7 +214,7 @@
         if [ $CUDA_VERSION = "11.6" ]; then 
             export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run
             export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz"
-            export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive"
+            export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive"
             export cuDNN_MajorVersion="8.3.2"
         else
             ColErr="\033[1;31m"
@@ -228,7 +228,7 @@
     export CUDA_PFAD="/usr/local/cuda-"$CUDA_VERSION
     export CUDA_COMPUTE_CAPABILITY=6.1
     export CUDA_SEARCH_PATH="/usr/local/cuda-"$CUDA_VERSION"/lib64"
-    export CUDA_EXAMPLES_PATH="cuda-samples/Samples/1_Utilities/deviceQuery"
+    export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-"$CUDA_VERSION"_Samples"
     
     ######################## cuDNN - Settings #############################################################################################
     export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
@@ -351,9 +351,10 @@ Logging "#######################################################################
     InstallCuda() {
         Logging "$installCUDA" 
         cd ~
-        apt -y install nvidia-cuda-toolkit
-        chmod +x ~/zoneminder/cuda_version.out > ~/cuda.version
-        ~/zoneminder/cuda_version.out > ~/cuda.version
+        #apt -y install nvidia-cuda-toolkit
+        git clone https://github.com/NVIDIA/cuda-samples.git
+        cp ~/zoneminder/cuda_version.out ~/.
+        ./cuda_version.out > ~/cuda.version
 
         if [ -f ~/cuda.version ]; then 
             for i in ` sed s'/=/ /g' ~/cuda.version | awk '{print $1}' ` ; 
@@ -384,12 +385,12 @@ Logging "#######################################################################
                  #apt-get -y install nvidia-cuda-toolkit
                  Logging "$infoCompileCUDAExamples" 
                         
-                 cd $CUDA_EXAMPLES_PATH
+                 cd ~/$CUDA_EXAMPLES_PATH
                  make -j$(nproc) 
                  cd ~
-                 if [ -f ~/$CUDA_EXAMPLES_PATH/deviceQuery ];  then 
-                     ~/$CUDA_EXAMPLES_PATH/deviceQuery | tee -a  ~/FinalInstall.log
-                     ~/$CUDA_EXAMPLES_PATH/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
+                 if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
+                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | tee -a  ~/FinalInstall.log
+                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
                      for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
                          do  
                          export CUDA_COMPUTE_CAPABILITY=$i
