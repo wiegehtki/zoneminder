@@ -353,8 +353,8 @@ Logging "#######################################################################
         cd ~
         apt -y install nvidia-cuda-toolkit
         cp ~/zoneminder/cuda_version.out ~/.
-        ./cuda_version.out
-        
+        ./cuda_version.out > ~/cuda.version
+
         if [ -f ~/cuda.version ]; then 
             for i in ` sed s'/=/ /g' ~/cuda.version | awk '{print $1}' ` ; 
                 do
