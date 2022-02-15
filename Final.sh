@@ -228,7 +228,7 @@
     export CUDA_PFAD="/usr/local/cuda-"$CUDA_VERSION
     export CUDA_COMPUTE_CAPABILITY=6.1
     export CUDA_SEARCH_PATH="/usr/local/cuda-"$CUDA_VERSION"/lib64"
-    export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-"$CUDA_VERSION"_Samples"
+    export CUDA_EXAMPLES_PATH="cuda-samples/Samples/1_Utilities/deviceQuery"
     
     ######################## cuDNN - Settings #############################################################################################
     export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
@@ -384,12 +384,12 @@ Logging "#######################################################################
                  #apt-get -y install nvidia-cuda-toolkit
                  Logging "$infoCompileCUDAExamples" 
                         
-                 cd ~/$CUDA_EXAMPLES_PATH
+                 cd $CUDA_EXAMPLES_PATH
                  make -j$(nproc) 
                  cd ~
-                 if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
-                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | tee -a  ~/FinalInstall.log
-                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
+                 if [ -f ~/$CUDA_EXAMPLES_PATH/deviceQuery ];  then 
+                     ~/$CUDA_EXAMPLES_PATH/deviceQuery | tee -a  ~/FinalInstall.log
+                     ~/$CUDA_EXAMPLES_PATH/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
                      for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
                          do  
                          export CUDA_COMPUTE_CAPABILITY=$i
