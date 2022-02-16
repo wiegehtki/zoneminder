@@ -228,7 +228,8 @@
     export CUDA_PFAD="/usr/local/cuda-"$CUDA_VERSION
     export CUDA_COMPUTE_CAPABILITY=6.1
     export CUDA_SEARCH_PATH="/usr/local/cuda-"$CUDA_VERSION"/lib64"
-    export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-"$CUDA_VERSION"_Samples"
+    export CUDA_EXAMPLES_PATH="cuda-samples/Samples"
+    #export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-"$CUDA_VERSION"_Samples"
     
     ######################## cuDNN - Settings #############################################################################################
     export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
@@ -385,7 +386,7 @@ Logging "#######################################################################
                  #apt-get -y install nvidia-cuda-toolkit
                  Logging "$infoCompileCUDAExamples" 
                         
-                 cd ~/$CUDA_EXAMPLES_PATH
+                 cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery
                  make -j$(nproc) 
                  cd ~
                  if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
