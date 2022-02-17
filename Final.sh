@@ -418,9 +418,7 @@ Logging "#######################################################################
         Logging "$installcuDNN" 
         local cuDNNFile
         cd ~
-        if [ -f ~/$CUDNN_VERSION ]; then 
-            cuDNNFile=$CUDNN_VERSION
-        else
+        if [! -f ~/$CUDNN_VERSION ]; then 
             Logging "$errorcuDNN"
             echo " "
             echo $errorcuDNN
@@ -429,7 +427,7 @@ Logging "#######################################################################
         apt-get install zlib1g
         
         Logging "$infoStep1"
-        tar -xfv $cuDNNFile
+        tar -xfv $CUDNN_VERSION
         
         cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda/include 
         cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64 
