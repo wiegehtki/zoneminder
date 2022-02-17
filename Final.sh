@@ -439,41 +439,41 @@ Logging "#######################################################################
         #cp $CUDNN_DIRECTORY/lib64/libcudnn* /usr/local/cuda/lib64
         #chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
         
-        cd /usr/local/cuda/lib64
-        if [ -f libcudnn.so ];   then rm libcudnn.so;   fi 
-        if [ -f libcudnn.so.8 ]; then rm libcudnn.so.8; fi 
-        ln libcudnn.so.$cuDNN_MajorVersion libcudnn.so.8
-        ln libcudnn.so.8 libcudnn.so
+        #cd /usr/local/cuda/lib64
+        #if [ -f libcudnn.so ];   then rm libcudnn.so;   fi 
+        #if [ -f libcudnn.so.8 ]; then rm libcudnn.so.8; fi 
+        #ln libcudnn.so.$cuDNN_MajorVersion libcudnn.so.8
+        #ln libcudnn.so.8 libcudnn.so
         
-        Logging "InstallcuDNN $infoStep2"
-        cd  /usr/local/cuda-$CUDA_VERSION/targets/x86_64-linux/lib
-        if [ -f libcudnn_adv_infer.so ];   then rm libcudnn_adv_infer.so;   fi 
-        if [ -f libcudnn_ops_train.so ];   then rm libcudnn_ops_train.so;   fi 
-        if [ -f libcudnn_cnn_train.so ];   then rm libcudnn_cnn_train.so;   fi 
-        if [ -f libcudnn_cnn_infer.so ];   then rm libcudnn_cnn_infer.so;   fi 
-        if [ -f libcudnn_adv_train.so ];   then rm libcudnn_adv_train.so;   fi 
-        if [ -f libcudnn_ops_infer.so ];   then rm libcudnn_ops_infer.so;   fi 
-        if [ -f libcudnn_adv_infer.so.8 ]; then rm libcudnn_adv_infer.so.8; fi 
-        if [ -f libcudnn_ops_train.so.8 ]; then rm libcudnn_ops_train.so.8; fi 
-        if [ -f libcudnn_cnn_train.so.8 ]; then rm libcudnn_cnn_train.so.8; fi 
-        if [ -f libcudnn_cnn_infer.so.8 ]; then rm libcudnn_cnn_infer.so.8; fi 
-        if [ -f libcudnn_adv_train.so.8 ]; then rm libcudnn_adv_train.so.8; fi 
-        if [ -f libcudnn_ops_infer.so.8 ]; then rm libcudnn_ops_infer.so.8; fi 
-        Logging "InstallcuDNN $infoStep3"
-        ln libcudnn_adv_infer.so.$cuDNN_MajorVersion libcudnn_adv_infer.so.8
-        ln libcudnn_ops_train.so.$cuDNN_MajorVersion libcudnn_ops_train.so.8
-        ln libcudnn_cnn_train.so.$cuDNN_MajorVersion libcudnn_cnn_train.so.8
-        ln libcudnn_cnn_infer.so.$cuDNN_MajorVersion libcudnn_cnn_infer.so.8
-        ln libcudnn_adv_train.so.$cuDNN_MajorVersion libcudnn_adv_train.so.8
-        ln libcudnn_ops_infer.so.$cuDNN_MajorVersion libcudnn_ops_infer.so.8
-        ln libcudnn_adv_infer.so.8 libcudnn_adv_infer.so
-        ln libcudnn_ops_train.so.8 libcudnn_ops_train.so
-        ln libcudnn_cnn_train.so.8 libcudnn_cnn_train.so
-        ln libcudnn_cnn_infer.so.8 libcudnn_cnn_infer.so
-        ln libcudnn_adv_train.so.8 libcudnn_adv_train.so
-        ln libcudnn_ops_infer.so.8 libcudnn_ops_infer.so
-        ldconfig  
-        source ~/.bashrc
+        #Logging "InstallcuDNN $infoStep2"
+        #cd  /usr/local/cuda-$CUDA_VERSION/targets/x86_64-linux/lib
+        #if [ -f libcudnn_adv_infer.so ];   then rm libcudnn_adv_infer.so;   fi 
+        #if [ -f libcudnn_ops_train.so ];   then rm libcudnn_ops_train.so;   fi 
+        #if [ -f libcudnn_cnn_train.so ];   then rm libcudnn_cnn_train.so;   fi 
+        #if [ -f libcudnn_cnn_infer.so ];   then rm libcudnn_cnn_infer.so;   fi 
+        #if [ -f libcudnn_adv_train.so ];   then rm libcudnn_adv_train.so;   fi 
+        #if [ -f libcudnn_ops_infer.so ];   then rm libcudnn_ops_infer.so;   fi 
+        #if [ -f libcudnn_adv_infer.so.8 ]; then rm libcudnn_adv_infer.so.8; fi 
+        #if [ -f libcudnn_ops_train.so.8 ]; then rm libcudnn_ops_train.so.8; fi 
+        #if [ -f libcudnn_cnn_train.so.8 ]; then rm libcudnn_cnn_train.so.8; fi 
+        #if [ -f libcudnn_cnn_infer.so.8 ]; then rm libcudnn_cnn_infer.so.8; fi 
+        #if [ -f libcudnn_adv_train.so.8 ]; then rm libcudnn_adv_train.so.8; fi 
+        #if [ -f libcudnn_ops_infer.so.8 ]; then rm libcudnn_ops_infer.so.8; fi 
+        #Logging "InstallcuDNN $infoStep3"
+        #ln libcudnn_adv_infer.so.$cuDNN_MajorVersion libcudnn_adv_infer.so.8
+        #ln libcudnn_ops_train.so.$cuDNN_MajorVersion libcudnn_ops_train.so.8
+        #ln libcudnn_cnn_train.so.$cuDNN_MajorVersion libcudnn_cnn_train.so.8
+        #ln libcudnn_cnn_infer.so.$cuDNN_MajorVersion libcudnn_cnn_infer.so.8
+        #ln libcudnn_adv_train.so.$cuDNN_MajorVersion libcudnn_adv_train.so.8
+        #ln libcudnn_ops_infer.so.$cuDNN_MajorVersion libcudnn_ops_infer.so.8
+        #ln libcudnn_adv_infer.so.8 libcudnn_adv_infer.so
+        #ln libcudnn_ops_train.so.8 libcudnn_ops_train.so
+        #ln libcudnn_cnn_train.so.8 libcudnn_cnn_train.so
+        #ln libcudnn_cnn_infer.so.8 libcudnn_cnn_infer.so
+        #ln libcudnn_adv_train.so.8 libcudnn_adv_train.so
+        #ln libcudnn_ops_infer.so.8 libcudnn_ops_infer.so
+        #ldconfig  
+        #source ~/.bashrc
         Logging "InstallcuDNN $infoStepEnd"
         return 0                    
     }
