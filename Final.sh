@@ -385,7 +385,7 @@ Logging "#######################################################################
                  source ~/.bashrc
                  #apt-get -y install nvidia-cuda-toolkit
                  Logging "$infoCompileCUDAExamples" 
-                        
+                         
                  cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery
                  make -j$(nproc) 
                  cd ~

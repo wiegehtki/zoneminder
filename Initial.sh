@@ -325,7 +325,7 @@
     InstallGooglePacks
     InstallMathPacks
     InstallDataManagement
-
+ 
     python3 -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
     if [ -f ~/python.version ]; then
         for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' `
