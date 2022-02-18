@@ -343,7 +343,7 @@
         Logging "$checkPythonVersion"
         InstallPython3.7
     fi
-    echo 'export PYTHONPATH=/usr/local/lib/python$PYTHON_VER/site-packages' >> ~/.bashrc
+    echo 'export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages' >> ~/.bashrc
     
     cd ~
     if [ "$UBUNTU_VER" = "18.04" ]; then
