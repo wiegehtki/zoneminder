@@ -429,7 +429,7 @@ Logging "#######################################################################
         Logging "$infoStep1"
         tar -xf $CUDNN_VERSION
         
-        mv ~/$CUDNN_VERSION /usr/local/cuda-$CUDA_VERSION/cudnn
+        mv ~/$CUDNN_DIRECTORY /usr/local/cuda-$CUDA_VERSION/cudnn
         chmod a+r /usr/local/cuda-$CUDA_VERSION/cudnn
         
         #cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda$CUDA_VERSION/include 
