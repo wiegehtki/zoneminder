@@ -647,10 +647,12 @@ Logging "#######################################################################
         Logging "$installEventServer"  
         apt-get -y install python3-numpy
         python3 -m pip install scipy matplotlib ipython pandas sympy nose cython pyzm
-        cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
+        
+        git clone https://github.com/zoneminder/zmeventnotification.git  ~/EventServer
+        #cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
         cd ~
-        chmod +x EventServer.zip
-        unzip EventServer
+        #chmod +x EventServer.zip
+        #unzip EventServer
         cd ~/EventServer
         chmod -R +x *
         ./install.sh --install-hook --install-es --no-install-config --no-interactive
@@ -1029,8 +1031,8 @@ Logging "#######################################################################
     #Bugfixing und Finalisierung
     BugFixes_Init() {
         Logging "$installBugfixes"
-        python3 -m pip install protobuf==3.3.0
-        python3 -m pip install numpy==1.16.5
+#        python3 -m pip install protobuf==3.3.0
+#        python3 -m pip install numpy==1.16.5
         
         yes | perl -MCPAN -e "upgrade IO::Socket::SSL"
         cd ~
