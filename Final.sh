@@ -40,8 +40,8 @@
         declare -r infoStep4="...Stufe 4"
         declare -r infoStep5="...Stufe 5"
         declare -r infoStepEnd="...Beendet"
-        declare -r infoZMVersion="Wollen Sie die Zoneminder - Version 1.34 (stable) oder die neueste Version 1.35 installieren?"
-        declare -r infoZMSelect="Drücken Sie ( 1 ) für Version 1.34.x oder irgendeine andere Taste für die Version 1.35.x"
+        declare -r infoZMVersion="Es wird das aktuelleste stable-Release von zoneminder installiert."
+        #declare -r infoZMSelect="Drücken Sie ( 1 ) für Version 1.34.x oder irgendeine andere Taste für die Version 1.35.x"
         
         declare -r infoStartInstallation="Start der Installation"
         declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
@@ -125,7 +125,7 @@
         declare -r infoStep4="...Step 4"
         declare -r infoStep5="...Step 5"
         declare -r infoStepEnd="...completed"
-        declare -r infoZMVersion="Do you want to install Zoneminder - version 1.34 (stable) or the latest version 1.35?"
+        declare -r infoZMVersion="The latest stable release of zoneminder will be installed."
         declare -r infoZMSelect="Press ( 1 ) for version 1.34.x or any other key for version 1.35.x"
         
         declare -r infoStartInstallation="Start der Installation"
@@ -1052,7 +1052,7 @@ Logging "#######################################################################
 
     echo -e "${ColImp}$infoZMVersion ${NoColImp}$1" 
     echo ""
-    echo -e "${ColImp}$infoZMSelect ${NoColImp}$1" 
+#    echo -e "${ColImp}$infoZMSelect ${NoColImp}$1" 
 
     #read -rsn1 input
     #if [ "$input" = "1" ]; then export ZM_VERSION="1.34"; add-apt-repository -y ppa:iconnor/zoneminder-1.34; else add-apt-repository -y ppa:iconnor/zoneminder-master; export ZM_VERSION="1.35"; fi
