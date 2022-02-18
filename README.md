@@ -3,7 +3,7 @@
 
 ### Installation von Zoneminder 1.34.x, OpenCV 4.5.5 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04/20.04 LTS
 
-* Folgende Versionen sind mit Stand 18.0.2022:
+* Getestete Versionen:
 
 | Ubuntu - Variante | Version | CUDA - Version | cuDNN - Version | Getestet |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
