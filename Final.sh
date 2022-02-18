@@ -736,9 +736,9 @@ Logging "#######################################################################
               -D INSTALL_C_EXAMPLES=OFF \
               -D OPENCV_ENABLE_NONFREE=ON \
               -D OPENCV_GENERATE_PKGCONFIG=ON \
-              -D WITH_CUDA=ON \
-              -D WITH_CUDNN=ON \
-              -D OPENCV_DNN_CUDA=ON \
+              -D WITH_CUDA=OFF \
+              -D WITH_CUDNN=OFF \
+              -D OPENCV_DNN_CUDA=OFF \
               -D ENABLE_FAST_MATH=1 \
               -D CUDA_FAST_MATH=1 \
               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY \
