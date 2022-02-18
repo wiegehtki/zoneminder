@@ -3,6 +3,16 @@
 
 ### Installation von Zoneminder 1.34.x, OpenCV 4.5.5 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04/20.04 LTS
 
+* Folgende Versionen sind mit Stand 18.0.2022:
+
+| Ubuntu - Variante | Version | CUDA - Version | cuDNN - Version | Getestet |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Desktop (Minimal)  | 20.04  | 11.6 | 8.3.2 | in progress |
+| Desktop (Maximal)  | 20.04  | 11.6 | 8.3.2 | in progress |
+| Server (Minimal)  | 20.04  | 11.6 | 8.3.2 | in progress |
+| Server (Maximal)  | 20.04  | 11.6 | 8.3.2 | in progress |
+
+
 
 #### Nach der Installation dieser Software könnt Ihr:
 * Mit Zoneminder Eure IP-Kameras einbinden und mobil verfügbar machen
@@ -13,13 +23,11 @@
 * Infos zum Darknet framework: http://pjreddie.com/darknet/
 * Infos zu OpenCV findet Ihr hier: https://opencv.org/
 
-
 #### Videos zu diesem Projekt (und weitere) findet Ihr auf https://wiegehtki.de
 * **Einführung in das Projekt:** https://youtu.be/TsEwtInBl3c
 * **Installation des Betriebssystems:** https://youtu.be/_P9d5rERbBA
 * **Installation der Software:** https://youtu.be/9pQ3ouCPqm8
 * **Inbetriebnahme:** https://youtu.be/3yM87yOXaBs
-
 
 #### Aufsetzen des Systems:
 Benötigt wird eine Ubuntu 18.04 oder 20.04 LTS Umgebung. Ihr solltet eine Maschine explizit und nur dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür eiegns bereitgestellten Test-Systemen durchführen.
