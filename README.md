@@ -66,6 +66,7 @@ Einloggen und dann die erste Stufe der Installation starten, der Rechner reboote
 ```
        sudo su
        cd ~
+	   apt -y install git nano
        git clone https://github.com/wiegehtki/zoneminder.git
        cp zoneminder/*sh .
        sudo chmod +x *sh
