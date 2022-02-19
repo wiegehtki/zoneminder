@@ -31,7 +31,7 @@
 
 <hr style="border:2px solid gray"> </hr>
 
-#### Aufsetzen des Systems:
+## Aufsetzen des Systems:
 Benötigt wird eine Ubuntu 18.04 oder 20.04 LTS Umgebung. Ihr solltet eine Maschine explizit und nur dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür eiegns bereitgestellten Test-Systemen durchführen.
 
 Ihr könnt das gewünschte System (Desktop oder Server) unter https://ubuntu.com/download runter laden. Anschließend das Image auf einen USB-Stick übertragen, zum Beispiel mit balenaEtcher (https://www.balena.io/etcher/) oder einem anderem Tool welches dafür geeignet ist.
