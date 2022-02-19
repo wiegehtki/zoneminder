@@ -45,7 +45,7 @@ Falls 21.10 installiert wird (Beispiel: Desktop minimal), dann sind die folgende
        sudo apt -y install git nano ssh     
 ```
 
-#### Notwendige Schritte VOR der weiteren Installation:
+### Notwendige Schritte VOR der weiteren Installation
 In diesem Projekt kommt eine NVIDIA® Grafikkarte zum Einsatz um den Prozessor von rechenintensiven Verarbeitungen zu befreien. Dazu setzen wir NVIDIA®'s CUDA® und cuDNN® ein. CUDA® ist eine Technologie, die es erlaubt Programmteile durch den Grafikprozessor abarbeiten zu lassen während die NVIDIA® CUDA® Deep Neural Network Bibliothek (cuDNN) eine GPU-beschleunigte Bibliothek mit Primitiven für tiefe neuronale Netzwerke darstellt. Solche Primitive, typischerweise neuronale Netzwerkschichten genannt, sind die grundlegenden Bausteine tiefer Netzwerke.
 
 cuDNN® ist insofern nicht frei verfügbar als dass man sich bei NVIDIA® registrieren muss. Das ist aktuell kostenlos, nach der Registrierung startet eine sehr kurze Umfrage, wozu man das einsetzt und dann kommt man auf die Download-Site.
