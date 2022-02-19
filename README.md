@@ -29,6 +29,8 @@
 * **Installation der Software:** https://youtu.be/9pQ3ouCPqm8
 * **Inbetriebnahme:** https://youtu.be/3yM87yOXaBs
 
+<hr style="border:2px solid gray"> </hr>
+
 #### Aufsetzen des Systems:
 Benötigt wird eine Ubuntu 18.04 oder 20.04 LTS Umgebung. Ihr solltet eine Maschine explizit und nur dafür vorsehen (virtuell oder physisch) welche NICHT im produktiven Einsatz ist! Das System wird durch die nachfolgenden Schritte erheblich verändert und daher solltet Ihr dies ausschließlich auf dafür eiegns bereitgestellten Test-Systemen durchführen.
 
@@ -78,8 +80,6 @@ Erneut Einloggen und dann die zweite und letzte Stufe der Installation starten:
        ./Final.sh  
 ```
 
-<hr style="border:2px solid gray"> </hr>
-
 ### Kontrolle des Installationsfortschritts
 
 Ein weiteres Terminalfenster öffnen und mit `cat Installation.log` bzw. `cat FinalInstall.log` den Fortschritt der Installationen kontrollieren.
@@ -87,6 +87,7 @@ Ein weiteres Terminalfenster öffnen und mit `cat Installation.log` bzw. `cat Fi
 Nach der Installation einen `reboot` ausführen.
   
 
+<hr style="border:2px solid gray"> </hr>
 
 #### Bevor wir mit der GUI weiter machen können, müssen noch verschiedene Dateien modifiziert werden.
 * **Ohne diese Anpassungen wird die Installation nicht funktionieren. Daher sind diese Schritte besonders sorgfältig durchzuführen.**
@@ -126,6 +127,8 @@ Falls nicht, hier die Download-Links:
 1. Download yolov3.weights: https://drive.google.com/file/d/10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A/view?usp=sharing
 2. Download yolov3-tiny.weights: https://drive.google.com/file/d/12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt/view?usp=sharing
 3. Download yolov4.weights: https://drive.google.com/file/d/1Z-n8nPO8F-QfdRUFvzuSgUjgEDkym0iW/view?usp=sharing
+
+<hr style="border:2px solid gray"> </hr>
 
 ### Optimierungen
 
