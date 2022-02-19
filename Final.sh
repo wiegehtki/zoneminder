@@ -429,15 +429,19 @@ Logging "#######################################################################
         Logging "$infoStep1"
         tar -xf $CUDNN_VERSION
         
-        mv ~/$CUDNN_DIRECTORY   $CUDA_VERSION/cudnn
-        chmod a+r /usr/local/cuda-$CUDA_VERSION/cudnn
+        mv ~/$CUDNN_DIRECTORY   ~/cudnn
+        #chmod a+r /usr/local/cuda-$CUDA_VERSION/cudnn
         
-        cp cudnn-*-archive/include/cudnn*.h /usr/local/cuda$CUDA_VERSION/include 
-        cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda$CUDA_VERSION/lib64 
-        chmod a+r /usr/local/cuda$CUDA_VERSION/include/cudnn*.h /usr/local/cuda$CUDA_VERSION/lib64/libcudnn*
+        cp -av cudnn/lib/libcudnn* /usr/local/cuda-$CUDA_VERSION/lib64 
+        cp -av cudnn/include/cudnn*.h /usr/local/cuda-$CUDA_VERSION/include 
+        cp -av cudnn/lib/libcudnn* /usr/local/cuda/lib64 
+        cp -av cudnn/include/cudnn*.h /usr/local/cuda/include 
+        
+        chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+        chmod a+r /usr/local/cuda-$CUDA_VERSION/include/cudnn*.h /usr/local/cuda-$CUDA_VERSION/lib64/libcudnn*
         
         #cp $CUDNN_DIRECTORY/include/cudnn*.h /usr/local/cuda/include
-        #cp $CUDNN_DIRECTORY/lib64/libcudnn* /usr/local/cuda/lib64
+        #cp -P $CUDNN_DIRECTORY/lib64/libcudnn* /usr/local/cuda/lib64
         #chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
         
         cd /usr/local/cuda/lib64
@@ -736,20 +740,17 @@ Logging "#######################################################################
               -D INSTALL_C_EXAMPLES=OFF \
               -D OPENCV_ENABLE_NONFREE=ON \
               -D OPENCV_GENERATE_PKGCONFIG=ON \
-              -D WITH_CUDA=OFF \
-              -D WITH_CUDNN=OFF \
-              -D OPENCV_DNN_CUDA=OFF \
+              -D WITH_CUDA=ON \
+              -D WITH_CUDNN=ON \
+              -D OPENCV_DNN_CUDA=ON \
               -D ENABLE_FAST_MATH=1 \
               -D CUDA_FAST_MATH=1 \
               -D CUDA_ARCH_BIN=$CUDA_COMPUTE_CAPABILITY \
               -D CUDA_ARCH_PTX="$CUDA_COMPUTE_CAPABILITY" \
               -D WITH_CUBLAS=1 \
-              -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+              -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules ~/opencv \
               -D HAVE_opencv_python3=ON \
               -D PYTHON_EXECUTABLE=/usr/bin/python3 \
-              -D PYTHON2_EXECUTABLE=/usr/bin/python2 \
-              -D CUDNN_INCLUDE_DIR=/usr/local/cuda-$CUDA_VERSION/cudnn/include \
-              -D CUDNN_LIBRARY=/usr/local/cuda-$CUDA_VERSION/cudnn/lib \
               -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
               -D PYTHON_DEFAULT_EXECUTABLE=$(which python3) \
               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")  \
@@ -1037,7 +1038,8 @@ Logging "#######################################################################
     #Bugfixing und Finalisierung
     BugFixes_Init() {
         Logging "$installBugfixes"
-        python3 -m pip install protobuf==3.3.0
+        python3 -m pip install protobuf==3.19.1
+        #3.3.0
         #python3 -m pip install numpy==1.17
         #16.5
         
