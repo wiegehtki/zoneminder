@@ -788,7 +788,7 @@ Logging "#######################################################################
     InstallYOLO() {
         Logging "$installYOLO"
         apt-get -y install xrdp \
-                   adduser xrdp ssl-cert
+                   adduser xrdp ssl-cert 
         systemctl restart xrdp
 
         #Disbale Power Management
@@ -814,7 +814,7 @@ Logging "#######################################################################
         Logging "InstallYOLO $infoStep2"
         cd ~/darknet
         make
-        ([ $? -eq 0 ] && Logging "$infoMakeYOLO") || Logging "$errorMakeYOLO" && return 1
+        ([ $? -eq 0 ] && Logging "$infoMakeYOLO") || ( Logging "$errorMakeYOLO" && return 1 )
         Logging "InstallYOLO $infoStepEnd"
         return 0
     }
@@ -836,7 +836,7 @@ Logging "#######################################################################
         cmake .
         Logging "InstallYOLO_mark $infoStep2"
         make
-        ([ $? -eq 0 ] && Logging "$infoMakeYOLO_mark") || Logging "$errorMakeYOLO_mark" && return 1
+        ([ $? -eq 0 ] && Logging "$infoMakeYOLO_mark") || ( Logging "$errorMakeYOLO_mark" && return 1 )
         Logging "InstallYOLO_mark $infoStepEnd"
         return 0
     }
