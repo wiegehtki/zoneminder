@@ -1093,9 +1093,6 @@ Logging "#######################################################################
     if InstallYOLO_mark $1; then echo "Installation YOLO_mark ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO_mark ${NoColErr}; exit 255; fi
     Logging "Main $infoEndofInstallation"
 
-Mon 08 Mar 2021 08:51:59 AM UTC make - YOLO erfolgreich beendet.
-Mon 08 Mar 2021 08:51:59 AM UTC Fehler bei make - YOLO, Abbruch...
-
     # cd ~
     # mkdir ffmpeg_sources
     # installLibs
