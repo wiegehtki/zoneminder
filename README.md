@@ -78,6 +78,8 @@ Erneut Einloggen und dann die zweite und letzte Stufe der Installation starten:
        ./Final.sh  
 ```
 
+<hr style="border:2px solid gray"> </hr>
+
 ### Kontrolle des Installationsfortschritts
 
 Ein weiteres Terminalfenster öffnen und mit `cat Installation.log` bzw. `cat FinalInstall.log` den Fortschritt der Installationen kontrollieren.
@@ -106,7 +108,8 @@ Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL
 ```
        nano /etc/zm/Anpassungen/objectconfig.ini
 ```
-**Nur bei Bedarf** Wenn Ihr ein anderes Framework/Model nutzen wollt,könnt Ihr den dazugehörigen Eintrag anpassen. Dazu einfach ein **#** vor die Zeile setzen, welche inaktviert werden soll bzw. entfernen, wenn Zeilen aktiviert werden sollen. Die Vorgabe von mir sieht wie folgt aus:
+**Nur bei Bedarf** 
+Wenn Ihr ein anderes Framework/Model nutzen wollt,könnt Ihr den dazugehörigen Eintrag anpassen. Dazu einfach ein **#** vor die Zeile setzen, welche inaktviert werden soll bzw. entfernen, wenn Zeilen aktiviert werden sollen. Die Vorgabe von mir sieht wie folgt aus:
 ```
        # FOR YoloV4. 
        object_framework=opencv
