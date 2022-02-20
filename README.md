@@ -1,7 +1,6 @@
 # Kameraüberwachung mit Objekt- und Gesichtserkennung mittels Zoneminder, YOLO und OpenCV auf x86 - Plattformen, benötigt NVIDIA® - GPU mit CUDA® und cuDNN®
-# !!!! 13.2 / 2022 - Tests ongoing mit neuer cuDNN Version, Fehler bei der Installation können auftreten. Wenn diese Meldung gelöscht wird, ist die Version stabil
 
-### Installation von Zoneminder 1.34.x, OpenCV 4.5.5 und YOLO (Tiny, v3 und v4) unter Ubuntu 18.04/20.04 LTS
+### Installation von Zoneminder 1.37.x, OpenCV 4.5.5 und YOLO (Tiny, v3 und v4) unter Ubuntu 
 
 * Getestete Versionen:
 
@@ -59,6 +58,15 @@ cuDNN® ist insofern nicht frei verfügbar als dass man sich bei NVIDIA® regist
        cd ~
        sudo chmod +x cudnn*     
 ```
+
+Der Script geht aktuell von folgenden Versionen bzw. Dateinamen aus:
+
+    * OpenCV (Zeile 4): `4.5.5`
+    * CUDA-Version (Zeilen 190-200): `11.6`
+    * cuDNN für CUDA 11.6 (Zeilen 208-220): `cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz`
+
+Sollten sich diese ändern, dann den Script anpassen.
+
 Anschließend kommen wir zur eigentlichen Installation des Systems. Diese ist in zwei Stufen unterteilt: In Stufe 1 installieren wir einige Standard-Pakete und de-aktivieren den bisherigen Grafiktreiber, anschließend startet das System neu. Der Script geht davon aus, dass es sich um eine neu aufgesetzte Maschine handelt, falls nicht, müsst Ihr entsprechende Anpassungen machen oder die Befehle per Hand ausführen um sicher zu gehen, dass eine vorhandene Installation nicht beeinträchtigt wird. Empfohlen wird daher, ein verfügbares Testsystem zu nutzen welches neu aufgesetzt werden kann.
 
 #### Zur Installation könnt ihr wie folgt vorgehen, dazu alle Befehle im Terminal ausführen:
