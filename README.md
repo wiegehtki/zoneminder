@@ -61,9 +61,9 @@ cuDNN® ist insofern nicht frei verfügbar als dass man sich bei NVIDIA® regist
 
 Der Script geht aktuell von folgenden Versionen bzw. Dateinamen aus:
 
-  OpenCV (Zeile 4): `4.5.5`
-  CUDA-Version (Zeilen 190-200): `11.6`
-  cuDNN für CUDA 11.6 (Zeilen 208-220): `cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz`
+OpenCV (Zeile 4): `4.5.5`
+CUDA-Version (Zeilen 190-200): `11.6`
+cuDNN für CUDA 11.6 (Zeilen 208-220): `cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz`
 
 Sollten sich diese ändern, dann den Script anpassen.
 
