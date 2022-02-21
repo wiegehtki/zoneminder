@@ -36,10 +36,11 @@ Logging "#######################################################################
 Logging "# Zoneminder - Objekterkennung mit OpenCV und YOLO. Support für Ubuntu $UBUNTU_VER                                        By WIEGEHTKI.DE #"
 Logging "# Zur freien Verwendung. Ohne Gewähr und nur auf Testsystemen anzuwenden                                                            #"
 Logging "#                                                                                                                                   #"
-Logging "# v2.0.1 (Rev a), 07.02.2021                                                                                                        #"
+Logging "# v2.1.1 (Rev b), 21.02.2022                                                                                                        #"
 Logging "#####################################################################################################################################"
 Logging "....................................................................................................................................."
 
-        chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
-        sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
-                 
+        #chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
+        #sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+        /var/lib/zmeventnotification/bin/zm_train_faces.py
+        chown -R www-data:www-data /var/lib/zmeventnotification/known_faces         
