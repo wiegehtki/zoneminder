@@ -700,9 +700,13 @@ Logging "#######################################################################
         if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then sudo -H pip3 uninstall dlib; fi
         if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("face-recognition"))'; then sudo -H pip3 uninstall face-recognition; fi
         Logging "InstallFaceRecognition $infoStep1"
-        cd ~/zoneminder/dlib
-        python3 ./setup.py install 
-        python3 -m pip install dlib
+        cd ~
+        git clone https://github.com/davisking/dlib.git
+        cd dlib
+        python3 -m setup.py install 
+        #cd ~/zoneminder/dlib
+        #python3 ./setup.py install 
+        #python3 -m pip install dlib
         python3 -m pip install face_recognition
         #cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/face_train.py
         Logging "InstallFaceRecognition $infoStepEnd"
