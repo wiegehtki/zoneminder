@@ -40,7 +40,6 @@ Logging "# v2.1.1 (Rev b), 21.02.2022                                           
 Logging "#####################################################################################################################################"
 Logging "....................................................................................................................................."
 
-        #chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
-        #sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
-        /var/lib/zmeventnotification/bin/zm_train_faces.py
-        chown -R www-data:www-data /var/lib/zmeventnotification/known_faces         
+        chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
+        sudo -u www-data -HE env PATH=$PATH PYTHONPATH=$PYTHONPATH  /var/lib/zmeventnotification/bin/zm_train_faces.py
+        

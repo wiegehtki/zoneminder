@@ -704,10 +704,10 @@ Logging "#######################################################################
         git clone https://github.com/davisking/dlib.git
         cd dlib
         python3 -m setup.py install 
-        #cd ~/zoneminder/dlib
-        #python3 ./setup.py install 
-        #python3 -m pip install dlib
-        python3 -m pip install face_recognition
+        cd ~/zoneminder/dlib
+       # python3 ./setup.py install 
+       # python3 -m pip install dlib
+       # python3 -m pip install face_recognition
         #cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/face_train.py
         Logging "InstallFaceRecognition $infoStepEnd"
     }                        
@@ -1051,6 +1051,12 @@ Logging "#######################################################################
         yes | perl -MCPAN -e "upgrade IO::Socket::SSL"
         cd ~
         zmupdate.pl -f
+        
+        
+        export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH' 
+        sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
+        sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
+   
         Logging "BugFixes_Init $infoStepEnd"
     }
                     
