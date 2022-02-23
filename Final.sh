@@ -355,6 +355,7 @@ Logging "#######################################################################
         #apt -y install nvidia-cuda-toolkit
         git clone https://github.com/NVIDIA/cuda-samples.git
         cp ~/zoneminder/cuda_version.out ~/.
+        chmod +x cuda_version.out
         ./cuda_version.out > ~/cuda.version
 
         if [ -f ~/cuda.version ]; then 
