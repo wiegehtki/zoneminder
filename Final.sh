@@ -1053,7 +1053,7 @@ Logging "#######################################################################
         zmupdate.pl -f
         
         
-        export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH' 
+        export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH
         sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
         sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
    
