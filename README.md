@@ -121,7 +121,7 @@ Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL
 <hr style="border:2px solid gray"> </hr>
 
 Eventserver in der Oberfläche aktivieren (Menüpunkt Options):
-![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png?raw=true "EventServer") 
+![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/EventServer.png) 
 <hr style="border:2px solid gray"> </hr>
 
 Kamera anlegen und Modus **MODECT** anwählen:
