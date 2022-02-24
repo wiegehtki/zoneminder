@@ -118,9 +118,14 @@ Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL
 ```
        nano /etc/zm/Anpassungen/objectconfig.ini
 ```
+<hr style="border:2px solid gray"> </hr>
 
-Eventserver in der Oberfläche aktivieren:
-![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png?raw=true "Title") 
+Eventserver in der Oberfläche aktivieren (Menüpunkt Options):
+![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png?raw=true "EventServer") 
+<hr style="border:2px solid gray"> </hr>
+Kamera anlegen und Modus **MODECT** anwählen:
+![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png?raw=true "Modect") 
+<hr style="border:2px solid gray"> </hr>
 
 **Nur bei Bedarf** 
 Wenn Ihr ein anderes Framework/Model nutzen wollt,könnt Ihr den dazugehörigen Eintrag anpassen. Dazu einfach ein **#** vor die Zeile setzen, welche inaktviert werden soll bzw. entfernen, wenn Zeilen aktiviert werden sollen. Die Vorgabe von mir sieht wie folgt aus:
