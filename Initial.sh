@@ -357,7 +357,7 @@
     if [ "$UBUNTU_VER" = "21.10" ]; then apt-get -y install python-is-python3 python3-pip; fi
 
     #apt-get -y install libzmq3-dev
-    pip3 install --upgrade pip
+    pip install --upgrade pip
     DeactivateNouveau
     Logging "$infoEndofInstallation"
     reboot
