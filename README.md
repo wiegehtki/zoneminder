@@ -6,7 +6,7 @@
 
 | Ubuntu - Variante | Version | CUDA - Version | cuDNN - Version | Getestet |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Desktop (Minimal)  | 20.04.4 LTS (focal)  | 11.6 | 8.3.2 | OK |
+| Desktop (Minimal)  | 20.04.4 LTS (focal)  | 11.6 | 8.3.2 | **OK** |
 | Desktop (Maximal)  | 20.04  | 11.6 | 8.3.2 | in progress |
 | Server (Minimal)  | 20.04  | 11.6 | 8.3.2 | in progress |
 | Server (Maximal)  | 20.04  | 11.6 | 8.3.2 | in progress |
