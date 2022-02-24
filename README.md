@@ -106,6 +106,7 @@ Nach der Installation einen `reboot` ausführen.
        cd ~
        nano /etc/zm/secrets.ini
 ```
+
 Anschließend folgende Einträge anpassen:
 `ZMES_PICTURE_URL=https://<PORTAL-ADRESSE>/zm/index.php?view=image&eid=EVENTID&fid=objdetect&width=600` Hier den Eintrag **<PORTAL-ADRESSE>** anpassen. Es sollte idealerweise eine "echte" Adresse sein, zum Beispiel bei mir war das: zm.wiegehtki.de und muss natürlich bei Euch an das jeweilige Portal angepasst werden.
 Wenn gar keine echte Adresse zur Verfügung steht, dann eine erfinden und im Client zum Test in der `hosts` - Datei eintragen und den Eintrag von `https` auf http` ändern.
@@ -117,6 +118,10 @@ Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL
 ```
        nano /etc/zm/Anpassungen/objectconfig.ini
 ```
+
+Eventserver in der Oberfläche aktivieren:
+![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png?raw=true "Title") 
+
 **Nur bei Bedarf** 
 Wenn Ihr ein anderes Framework/Model nutzen wollt,könnt Ihr den dazugehörigen Eintrag anpassen. Dazu einfach ein **#** vor die Zeile setzen, welche inaktviert werden soll bzw. entfernen, wenn Zeilen aktiviert werden sollen. Die Vorgabe von mir sieht wie folgt aus:
 ```
