@@ -124,7 +124,7 @@ Eventserver in der Oberfläche aktivieren (Menüpunkt Options):
 ![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png?raw=true "EventServer") 
 <hr style="border:2px solid gray"> </hr>
 Kamera anlegen und Modus **MODECT** anwählen:
-![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png?raw=true "Modect") 
+![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/Modect.png) 
 <hr style="border:2px solid gray"> </hr>
 
 **Nur bei Bedarf** 
