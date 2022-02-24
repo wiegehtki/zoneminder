@@ -120,7 +120,7 @@ Das gleiche gilt für `ZM_PORTAL=https://<PORTAL-ADRESSE>/zm` und `ZM_API_PORTAL
 ```
 <hr style="border:2px solid gray"> </hr>
 
-Website aufrufen (z.B. http://<<IP-Adresse>>/zm) und Eventserver in der Oberfläche aktivieren (Menüpunkt Options):
+Website aufrufen (z.B. http:// <IP-Adresse> /zm) und Eventserver in der Oberfläche aktivieren (Menüpunkt Options):
 ![Alt text](https://github.com/wiegehtki/zoneminder/blob/main/Screenshots/EventServer.png) 
 <hr style="border:2px solid gray"> </hr>
 
