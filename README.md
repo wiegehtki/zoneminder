@@ -91,7 +91,7 @@ Dann die erste Stufe der Installation starten, der Rechner rebootet danach autom
 Erneut Einloggen und dann die zweite und letzte Stufe der Installation starten:
 ```
        sudo su
-	   cd ~
+       cd ~
        ./Final.sh  
 ```
 
