@@ -74,7 +74,7 @@ Einloggen und zunächst noch benötigte Pakete installieren (fehlen u.U. bei ein
 ```
        sudo su
        cd ~
-	   apt -y install git
+       apt -y install git
 ```
 
 Dann die erste Stufe der Installation starten, der Rechner rebootet danach automatisch:
