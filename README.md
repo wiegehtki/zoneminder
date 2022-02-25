@@ -70,10 +70,17 @@ Sollten sich diese ändern, dann den Script anpassen.
 Anschließend kommen wir zur eigentlichen Installation des Systems. Diese ist in zwei Stufen unterteilt: In Stufe 1 installieren wir einige Standard-Pakete und de-aktivieren den bisherigen Grafiktreiber, anschließend startet das System neu. Der Script geht davon aus, dass es sich um eine neu aufgesetzte Maschine handelt, falls nicht, müsst Ihr entsprechende Anpassungen machen oder die Befehle per Hand ausführen um sicher zu gehen, dass eine vorhandene Installation nicht beeinträchtigt wird. Empfohlen wird daher, ein verfügbares Testsystem zu nutzen welches neu aufgesetzt werden kann.
 
 #### Zur Installation könnt ihr wie folgt vorgehen, dazu alle Befehle im Terminal ausführen:
-Einloggen und dann die erste Stufe der Installation starten, der Rechner rebootet danach automatisch:
+Einloggen und zunächst noch benötigte Pakete installieren (fehlen u.U. bei einigen OS-Varianten):
 ```
        sudo su
        cd ~
+	   apt -y install git
+```
+
+Dann die erste Stufe der Installation starten, der Rechner rebootet danach automatisch:
+
+
+``` 
        git clone https://github.com/wiegehtki/zoneminder.git
        cp zoneminder/*sh .
        sudo chmod +x *sh

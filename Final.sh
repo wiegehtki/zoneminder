@@ -392,6 +392,8 @@ Logging "#######################################################################
               echo $CUDA_Script $errorDownload
               return 1
            fi   
+        else
+           apt -y install nvidia-cuda-toolkit
         fi
         
         cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery
