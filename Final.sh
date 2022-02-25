@@ -386,31 +386,31 @@ Logging "#######################################################################
                  source ~/.bashrc
                  #apt-get -y install nvidia-cuda-toolkit
                  Logging "$infoCompileCUDAExamples" 
-                         
-                 cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery
-                 make -j$(nproc) 
-                 cd ~
-                 if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
-                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | tee -a  ~/FinalInstall.log
-                     ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
-                     for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
-                         do  
-                         export CUDA_COMPUTE_CAPABILITY=$i
-                         echo "CUDA_COMPUTE_CAPABILITY "$CUDA_COMPUTE_CAPABILITY | tee -a  ~/ExportControl.log               
-                         awk -v "a=$CUDA_COMPUTE_CAPABILITY" -v "b=10" 'BEGIN {printf "%.0f\n", a*b}' > ~/ComputeCapability.FFMPEG
-                     done  
-                 else
-                     Logging "$errorDeviceQuery"  
-                     exit 255
-                 fi
-             else
+              else
                  Logging "$CUDA_Script $errorDownload"
                  echo " "
                  echo $CUDA_Script $errorDownload
                  return 1
-             fi
-             # ELSE CUDA SCHON INSTALLIERT!
-        fi        
+              fi
+           fi   
+        fi
+        
+        cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery
+        make -j$(nproc) 
+        cd ~
+        if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
+           ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | tee -a  ~/FinalInstall.log
+           ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
+           for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
+               do  
+               export CUDA_COMPUTE_CAPABILITY=$i
+               echo "CUDA_COMPUTE_CAPABILITY "$CUDA_COMPUTE_CAPABILITY | tee -a  ~/ExportControl.log               
+               awk -v "a=$CUDA_COMPUTE_CAPABILITY" -v "b=10" 'BEGIN {printf "%.0f\n", a*b}' > ~/ComputeCapability.FFMPEG
+               done  
+        else
+           Logging "$errorDeviceQuery"  
+           exit 255
+        fi
         Logging "InstallCuda $infoStepEnd"
         return 0
     }
