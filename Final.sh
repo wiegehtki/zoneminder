@@ -368,30 +368,29 @@ Logging "#######################################################################
         
         if [ "$CUDA_VER" == "NA" ]; then 
            if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
-              if [ ! -f ~/$CUDA_Script ]; then wget $CUDA_DOWNLOAD; fi
-              if [ -f ~/$CUDA_Script ]; then
-                 chmod +x $CUDA_Script
-                 ./$CUDA_Script --silent
-                 lshw -C display | tee -a  ~/FinalInstall.log
-                 #Pfade setzen
-                 echo $CUDA_SEARCH_PATH >> /etc/ld.so.conf
-                 ldconfig
-                 echo 'export PATH='$CUDA_SEARCH_PATH':'$PATH >> ~/.bashrc
-                 echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
-                 echo 'LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
-                 export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
-                 export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} 
-                 echo 'cd ~' >> ~/.bashrc
-                 ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
-                 source ~/.bashrc
-                 #apt-get -y install nvidia-cuda-toolkit
-                 Logging "$infoCompileCUDAExamples" 
-              else
-                 Logging "$CUDA_Script $errorDownload"
-                 echo " "
-                 echo $CUDA_Script $errorDownload
-                 return 1
-              fi
+           if [ ! -f ~/$CUDA_Script ]; then wget $CUDA_DOWNLOAD; fi
+           if [ -f ~/$CUDA_Script ]; then
+              chmod +x $CUDA_Script
+              ./$CUDA_Script --silent
+              lshw -C display | tee -a  ~/FinalInstall.log
+              #Pfade setzen
+              echo $CUDA_SEARCH_PATH >> /etc/ld.so.conf
+              ldconfig
+              echo 'export PATH='$CUDA_SEARCH_PATH':'$PATH >> ~/.bashrc
+              echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
+              echo 'LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
+              export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
+              export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} 
+              echo 'cd ~' >> ~/.bashrc
+              ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
+              source ~/.bashrc
+              #apt-get -y install nvidia-cuda-toolkit
+              Logging "$infoCompileCUDAExamples" 
+           else
+              Logging "$CUDA_Script $errorDownload"
+              echo " "
+              echo $CUDA_Script $errorDownload
+              return 1
            fi   
         fi
         
