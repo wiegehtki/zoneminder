@@ -4,7 +4,7 @@
 
 * Getestete Versionen:
 
-| Ubuntu - Variante | Version | Install third-party software | CUDA - Version | cuDNN - Version | Getestet |
+| Ubuntu - Variante | Version | Install third-party software (CUDA vorinstalliert) | CUDA - Version | cuDNN - Version | Getestet |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Desktop (Minimal)  | 20.04.4 LTS (focal)  | Nein | 11.6 | 8.3.2 | **OK** |
 | Desktop (Maximal)  | 20.04  | Nein | 11.6 | 8.3.2 | in progress |
