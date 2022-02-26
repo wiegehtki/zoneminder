@@ -394,6 +394,11 @@ Logging "#######################################################################
            fi   
         else
            apt -y install nvidia-cuda-toolkit
+           mkdir usr/local/cuda
+           mkdir usr/local/cuda/bin
+           ln -s /usr/local/cuda/bin/nvcc /usr/bin/nvcc
+           mkdir usr/local/cuda-$CUDA_VERSION
+           ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
         fi
         
         cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery
