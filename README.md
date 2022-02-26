@@ -4,6 +4,9 @@
 Bei WIEGEHTKI.DE geht es um nachvollziehbare Schritte und eine Einführung in die KI-Welt. Es geht nicht um das Bereitstellen hocheffizienter Entwicklungsumgebungen. Daher sollten auch die Plattformen ausschließlich Testsysteme sein, welche auch schnell mal neu aufgesetzt werden können. Auf gar keinen Fall sollten produktive Systeme genutzt werden! Desweiteren wird auch keine Rücksicht auf Benutzerrechte genommen, d.h. dass die Pakete der Einfachheit halber als root installiert werden. Das sollte natürlich nicht bei dauerhaft betriebenen Systemen beibehalten werden, da dies eine erhebliche Sicherheitslücke darstellt.
 Insofern fühlt Euch eingeladen die Scripte nach Euren Vorstellungen anzupassen und zu optimieren.
 
+In der nachstehenden Tabelle findet Ihr von mir bereits getestet Versionen. Diese werden sukzessive aktualisiert.
+
+
 ### Installation von Zoneminder 1.37.x, OpenCV 4.5.5 und YOLO (Tiny, v3 und v4) unter Ubuntu 
 
 * Getestete Versionen:
