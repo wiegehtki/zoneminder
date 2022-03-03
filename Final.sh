@@ -17,7 +17,7 @@
         declare -r errorcuDNN="cuDNN - Installationsdatei konnte nicht gefunden werden, Abbruch..."
         declare -r errorDownload="konnte nicht herunter geladen werden, Abbruch..."
         declare -r errorCUDAInstall="Fehler bei InstallCuda, Fehlernummer:"
-        declare -r errorcuDNNInstall="Fehler bei InstallCuda, Fehlernummer:"
+        declare -r errorcuDNNInstall="Fehler bei InstallcuDNN, Fehlernummer:"
         declare -r errorOpenCVCUDA="CUDA - Integration in OpenCV fehlgeschlagen, Abbruch..."
         declare -r errorLinuxDist="Keine unterstützte Linux-Distribution, Installer wird beendet, Abbruch..."
         declare -r errorZMVersion="Keine gültige Zoneminder - Version angegeben, Abbruch..."
@@ -210,12 +210,21 @@
         export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive.tar.xz"
         export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive"
         export cuDNN_MajorVersion="8.3.2"
+        if [ ! -f ~/$CUDNN_VERSION ]; then 
+            echo $errorcuDNN
+            return 1
+        fi
+       
     else 
         if [ $CUDA_VERSION == "11.6" ]; then 
             export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run
             export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz"
             export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive"
             export cuDNN_MajorVersion="8.3.2"
+            if [ ! -f ~/$CUDNN_VERSION ]; then 
+               echo $errorcuDNN
+               return 1
+            fi
         else
             ColErr="\033[1;31m"
             NoColErr="\033[0m"
