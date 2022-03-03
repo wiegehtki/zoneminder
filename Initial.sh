@@ -92,7 +92,7 @@
             export UBUNTU_VER="20.04"
         else
             if [[ ${LINUX_VERSION_NAME} == "21.10" ]]; then
-                export UBUNTU_VER="22.10"
+                export UBUNTU_VER="21.10"
             else
                 echo " "
                 ColErr="\033[1;31m"
@@ -353,8 +353,8 @@
                            python3-pip
         InstallCompiler_v6
     fi
-    if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi
-    if [ "$UBUNTU_VER" = "21.10" ]; then apt-get -y install python-is-python3 python3-pip; fi
+    if [ "$UBUNTU_VER" == "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi
+    if [ "$UBUNTU_VER" == "21.10" ]; then apt-get -y install python-is-python3 python3-pip; fi
 
     #apt-get -y install libzmq3-dev
     pip install --upgrade pip
