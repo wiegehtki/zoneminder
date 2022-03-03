@@ -186,13 +186,13 @@
     export ZM_VERSION="1.34"
     
 
-    if [[ ${LINUX_MAJOR_VERSION} = "18" ]]; then
+    if [[ ${LINUX_MAJOR_VERSION} == "18" ]]; then
         export CUDA_VERSION="11.6"
     else
-       if [[ ${LINUX_MAJOR_VERSION} = "20" ]]; then
+       if [[ ${LINUX_MAJOR_VERSION} == "20" ]]; then
            export CUDA_VERSION="11.6"
        else
-            if [[ ${LINUX_MAJOR_VERSION} = "21" ]]; then
+            if [[ ${LINUX_MAJOR_VERSION} == "21" ]]; then
                export CUDA_VERSION="11.6"
             else
                echo " "
@@ -205,13 +205,13 @@
     fi
     
     ######################### CUDA / cuDNN - Settings ############################################################################################
-    if [ $CUDA_VERSION = "10.2" ]; then 
+    if [ $CUDA_VERSION == "10.2" ]; then 
         export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run; 
         export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive.tar.xz"
         export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive"
         export cuDNN_MajorVersion="8.3.2"
     else 
-        if [ $CUDA_VERSION = "11.6" ]; then 
+        if [ $CUDA_VERSION == "11.6" ]; then 
             export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run
             export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz"
             export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive"
@@ -300,17 +300,21 @@
         exit 255
     fi
     
-    if [[ ${LINUX_VERSION_NAME} = "18.04" ]]; then
+    if [[ ${LINUX_VERSION_NAME} == "18.04" ]]; then
         export UBUNTU_VER="18.04"
     else
-       if [[ ${LINUX_VERSION_NAME} = "20.04" ]]; then
+       if [[ ${LINUX_VERSION_NAME} == "20.04" ]]; then
            export UBUNTU_VER="20.04"
        else
-           echo " "
-           ColErr="\033[1;31m"
-           NoColErr="\033[0m"
-           echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
-           exit 255
+           if [[ ${LINUX_VERSION_NAME} == "21.10" ]]; then
+              export UBUNTU_VER="21.10"
+           else
+              echo " "
+              ColErr="\033[1;31m"
+              NoColErr="\033[0m"
+              echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
+              exit 255
+           fi
        fi
     fi
                  
@@ -330,7 +334,7 @@ Logging "#######################################################################
 
     InstallGPUTools() {
         Logging "$installGPUTools"
-        if [ "$UBUNTU_VER" = "18.04" ]; then 
+        if [ "$UBUNTU_VER" == "18.04" ]; then 
             Logging "$infoStep1"
             apt-get -y install libncurses5-dev libncursesw5-dev
             cd ~
@@ -342,7 +346,8 @@ Logging "#######################################################################
             make install
         else
             Logging "$infoStep2"
-            if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install nvtop; fi
+            if [ "$UBUNTU_VER" == "20.04" ]; then apt-get -y install nvtop; fi
+            if [ "$UBUNTU_VER" == "21.10" ]; then apt-get -y install nvtop; fi
         fi
         python3 -m pip install --upgrade --force-reinstall  glances[gpu]
         if [ -f /usr/local/bin/glances ]; then mv /usr/local/bin/glances /usr/bin/; fi
@@ -434,7 +439,7 @@ Logging "#######################################################################
         fi
         apt-get install zlib1g
         
-        Logging "$infoStep1"
+        Logging "$infoStep1"^
         tar -xf $CUDNN_VERSION
         
         mv ~/$CUDNN_DIRECTORY   ~/cudnn
@@ -1107,7 +1112,7 @@ Logging "#######################################################################
     InstallOpenCV
     BugFixes_Init
     AccessRightsZoneminder
-    if [ "$UBUNTU_VER" = "20.04" ]; then CompileFfmpeg; fi
+  #  if [ "$UBUNTU_VER" == "20.04" ]; then CompileFfmpeg; fi
     InstallGPUTools
     if InstallYOLO $1; then echo "Installation YOLO ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO ${NoColErr}; exit 255; fi
     if InstallYOLO_mark $1; then echo "Installation YOLO_mark ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO_mark ${NoColErr}; exit 255; fi
