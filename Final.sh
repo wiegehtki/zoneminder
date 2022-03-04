@@ -212,7 +212,7 @@
         export cuDNN_MajorVersion="8.3.2"
         if [ ! -f ~/$CUDNN_VERSION ]; then 
             echo $errorcuDNN
-            return 1
+            exit 255
         fi
        
     else 
@@ -223,8 +223,7 @@
             export cuDNN_MajorVersion="8.3.2"
             if [ ! -f ~/$CUDNN_VERSION ]; then 
                echo $errorcuDNN
-               return 1
-            fi
+               exit 255
         else
             ColErr="\033[1;31m"
             NoColErr="\033[0m"
