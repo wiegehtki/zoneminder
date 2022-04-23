@@ -4,9 +4,8 @@
     export OPENCV_VER="4.5.5"
     echo "OPENCV_VER "$OPENCV_VER  | tee -a  ~/ExportControl.log
     echo "CUDA_VERSION "$CUDA_VERSION | tee -a  ~/ExportControl.log
-    
     Language="German"
-    
+
     if [ $Language = "German" ]; then
         declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
         declare -r errorPythonVersion="Probleme beim Auslesen der Python - Version, Abbruch..."
@@ -33,7 +32,7 @@
         declare -r checkHW_OS="Hardware_und_Linux Check"
         declare -r checkOpenCV="Test auf CUDA enabled Devices"
         declare -r checkOpenCVCUDA="Abfrage auf CUDA Devices in OpenCV fehlgeschlagen, Abbruch..."
-        
+
         declare -r infoStep1="...Stufe 1"
         declare -r infoStep2="...Stufe 2"
         declare -r infoStep3="...Stufe 3"
@@ -42,7 +41,7 @@
         declare -r infoStepEnd="...Beendet"
         declare -r infoZMVersion="Es wird das aktuelleste stable-Release von zoneminder installiert."
         #declare -r infoZMSelect="Drücken Sie ( 1 ) für Version 1.34.x oder irgendeine andere Taste für die Version 1.35.x"
-        
+
         declare -r infoStartInstallation="Start der Installation"
         declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
         declare -r infoSelfSignedCertificates="Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
@@ -54,7 +53,7 @@
         declare -r infoMakeYOLO_mark="make - YOLO_mark erfolgreich beendet."
 
         declare -r createInstallationLog="FinalInstall.log anlegen"
-        
+
         declare -r installUpdate="Pakete aktualisieren"
         declare -r installCUDA="CUDA - Download und Installation inklusive Grafiktreiber"
         declare -r installYOLO="YOLOv2-v4 - Download und Installation"
@@ -77,8 +76,8 @@
         declare -r installZM="Zoneminder - Installation & Setup"
         declare -r installZMAccessRights="Zoneminder - Zugriffsrechte setzen"
         declare -r installApacheSetup="Apache2 - Setup"
-        declare -r installEventServer="EventServer - Setup" 
-        declare -r installFaceRecognition="Gesichtserkennung - Setup" 
+        declare -r installEventServer="EventServer - Setup"
+        declare -r installFaceRecognition="Gesichtserkennung - Setup"
         declare -r installLAMP="LAMP - Setup"
         declare -r installOpenCV="OpenCV kompilieren mit Compute Capability $CUDA_COMPUTE_CAPABILITY"
         declare -r installLibs="Notwendige Pakete installieren"
@@ -112,13 +111,13 @@
         declare -r errorMakeYOLO="Error make - YOLO, abort..."
         declare -r errorMakeYOLO_mark="Error make - YOLO_mark, abort..."
 
-        declare -r checkGPUDriver= "Nouveau - Deactivate graphics drive"
+        declare -r checkGPUDriver="Nouveau - Deactivate graphics drive"
         declare -r checkPythonVersion="No supported Python3 version found, abort..."
         declare -r checkInstallationLog="Test for existing installation.log"
         declare -r checkHW_OS="Hardware_and_Linux check"
         declare -r checkOpenCV="Test for CUDA enabled Devices"
         declare -r checkOpenCVCUDA="Query on CUDA devices in OpenCV failed, abort..."
-        
+
         declare -r infoStep1="...Step 1"
         declare -r infoStep2="...Step 2"
         declare -r infoStep3="...Step 3"
@@ -127,7 +126,7 @@
         declare -r infoStepEnd="...completed"
         declare -r infoZMVersion="The latest stable release of zoneminder will be installed."
         declare -r infoZMSelect="Press ( 1 ) for version 1.34.x or any other key for version 1.35.x"
-        
+
         declare -r infoStartInstallation="Start der Installation"
         declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
         declare -r infoSelfSignedCertificates="Self-signed keys are generated in /etc/apache2/ssl/, please replace with your own certificates if necessary."
@@ -139,7 +138,7 @@
         declare -r infoMakeYOLO_mark="make - YOLO_mark successful."
 
         declare -r createInstallationLog="Create FinalInstall.log"
-        
+
         declare -r installUpdate="Update packages"
         declare -r installCUDA="CUDA - Download and installation including graphics driver"
         declare -r installcuDNN="Installation cuDNN"
@@ -159,9 +158,9 @@
         declare -r installPHP="PHP $PHP_VERS - Setup"
         declare -r installZM="Zoneminder - Installation & Setup"
         declare -r installZMAccessRights="Zoneminder - Set access rights"
-        declare -r installApacheSetup="Apache2 - Setup" 
-        declare -r installEventServer="EventServer - Setup" 
-        declare -r installFaceRecognition="Face recognition - Setup" 
+        declare -r installApacheSetup="Apache2 - Setup"
+        declare -r installEventServer="EventServer - Setup"
+        declare -r installFaceRecognition="Face recognition - Setup"
         declare -r installLAMP="LAMP - Setup"
         declare -r installOpenCV="Compile OpenCV with Compute Capability $CUDA_COMPUTE_CAPABILITY"
         declare -r installYOLO="YOLOv2-v4 - Download and Installation"
@@ -179,12 +178,11 @@
     fi
 
     # Es wird empfohlen root als Benutzer zu verwenden
-    Benutzer="root" 
-    #export ZM_VERSION="1.35" 
+    Benutzer="root"
+    #export ZM_VERSION="1.35"
     export LINUX_VERSION_NAME=`lsb_release -sr`
     LINUX_MAJOR_VERSION="${LINUX_VERSION_NAME:0:2}"
     export ZM_VERSION="1.34"
-    
 
     if [[ ${LINUX_MAJOR_VERSION} == "18" ]]; then
         export CUDA_VERSION="11.6"
@@ -200,30 +198,29 @@
                NoColErr="\033[0m"
                echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
                exit 255
-            fi   
+            fi
        fi
     fi
-    
     ######################### CUDA / cuDNN - Settings ############################################################################################
-    if [ $CUDA_VERSION == "10.2" ]; then 
-        export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run; 
+    if [ $CUDA_VERSION == "10.2" ]; then
+        export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run;
         export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive.tar.xz"
         export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive"
         export cuDNN_MajorVersion="8.3.2"
-        if [ ! -f ~/$CUDNN_VERSION ]; then 
+        if [ ! -f ~/$CUDNN_VERSION ]; then
             echo $errorcuDNN
             exit 255
         fi
-       
-    else 
-        if [ $CUDA_VERSION == "11.6" ]; then 
+    else
+        if [ $CUDA_VERSION == "11.6" ]; then
             export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run
             export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz"
             export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive"
             export cuDNN_MajorVersion="8.3.2"
-            if [ ! -f ~/$CUDNN_VERSION ]; then 
+            if [ ! -f ~/$CUDNN_VERSION ]; then
                echo $errorcuDNN
                exit 255
+            fi
         else
             ColErr="\033[1;31m"
             NoColErr="\033[0m"
@@ -231,14 +228,14 @@
             exit 255
         fi
     fi
-    
+
     export CUDA_PFAD_BASHRC="/usr/local/cuda-"$CUDA_VERSION"/bin"
     export CUDA_PFAD="/usr/local/cuda-"$CUDA_VERSION
     export CUDA_COMPUTE_CAPABILITY=6.1
     export CUDA_SEARCH_PATH="/usr/local/cuda-"$CUDA_VERSION"/lib64"
     export CUDA_EXAMPLES_PATH="cuda-samples/Samples"
     #export CUDA_EXAMPLES_PATH="NVIDIA_CUDA-"$CUDA_VERSION"_Samples"
-    
+
     ######################## cuDNN - Settings #############################################################################################
     export CUDA_Script="$(basename $CUDA_DOWNLOAD)"
     export OPENCV_URL=https://github.com/opencv/opencv/archive/$OPENCV_VER.zip
@@ -254,33 +251,33 @@
     echo "CUDA_Script "$CUDA_Script | tee -a  ~/ExportControl.log
     echo "OPENCV_URL "$OPENCV_URL | tee -a  ~/ExportControl.log
     echo "OPENCV_CONTRIB_URL "$OPENCV_CONTRIB_URL | tee -a  ~/ExportControl.log
-    
+
     if [ "$(whoami)" != $Benutzer ]; then
        ColErr="\033[1;31m"
        NoColErr="\033[0m"
        echo -e ${ColErr}$(date -u) $errorUser ${NoColErr}
        exit 255
     fi
-       
+
     python3 -c 'import platform; version=platform.python_version(); print(version[0:3])' > ~/python.version
-    
-    if [ -f ~/python.version ]; then 
+
+    if [ -f ~/python.version ]; then
         for i in ` sed s'/=/ /g' ~/python.version | awk '{print $1}' ` ; do
             export PYTHON_VER=$i
             if [ $PYTHON_VER \< "3.0" ] || [ $PYTHON_VER \> "3.9" ]; then  echo $(date -u) $checkPythonVersion | tee -a  ~/FinalInstall.log; exit 255; fi
-        done  
+        done
     else
         ColErr="\033[1;31m"
         NoColErr="\033[0m"
         echo -e ${ColErr}$(date -u) $errorPythonVersion ${NoColErr}
         exit 255
     fi
-    echo "PYTHON_VER "$PYTHON_VER | tee -a  ~/ExportControl.log               
+    echo "PYTHON_VER "$PYTHON_VER | tee -a  ~/ExportControl.log
 
     Logging() {
         echo $(date -u) "$1"  | tee -a  ~/FinalInstall.log
     }
-    
+
     export DEBCONF_NONINTERACTIVE_SEEN="true"
     export DEBIAN_FRONTEND="noninteractive"
     export TZ="Europe/Berlin"
@@ -289,25 +286,25 @@
     export SHMEM="50%"
     export MULTI_PORT_START="0"
     export MULTI_PORT_END="0"
-                         
+
     #Vorbelegung CompilerFlags und Warnungen zu unterdrücken die durch automatisch generierten Code schnell mal entstehen können und keine wirkliche Relevanz haben
     export CFLAGS=$CFLAGS" -w"
     export CPPFLAGS=$CPPFLAGS" -w"
     export CXXFLAGS=$CXXFLAGS" -w"
-    
+
     echo $(date -u) "$checkInstallationLog"
     test -f ~/FinalInstall.log && rm ~/FinalInstall.log
-    
+
     echo $(date -u) "$createInstallationLog"
     touch ~/FinalInstall.log
-     
+
     if lshw -C display | grep -q 'nouveau'; then
         ColErr="\033[1;31m"
         NoColErr="\033[0m"
         echo -e ${ColErr}$(date -u) $errorGPUDriver ${NoColErr}
         exit 255
     fi
-    
+
     if [[ ${LINUX_VERSION_NAME} == "18.04" ]]; then
         export UBUNTU_VER="18.04"
     else
@@ -325,16 +322,15 @@
            fi
        fi
     fi
-                 
 
 Logging "########################################################################################################################"
 Logging "# Zoneminder - Objekterkennung mit OpenCV, CUDA, cuDNN und YOLO auf Ubuntu $UBUNTU_VER                       By WIEGEHTKI.DE #"
-Logging "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                              #" 
-Logging "# For free use. Without warranty and to be used only on test systems                                                   #" 
-Logging "# V2.2.0 (Rev a), 12.02.2022                                                                                           #" 
-Logging "########################################################################################################################" 
+Logging "# Zur freien Verwendung. Ohne Gewaehr und nur auf Testsystemen anzuwenden                                              #"
+Logging "# For free use. Without warranty and to be used only on test systems                                                   #"
+Logging "# V2.2.0 (Rev a), 12.02.2022                                                                                           #"
+Logging "########################################################################################################################"
     UpdatePackages() {
-        Logging "$installUpdate"                  
+        Logging "$installUpdate"
         apt-get -y update
         apt-get -y dist-upgrade
         Logging "UpdatePackages $infoStepEnd"
@@ -342,7 +338,7 @@ Logging "#######################################################################
 
     InstallGPUTools() {
         Logging "$installGPUTools"
-        if [ "$UBUNTU_VER" == "18.04" ]; then 
+        if [ "$UBUNTU_VER" == "18.04" ]; then
             Logging "$infoStep1"
             apt-get -y install libncurses5-dev libncursesw5-dev
             cd ~
@@ -363,7 +359,7 @@ Logging "#######################################################################
     }
 
     InstallCuda() {
-        Logging "$installCUDA" 
+        Logging "$installCUDA"
         cd ~
         #apt -y install nvidia-cuda-toolkit
         git clone https://github.com/NVIDIA/cuda-samples.git
@@ -371,15 +367,15 @@ Logging "#######################################################################
         chmod +x cuda_version.out
         ./cuda_version.out > ~/cuda.version
 
-        if [ -f ~/cuda.version ]; then 
-            for i in ` sed s'/=/ /g' ~/cuda.version | awk '{print $1}' ` ; 
+        if [ -f ~/cuda.version ]; then
+            for i in ` sed s'/=/ /g' ~/cuda.version | awk '{print $1}' ` ;
                 do
                 export CUDA_VER=$i
                 echo "CUDA_Version "$CUDA_VER | tee -a  ~/ExportControl.log
-			done
+            done
         fi
-        
-        if [ "$CUDA_VER" == "NA" ]; then 
+
+        if [ "$CUDA_VER" == "NA" ]; then
            if ls cuda_* >/dev/null 2>&1; then rm -f ~/cuda_* &> /dev/null; fi
            if [ ! -f ~/$CUDA_Script ]; then wget $CUDA_DOWNLOAD; fi
            if [ -f ~/$CUDA_Script ]; then
@@ -392,20 +388,20 @@ Logging "#######################################################################
               echo 'export PATH='$CUDA_SEARCH_PATH':'$PATH >> ~/.bashrc
               echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.bashrc
               echo 'LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
-              export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 
-              export PATH=/usr/local/cuda/bin${PATH:+:${PATH}} 
+              export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+              export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
               echo 'cd ~' >> ~/.bashrc
               ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
               source ~/.bashrc
               #apt-get -y install nvidia-cuda-toolkit
-              Logging "$infoCompileCUDAExamples" 
+              Logging "$infoCompileCUDAExamples"
            else
               Logging "$CUDA_Script $errorDownload"
               echo " "
               echo $CUDA_Script $errorDownload
               return 1
            fi
-        fi   
+        fi
        # else
        #    apt -y install nvidia-cuda-toolkit
        #    mkdir /usr/local/cuda
@@ -414,21 +410,21 @@ Logging "#######################################################################
        #    mkdir /usr/local/cuda-$CUDA_VERSION
        #    ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
        # fi
-        
+
         cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery
-        make -j$(nproc) 
+        make -j$(nproc)
         cd ~
-        if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then 
+        if [ -f ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery ];  then
            ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | tee -a  ~/FinalInstall.log
            ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery/deviceQuery | grep "CUDA Capability Major/Minor version number:" >  ~/ComputeCapability.CUDA
            for i in ` sed s'/=/ /g' ~/ComputeCapability.CUDA | awk '{print $6}' `
-               do  
+               do
                export CUDA_COMPUTE_CAPABILITY=$i
-               echo "CUDA_COMPUTE_CAPABILITY "$CUDA_COMPUTE_CAPABILITY | tee -a  ~/ExportControl.log               
+               echo "CUDA_COMPUTE_CAPABILITY "$CUDA_COMPUTE_CAPABILITY | tee -a  ~/ExportControl.log
                awk -v "a=$CUDA_COMPUTE_CAPABILITY" -v "b=10" 'BEGIN {printf "%.0f\n", a*b}' > ~/ComputeCapability.FFMPEG
-               done  
+               done
         else
-           Logging "$errorDeviceQuery"  
+           Logging "$errorDeviceQuery"
            exit 255
         fi
         Logging "InstallCuda $infoStepEnd"
@@ -436,55 +432,55 @@ Logging "#######################################################################
     }
 
     InstallcuDNN() {
-        Logging "$installcuDNN" 
+        Logging "$installcuDNN"
         local cuDNNFile
         cd ~
-        if [ ! -f ~/$CUDNN_VERSION ]; then 
+        if [ ! -f ~/$CUDNN_VERSION ]; then
             Logging "$errorcuDNN"
             echo " "
             echo $errorcuDNN
             return 1
         fi
         apt-get install zlib1g
-        
+
         Logging "$infoStep1"^
         tar -xf $CUDNN_VERSION
-        
+
         mv ~/$CUDNN_DIRECTORY   ~/cudnn
         #chmod a+r /usr/local/cuda-$CUDA_VERSION/cudnn
-        
-        cp -av cudnn/lib/libcudnn* /usr/local/cuda-$CUDA_VERSION/lib64 
-        cp -av cudnn/include/cudnn*.h /usr/local/cuda-$CUDA_VERSION/include 
-        cp -av cudnn/lib/libcudnn* /usr/local/cuda/lib64 
-        cp -av cudnn/include/cudnn*.h /usr/local/cuda/include 
-        
+
+        cp -av cudnn/lib/libcudnn* /usr/local/cuda-$CUDA_VERSION/lib64
+        cp -av cudnn/include/cudnn*.h /usr/local/cuda-$CUDA_VERSION/include
+        cp -av cudnn/lib/libcudnn* /usr/local/cuda/lib64
+        cp -av cudnn/include/cudnn*.h /usr/local/cuda/include
+
         chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
         chmod a+r /usr/local/cuda-$CUDA_VERSION/include/cudnn*.h /usr/local/cuda-$CUDA_VERSION/lib64/libcudnn*
-        
+
         #cp $CUDNN_DIRECTORY/include/cudnn*.h /usr/local/cuda/include
         #cp -P $CUDNN_DIRECTORY/lib64/libcudnn* /usr/local/cuda/lib64
         #chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
-        
+
         cd /usr/local/cuda/lib64
-        if [ -f libcudnn.so ];   then rm libcudnn.so;   fi 
-        if [ -f libcudnn.so.8 ]; then rm libcudnn.so.8; fi 
+        if [ -f libcudnn.so ];   then rm libcudnn.so;   fi
+        if [ -f libcudnn.so.8 ]; then rm libcudnn.so.8; fi
         ln libcudnn.so.$cuDNN_MajorVersion libcudnn.so.8
         ln libcudnn.so.8 libcudnn.so
-        
+
         Logging "InstallcuDNN $infoStep2"
         cd  /usr/local/cuda-$CUDA_VERSION/targets/x86_64-linux/lib
-        if [ -f libcudnn_adv_infer.so ];   then rm libcudnn_adv_infer.so;   fi 
-        if [ -f libcudnn_ops_train.so ];   then rm libcudnn_ops_train.so;   fi 
-        if [ -f libcudnn_cnn_train.so ];   then rm libcudnn_cnn_train.so;   fi 
-        if [ -f libcudnn_cnn_infer.so ];   then rm libcudnn_cnn_infer.so;   fi 
-        if [ -f libcudnn_adv_train.so ];   then rm libcudnn_adv_train.so;   fi 
-        if [ -f libcudnn_ops_infer.so ];   then rm libcudnn_ops_infer.so;   fi 
-        if [ -f libcudnn_adv_infer.so.8 ]; then rm libcudnn_adv_infer.so.8; fi 
-        if [ -f libcudnn_ops_train.so.8 ]; then rm libcudnn_ops_train.so.8; fi 
-        if [ -f libcudnn_cnn_train.so.8 ]; then rm libcudnn_cnn_train.so.8; fi 
-        if [ -f libcudnn_cnn_infer.so.8 ]; then rm libcudnn_cnn_infer.so.8; fi 
-        if [ -f libcudnn_adv_train.so.8 ]; then rm libcudnn_adv_train.so.8; fi 
-        if [ -f libcudnn_ops_infer.so.8 ]; then rm libcudnn_ops_infer.so.8; fi 
+        if [ -f libcudnn_adv_infer.so ];   then rm libcudnn_adv_infer.so;   fi
+        if [ -f libcudnn_ops_train.so ];   then rm libcudnn_ops_train.so;   fi
+        if [ -f libcudnn_cnn_train.so ];   then rm libcudnn_cnn_train.so;   fi
+        if [ -f libcudnn_cnn_infer.so ];   then rm libcudnn_cnn_infer.so;   fi
+        if [ -f libcudnn_adv_train.so ];   then rm libcudnn_adv_train.so;   fi
+        if [ -f libcudnn_ops_infer.so ];   then rm libcudnn_ops_infer.so;   fi
+        if [ -f libcudnn_adv_infer.so.8 ]; then rm libcudnn_adv_infer.so.8; fi
+        if [ -f libcudnn_ops_train.so.8 ]; then rm libcudnn_ops_train.so.8; fi
+        if [ -f libcudnn_cnn_train.so.8 ]; then rm libcudnn_cnn_train.so.8; fi
+        if [ -f libcudnn_cnn_infer.so.8 ]; then rm libcudnn_cnn_infer.so.8; fi
+        if [ -f libcudnn_adv_train.so.8 ]; then rm libcudnn_adv_train.so.8; fi
+        if [ -f libcudnn_ops_infer.so.8 ]; then rm libcudnn_ops_infer.so.8; fi
         Logging "InstallcuDNN $infoStep3"
         ln libcudnn_adv_infer.so.$cuDNN_MajorVersion libcudnn_adv_infer.so.8
         ln libcudnn_ops_train.so.$cuDNN_MajorVersion libcudnn_ops_train.so.8
@@ -498,19 +494,19 @@ Logging "#######################################################################
         ln libcudnn_cnn_infer.so.8 libcudnn_cnn_infer.so
         ln libcudnn_adv_train.so.8 libcudnn_adv_train.so
         ln libcudnn_ops_infer.so.8 libcudnn_ops_infer.so
-        ldconfig  
+        ldconfig
         source ~/.bashrc
         Logging "InstallcuDNN $infoStepEnd"
-        return 0                    
+        return 0
     }
 
     SetUpMySQL() {
-        Logging "$installMySQL"  
+        Logging "$installMySQL"
         if [ $# -eq 0 ]; then
             Logging "SetUpMySQL $infoStep1"
-            rm /etc/mysql/my.cnf  
+            rm /etc/mysql/my.cnf
             cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
-            
+
             echo "default-time-zone='+01:00'" >> /etc/mysql/my.cnf
             echo "sql_mode        = NO_ENGINE_SUBSTITUTION" >> /etc/mysql/my.cnf
             mysql_tzinfo_to_sql /usr/share/zoneinfo/Europe | sudo mysql -u root mysql
@@ -521,28 +517,28 @@ Logging "#######################################################################
             #mysql -uroot --skip-password < /usr/share/zoneminder/db/zm_create.sql
             mysql -uroot --skip-password < ~/zoneminder/database/Settings.sql
             mysqladmin -uroot --skip-password reload
-        fi 
+        fi
         Logging "SetUpMySQL $infoStepEnd"
     }
 
     SetUpPHP() {
-        Logging "$installPHP"  
+        Logging "$installPHP"
         php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'';" > ~/php.version
         if [ -f ~/php.version ]; then
             FILESIZE=$(stat -c%s ~/php.version)
-            if [ $FILESIZE -eq 0 ]; then 
+            if [ $FILESIZE -eq 0 ]; then
                 export PHP_VERS="7.4"
             else
                 for i in ` sed s'/=/ /g' ~/php.version | awk '{print $1}' ` ; do
                     PHP_VERS=$i
-                    echo ${#PHP_VERS} 
+                    echo ${#PHP_VERS}
                 done
             fi
-        else 
+        else
             export PHP_VERS="7.4"
         fi
-        echo "PHP_VERS "$PHP_VERS | tee -a  ~/ExportControl.log               
- 
+        echo "PHP_VERS "$PHP_VERS | tee -a  ~/ExportControl.log
+
         if [ $PHP_VERS \< "7.0" ] || [ $PHP_VERS \> "7.9" ]; then
             ColErr="\033[1;31m"
             NoColErr="\033[0m"
@@ -565,7 +561,7 @@ Logging "#######################################################################
     }
 
     AccessRightsZoneminder() {
-        Logging "$installZMAccessRights"  
+        Logging "$installZMAccessRights"
         chown root:www-data /etc/zm/zm.conf
         chown -R www-data:www-data /usr/share/zoneminder/
         chown root:www-data /etc/zm/conf.d/*.conf
@@ -574,7 +570,7 @@ Logging "#######################################################################
     }
 
     SetUpApache2() {
-        Logging "$installApacheSetup" 
+        Logging "$installApacheSetup"
         a2enmod cgi
         a2enmod rewrite
         a2enconf zoneminder
@@ -587,7 +583,7 @@ Logging "#######################################################################
         mv /root/zoneminder/apache/default-ssl.conf    /etc/apache2/sites-enabled/default-ssl.conf
         cp /etc/apache2/ports.conf                     /etc/apache2/ports.conf.default
         cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
- 
+
         Logging "SetUpApache2 $infoStep1"
         echo "localhost" >> /etc/apache2/ssl/ServerName
         export SERVER=`cat /etc/apache2/ssl/ServerName`
@@ -628,19 +624,19 @@ Logging "#######################################################################
     }
 
     InstallZoneminder() {
-        Logging "$installZM"  
- 
+        Logging "$installZM"
+
         apt-get -y install libcrypt-mysql-perl \
                            libyaml-perl \
-                           libjson-perl 
-        apt-get -y install zoneminder 
+                           libjson-perl
+        apt-get -y install zoneminder
         apt-get -y install libavutil-dev && \
         apt-get -y install --no-install-recommends libvlc-dev libvlccore-dev vlc
         apt-get -y install libavcodec-dev \
                            libavformat-dev \
                            libswscale-dev \
                            openexr \
-                           libopenexr-dev 
+                           libopenexr-dev
         Logging "InstallZoneminder $infoStep1"
         UpdatePackages
         Logging "$infoStep2"
@@ -653,18 +649,18 @@ Logging "#######################################################################
         cp ~/zoneminder/Anzupassen/. /etc/zm/. -r
         chmod +x /etc/zm/*
         hostname -I > ~/ip.host
- 
-        if [ -f ~/ip.host ]; then 
+
+        if [ -f ~/ip.host ]; then
             for i in ` sed s'/=/ /g' ~/ip.host | awk '{print $1}' ` ; do
                 sed -i "s/<PORTAL-ADRESSE>/${i}/g" /etc/zm/secrets.ini
-            done  
+            done
         else
             ColErr="\033[1;31m"
             NoColErr="\033[0m"
             echo -e ${ColErr}$(date -u) $errorDetectIP ${NoColErr}
             exit 255
         fi
-        
+
         systemctl enable zoneminder
         systemctl start zoneminder
         Logging "$infoStepEnd"
@@ -672,10 +668,10 @@ Logging "#######################################################################
 
     #EventServer installieren
     InstallEventserver() {
-        Logging "$installEventServer"  
+        Logging "$installEventServer"
         apt-get -y install python3-numpy
         python3 -m pip install scipy matplotlib ipython pandas sympy nose cython pyzm
-        
+
         git clone https://github.com/zoneminder/zmeventnotification.git  ~/EventServer
         #cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
         cd ~
@@ -687,22 +683,22 @@ Logging "#######################################################################
         cd ~
         cp EventServer/zmeventnotification.ini /etc/zm/. -r
         chmod +x /var/lib/zmeventnotification/bin/*
- 
+
         Logging "InstallEventserver $infoStep1"
         yes | perl -MCPAN -e "install Crypt::MySQL"
         yes | perl -MCPAN -e "install Config::IniFiles"
         yes | perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
- 
+
         Logging "InstallEventserver $infoStep2"
         apt -y install libyaml-perl
         apt -y install make
         yes | perl -MCPAN -e "install Net::WebSocket::Server"
- 
+
         Logging "InstallEventserver $infoStep3"
         apt -y install libjson-perl
         yes | perl -MCPAN -e "install LWP::Protocol::https"
         yes | perl -MCPAN -e "install Net::MQTT::Simple"
- 
+
         Logging "InstallEventserver $infoStep4"
         # Fix memory issue
         Logging "$infoSharedMemory"
@@ -711,40 +707,40 @@ Logging "#######################################################################
         mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
         chown -R www-data:www-data /etc/apache2/ssl/*
         a2enmod ssl
-        systemctl restart apache2  
+        systemctl restart apache2
         Logging "InstallEventserver $infoStepEnd"
     }
 
-    #Apache, MySQL, PHP 
+    #Apache, MySQL, PHP
     InstallFaceRecognition() {
-        Logging "$installFaceRecognition"  
+        Logging "$installFaceRecognition"
         if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("dlib"))'; then sudo -H pip uninstall dlib; fi
         if python3 -c 'import pkgutil; exit(not pkgutil.find_loader("face-recognition"))'; then sudo -H pip uninstall face-recognition; fi
         Logging "InstallFaceRecognition $infoStep1"
         cd ~
         git clone https://github.com/davisking/dlib.git
         cd dlib
-        python3 -m setup.py install 
+        python3 -m setup.py install
         cd ~
         #/zoneminder/dlib
-       # python3 ./setup.py install 
+       # python3 ./setup.py install
        # python3 -m pip install dlib
         python3 -m pip install face_recognition
         #cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/face_train.py
         Logging "InstallFaceRecognition $infoStepEnd"
-    }                        
- 
+    }
+
     InstallLAMP() {
-        Logging "$installLAMP" 
+        Logging "$installLAMP"
         apt-get -y install tasksel
         tasksel install lamp-server
         Logging "InstallLAMP $infoStepEnd"
-    }                        
- 
+    }
+
     InstallOpenCV() {
         Logging "$installOpenCV"
         apt-get -y install python3-pip \
-                   python3-dev 
+                   python3-dev
         #python2 -m pip  install numpy
         cd ~
         wget  -O opencv.zip $OPENCV_URL
@@ -759,7 +755,7 @@ Logging "#######################################################################
         cd build
         export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
         export LD_LIBRARY_PATH=/usr/local/cuda/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-        #Wichtig: Je nach Karte anpassen - CUDA_ARCH_BIN = https://en.wikipedia.org/wiki/CUDA 
+        #Wichtig: Je nach Karte anpassen - CUDA_ARCH_BIN = https://en.wikipedia.org/wiki/CUDA
         Logging "InstallOpenCV $infoStep1"
         cmake -D CMAKE_BUILD_TYPE=RELEASE \
               -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -783,17 +779,17 @@ Logging "#######################################################################
               -D PYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")  \
               -D PYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
               -D BUILD_EXAMPLES=OFF ..
-        
+
         make -j$(nproc)
         make install
         pkg-config --cflags --libs opencv4
         pkg-config --modversion opencv4
         Logging "InstallOpenCV $checkOpenCV"
         python -c 'import cv2; count = cv2.cuda.getCudaEnabledDeviceCount(); print(count)' >  ~/devices.cuda
-       
-        if [ -f ~/devices.cuda ]; then 
+
+        if [ -f ~/devices.cuda ]; then
             FILESIZE=$(stat -c%s ~/devices.cuda)
-            if [ $FILESIZE -eq 0 ]; then 
+            if [ $FILESIZE -eq 0 ]; then
                 ColErr="\033[1;31m"
                 NoColErr="\033[0m"
                 echo -e ${ColErr}$(date -u) $checkOpenCVCUDA ${NoColErr}
@@ -801,7 +797,7 @@ Logging "#######################################################################
             else
                 for i in ` sed s'/=/ /g' ~/devices.cuda | awk '{print $1}' ` ; do
                     if [ $i \> "0" ]; then Logging "$infoOpenCVCUDA"; else Logging "$errorOpenCVCUDA"; exit 255; fi
-                done  
+                done
             fi
         else
             ColErr="\033[1;31m"
@@ -811,30 +807,30 @@ Logging "#######################################################################
         fi
         Logging "InstallOpenCV $infoStepEnd"
     }
- 
+
     InstallYOLO() {
         Logging "$installYOLO"
         apt-get -y install xrdp \
-                   adduser xrdp ssl-cert 
+                   adduser xrdp ssl-cert
         systemctl restart xrdp
 
         #Disbale Power Management
         systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
         cd ~
-        if [ -d ~/darknet ]; then 
+        if [ -d ~/darknet ]; then
             Logging "$errorDarknetRepoExist"
             return 1
-        else  
+        else
             mv ~/zoneminder/darknet.repo ~/darknet
-        fi 
+        fi
 
         Logging "InstallYOLO $infoStep1"
         (ls ~/darknet/YoloWeights >> /dev/null 2>&1 && echo "YoloWeights ok") || mkdir ~/darknet/YoloWeights
         (ls ~/darknet/YoloWeights/yolov4.weights >> /dev/null 2>&1 && echo "yolov4.weights ok") || echo "Download: yolov4.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT" -O ~/darknet/YoloWeights/yolov4.weights && rm -rf /tmp/cookies.txt
         (ls ~/darknet/YoloWeights/yolov3.weights >> /dev/null 2>&1 && echo "yolov3.weights ok") || echo "Download: yolov3.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=10NEJcLeMYxhSx9WTQNHE0gfRaQaV8z8A" -O ~/darknet/YoloWeights/yolov3.weights && rm -rf /tmp/cookies.txt
         (ls ~/darknet/YoloWeights/yolov3-tiny.weights >> /dev/null 2>&1 && echo "yolov3-tiny.weights ok") || echo "Download: yolov3-tiny.weights" && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=12R3y8p-HVUZOvWHAsk2SgrM3hX3k77zt" -O ~/darknet/YoloWeights/yolov3-tiny.weights && rm -rf /tmp/cookies.txt
-   
+
         cd ~/darknet/data
         if [ ! -f ~/darknet/data/darknet53.conv.74 ]; then wget https://pjreddie.com/media/files/darknet53.conv.74; fi
 
@@ -848,14 +844,14 @@ Logging "#######################################################################
 
     InstallYOLO_mark() {
         Logging "$installYOLO_mark"
-        if [ ! -d ~/darknet ]; then 
+        if [ ! -d ~/darknet ]; then
             if [ -d ~/zoneminder/darknet.repo ]; then
                 mv ~/zoneminder/darknet.repo ~/darknet
             else
                 Logging "$errorDarknetRepoNotExist"
                 return 1
             fi
-        fi 
+        fi
         mv ~/darknet/mark ~/YOLO_mark
         chmod -R +x * ~/YOLO_mark
         cd ~/YOLO_mark
@@ -867,7 +863,7 @@ Logging "#######################################################################
         Logging "InstallYOLO_mark $infoStepEnd"
         return 0
     }
- 
+
     InstallLibs() {
         Logging "$installLibs"
         sudo apt-get update
@@ -876,7 +872,7 @@ Logging "#######################################################################
         libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev libopus-dev
         Logging "InstallLibs $infoStepEnd"
     }
-     
+
     #Install nvidia SDK
     InstallSDK() {
         Logging  "$installNVIDIACodecs"
@@ -890,7 +886,7 @@ Logging "#######################################################################
         sudo make install
         Logging "InstallSDK $infoStepEnd"
     }
-    
+
     #nasm
     CompileNasm() {
         Logging "$installNASM"
@@ -908,12 +904,12 @@ Logging "#######################################################################
         make -j$(nproc) distclean
         Logging "CompileNasm $infoStepEnd"
     }
-    
+
     #libx264
     CompileLibX264() {
         Logging "$installx264"
         cd ~/ffmpeg_sources
-        wget https://download.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245-stable.tar.bz2 
+        wget https://download.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245-stable.tar.bz2
         tar xjvf x264-snapshot-20191217-2245-stable.tar.bz2
         cd x264-snapshot-20191217-2245-stable
         Logging "CompileLibX264 $infoStep1"
@@ -925,7 +921,7 @@ Logging "#######################################################################
         make -j$(nproc) distclean
         Logging "CompileLibX264 $infoStepEnd"
     }
-    
+
     #libfdk-acc
     CompileLibfdkacc() {
         Logging "$installLibfdkacc"
@@ -945,7 +941,7 @@ Logging "#######################################################################
         make -j$(nproc) distclean
         Logging "CompileLibfdkacc $infoStepEnd"
     }
- 
+
     #libmp3lame
     CompileLibMP3Lame() {
         Logging "$installLibMP3Lame"
@@ -964,7 +960,7 @@ Logging "#######################################################################
         make -j$(nproc) distclean
         Logging "CompileLibMP3Lame $infoStepEnd"
     }
-    
+
     #libopus
     CompileLibOpus() {
         Logging "$installLibOpus"
@@ -982,10 +978,10 @@ Logging "#######################################################################
         make -j$(nproc) distclean
         Logging "CompileLibOpus $infoStepEnd"
     }
- 
+
     #libx265
     CompileLibX265() {
-        Logging "$installLibx265"               
+        Logging "$installLibx265"
         cd ~
         git clone https://bitbucket.org/multicoreware/x265_git
         cd x265_git/build/linux
@@ -995,7 +991,7 @@ Logging "#######################################################################
         make install
         Logging "CompileLibX265 $infoStepEnd"
     }
- 
+
     #libvpx
     CompileLibPvx() {
         Logging "$installLibPvx"
@@ -1014,7 +1010,7 @@ Logging "#######################################################################
         make -j$(nproc) clean
         Logging "CompileLibPvx $infoStepEnd"
     }
-    
+
     #ffmpeg
     CompileFfmpeg() {
         Logging "$installFFMPEG"
@@ -1028,22 +1024,22 @@ Logging "#######################################################################
         git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg_sources/
         cd ~/ffmpeg_sources
         Logging "CompileFfmpeg $infoStep3"
-        if [ -f ~/ffmpeg_sources/configure ]; then 
-            if [ -f ~/ComputeCapability.FFMPEG ]; then 
+        if [ -f ~/ffmpeg_sources/configure ]; then
+            if [ -f ~/ComputeCapability.FFMPEG ]; then
                 for i in ` sed s'/=/ /g' ~/ComputeCapability.FFMPEG | awk '{print $1}' ` ; do
                     export COMPUTE_COMP=$i
                 done
                 sed -i "s/compute_30,code=sm_30/compute_$COMPUTE_COMP,code=sm_$COMPUTE_COMP/g" ~/ffmpeg_sources/configure
                 sed -i "s/cuda-gpu-arch=sm_30/cuda-gpu-arch=sm_${COMPUTE_COMP}/g" ~/ffmpeg_sources/configure
-            fi                            
+            fi
         fi
         ./configure --enable-nonfree --enable-cuda-nvcc --enable-cuda --enable-libnpp --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
-        make -j$(nproc) 
-        Logging "CompileFfmpeg $infoStep4" 
+        make -j$(nproc)
+        Logging "CompileFfmpeg $infoStep4"
         make install
         if [ -f /usr/local/bin/ffmpeg ]; then mv /usr/local/bin/ffmpeg /usr/bin/ffmpeg; fi
         #if [ -f /usr/local/bin/ffmpeg ]; then cp /usr/local/bin/ffmpeg /usr/share/ffmpeg; fi
-       
+
         Logging "CompileFfmpeg $infoStepEnd"
     }
 
@@ -1069,27 +1065,27 @@ Logging "#######################################################################
         #3.3.0
         #python3 -m pip install numpy==1.17
         #16.5
-        
+
         yes | perl -MCPAN -e "upgrade IO::Socket::SSL"
         cd ~
         zmupdate.pl -f
-        
-        
+
+
         export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH
         sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
         sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
-   
+
         Logging "BugFixes_Init $infoStepEnd"
     }
-                    
-    Logging "Main $infoStartInstallation"  
+
+    Logging "Main $infoStartInstallation"
     echo ""
     ColImp="\033[1;32m"
     NoColImp="\033[0m"
 
-    echo -e "${ColImp}$infoZMVersion ${NoColImp}$1" 
+    echo -e "${ColImp}$infoZMVersion ${NoColImp}$1"
     echo ""
-#    echo -e "${ColImp}$infoZMSelect ${NoColImp}$1" 
+#    echo -e "${ColImp}$infoZMSelect ${NoColImp}$1"
 
     #read -rsn1 input
     #if [ "$input" = "1" ]; then export ZM_VERSION="1.34"; add-apt-repository -y ppa:iconnor/zoneminder-1.34; else add-apt-repository -y ppa:iconnor/zoneminder-master; export ZM_VERSION="1.35"; fi
@@ -1163,18 +1159,16 @@ Logging "#######################################################################
 
     ##### Link für Reolink Kameras, getestet mit RL410 #####
     #rtmp://<KAMERA_IP>/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password=<Dein Passwort>
-    
+
     #Test Chromebrowser:
     #https://zm.wiegehtki.de/zm/api/host/getVersion.json
     #https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=snapshot
     #https://zm.wiegehtki.de/zm/?view=image&eid=<EVENTID_EINSETZEN>&fid=alarm
-    
+
     #/var/lib/zmeventnotification/known_faces
     #sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
     #sudo -u www-data /var/lib/zmeventnotification/bin/zm_detect.py --config /etc/zm/objectconfig.ini  --eventid 1 --monitorid 1 --debug
     #chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
     #echo "zm.wiegehtki.de" >> /etc/hosts
-    
+
     #rtmp://192.168.100.164/bcs/channel0_main.bcs?channel=0&stream=0&user=admin&password=<Dein Passwort>
-
-
