@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-Benutzer="root" 
+Benutzer="root"
 Language="German"
-    
+
 if [ $Language = "German" ]; then
     declare -r errorUser="Script muss als Benutzer: $Benutzer ausgeführt werden!"
     declare -r errorLinuxDistribution="Keine gültige Distribution, Installer wird beendet"
@@ -26,9 +26,13 @@ else
     if [[ ${LINUX_VERSION_NAME} == "20.04" ]]; then
         export UBUNTU_VER="20.04"
     else
-        echo " "
-        echo "$errorLinuxDistribution"
-        exit
+       if [[ ${LINUX_VERSION_NAME} == "22.04" ]]; then
+           export UBUNTU_VER="22.04"
+       else
+           echo " "
+           echo "$errorLinuxDistribution"
+           exit
+       fi
     fi
 fi
 
@@ -42,4 +46,3 @@ Logging ".......................................................................
 
         chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
         sudo -u www-data -HE env PATH=$PATH PYTHONPATH=$PYTHONPATH  /var/lib/zmeventnotification/bin/zm_train_faces.py
-        

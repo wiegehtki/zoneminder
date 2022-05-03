@@ -190,15 +190,19 @@
        if [[ ${LINUX_MAJOR_VERSION} == "20" ]]; then
            export CUDA_VERSION="11.6"
        else
-            if [[ ${LINUX_MAJOR_VERSION} == "21" ]]; then
-               export CUDA_VERSION="11.6"
-            else
-               echo " "
-               ColErr="\033[1;31m"
-               NoColErr="\033[0m"
-               echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
-               exit 255
-            fi
+           if [[ ${LINUX_MAJOR_VERSION} == "21" ]]; then
+              export CUDA_VERSION="11.6"
+           else
+              if [[ ${LINUX_MAJOR_VERSION} == "22" ]]; then
+                  export CUDA_VERSION="11.6"
+              else
+                  echo " "
+                  ColErr="\033[1;31m"
+                  NoColErr="\033[0m"
+                  echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
+                  exit 255
+               fi
+           fi
        fi
     fi
     ######################### CUDA / cuDNN - Settings ############################################################################################
@@ -214,9 +218,9 @@
     else
         if [ $CUDA_VERSION == "11.6" ]; then
             export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run
-            export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive.tar.xz"
-            export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.3.2.44_cuda11.5-archive"
-            export cuDNN_MajorVersion="8.3.2"
+            export CUDNN_VERSION="cudnn-linux-x86_64-8.4.0.27_cuda11.6-archive.tar.xz"
+            export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.4.0.27_cuda11.6-archive"
+            export cuDNN_MajorVersion="8.4.0"
             if [ ! -f ~/$CUDNN_VERSION ]; then
                echo $errorcuDNN
                exit 255
