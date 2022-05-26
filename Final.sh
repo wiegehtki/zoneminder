@@ -511,7 +511,7 @@ Logging "#######################################################################
             rm /etc/mysql/my.cnf
             cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
 
-            echo "default-time-zone='+01:00'" >> /etc/mysql/my.cnf
+            #echo "default-time-zone='+01:00'" >> /etc/mysql/my.cnf
             echo "sql_mode        = NO_ENGINE_SUBSTITUTION" >> /etc/mysql/my.cnf
             mysql_tzinfo_to_sql /usr/share/zoneinfo/Europe | sudo mysql -u root mysql
             mysql -e "SET GLOBAL time_zone = 'Berlin';"
