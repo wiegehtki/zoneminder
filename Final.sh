@@ -1095,9 +1095,9 @@ Logging "#######################################################################
 
     #read -rsn1 input
     #if [ "$input" = "1" ]; then export ZM_VERSION="1.34"; add-apt-repository -y ppa:iconnor/zoneminder-1.34; else add-apt-repository -y ppa:iconnor/zoneminder-master; export ZM_VERSION="1.35"; fi
-
-   add-apt-repository -y ppa:iconnor/zoneminder-master
-   export ZM_VERSION="1.35"
+    add-apt-repository ppa:iconnor/zoneminder-1.36
+    #add-apt-repository -y ppa:iconnor/zoneminder-master
+    export ZM_VERSION="1.36"
 
     #VERSION = "1.34"
     #    [[ "$ZM_VERSION" == "$VERSION" ]] && add-apt-repository -y ppa:iconnor/zoneminder-1.34 || add-apt-repository -y ppa:iconnor/zoneminder-master
