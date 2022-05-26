@@ -344,10 +344,10 @@
         InstallPython3.7
     fi
     echo 'export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH' >> ~/.bashrc
-    echo 'PYTHONPATH="/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH'" >> /etc/environments
+    if [ $PYTHON_VER == "3.8" ]; then echo 'PYTHONPATH='"\""/usr/local/lib/python$PYTHON_VER/site-packages:/usr/local/lib/python$PYTHON_VER/site-packages/cv2/python-$PYTHON_VER:"\""  >> /etc/environment; fi
     
     cd ~
-    if [ "$UBUNTU_VER" = "18.04" ]; then
+    if [ "$UBUNTU_VER" == "18.04" ]; then
         if [ -f /usr/bin/python ]; then rm /usr/bin/python; fi
         ln -sv /usr/bin/python3.6 /usr/bin/python
         apt-get -y install python3-testresources \
