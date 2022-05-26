@@ -13,6 +13,7 @@ In der nachstehenden Tabelle findet Ihr von mir bereits getestete Versionen. Die
 
 | Ubuntu - Variante | Version | Install third-party software (CUDA wird vorinstalliert) | CUDA - Version | cuDNN - Version | Getestet |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| Desktop (Minimal)  | 22.04  | Nein | 11.6 | 8.4.0 | **OK** |
 | Desktop (Minimal)  | 20.04.4 LTS (focal)  | Nein | 11.6 | 8.3.2 | **OK** |
 | Desktop (Maximal)  | 20.04  | Nein | 11.6 | 8.3.2 | in progress |
 | Server (Minimal)  | 20.04  | Nein | 11.6 | 8.3.2 | in progress |
