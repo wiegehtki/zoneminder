@@ -45,4 +45,6 @@ Logging "#######################################################################
 Logging "....................................................................................................................................."
 
         chown -R www-data:www-data /var/lib/zmeventnotification/known_faces
-        sudo -u www-data -HE env PATH=$PATH PYTHONPATH=$PYTHONPATH  /var/lib/zmeventnotification/bin/zm_train_faces.py
+        sudo -u www-data /var/lib/zmeventnotification/bin/zm_train_faces.py
+        #sudo -u www-data -HE env PATH=$PATH PYTHONPATH=$PYTHONPATH  /var/lib/zmeventnotification/bin/zm_train_faces.py
+

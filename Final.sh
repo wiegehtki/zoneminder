@@ -683,7 +683,7 @@ Logging "#######################################################################
         #unzip EventServer
         cd ~/EventServer
         chmod -R +x *
-        ./install.sh --install-hook --install-es --no-install-config --no-interactive
+        sudo -H ./install.sh --install-hook --install-es --no-install-config --no-interactive
         cd ~
         cp EventServer/zmeventnotification.ini /etc/zm/. -r
         chmod +x /var/lib/zmeventnotification/bin/*

@@ -344,6 +344,7 @@
         InstallPython3.7
     fi
     echo 'export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH' >> ~/.bashrc
+    echo 'PYTHONPATH="/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH'" >> /etc/environments
     
     cd ~
     if [ "$UBUNTU_VER" = "18.04" ]; then
