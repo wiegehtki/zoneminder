@@ -1079,7 +1079,11 @@ Logging "#######################################################################
         sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
         sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
         
-        if [ $PYTHON_VER \== "3.8" ]; then cp -r ~/zoneminder/Bugfixes/yolo.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/yolo.py; fi
+        if [ $PYTHON_VER \== "3.8" ]; then
+            [ $ZM_VERSION \== "1.36" ]; then
+               cp -r ~/zoneminder/Bugfixes/yolo.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/yolo.py
+            fi
+        fi
  
         Logging "BugFixes_Init $infoStepEnd"
     }
