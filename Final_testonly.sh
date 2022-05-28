@@ -43,7 +43,7 @@
         #declare -r infoZMSelect="Drücken Sie ( 1 ) für Version 1.34.x oder irgendeine andere Taste für die Version 1.35.x"
 
         declare -r infoStartInstallation="Start der Installation"
-        declare -r infoEndofInstallation="Ende der Installation, bitte Installation prüfen und System neu starten..."
+        declare -r infoEndofInstallation="Ende der Initialisierung, initialisiere einen Neustart..."
         declare -r infoSelfSignedCertificates="Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
         declare -r infoSelfSignedCertificateFound="Bestehendes Zertifikat gefunden in"
         declare -r infoCompileCUDAExamples="Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen"
@@ -128,7 +128,7 @@
         declare -r infoZMSelect="Press ( 1 ) for version 1.34.x or any other key for version 1.35.x"
 
         declare -r infoStartInstallation="Start der Installation"
-        declare -r infoEndofInstallation="End of installation, please check installation and restart system."
+        declare -r infoEndofInstallation="End of initialisation, initialise a restart..."
         declare -r infoSelfSignedCertificates="Self-signed keys are generated in /etc/apache2/ssl/, please replace with your own certificates if necessary."
         declare -r infoSelfSignedCertificateFound="Existing certificate found in"
         declare -r infoCompileCUDAExamples="Compiling the CUDA examples to enable DeviceQuery"
@@ -676,8 +676,8 @@ Logging "#######################################################################
         apt-get -y install python3-numpy
         python3 -m pip install scipy matplotlib ipython pandas sympy nose cython pyzm
 
-        git clone https://github.com/zoneminder/zmeventnotification.git  ~/EventServer
-        #cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
+        #git clone https://github.com/zoneminder/zmeventnotification.git  ~/EventServer
+        cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
         cd ~
         #chmod +x EventServer.zip
         #unzip EventServer
