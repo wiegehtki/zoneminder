@@ -679,8 +679,8 @@ Logging "#######################################################################
         #git clone https://github.com/zoneminder/zmeventnotification.git  ~/EventServer
         cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
         cd ~
-        #chmod +x EventServer.zip
-        #unzip EventServer
+        chmod +x EventServer.zip
+        unzip EventServer
         cd ~/EventServer
         chmod -R +x *
         sudo -H ./install.sh --install-hook --install-es --no-install-config --no-interactive
@@ -1075,9 +1075,9 @@ Logging "#######################################################################
         zmupdate.pl -f
 
 
-        export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH
-        sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
-        sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
+        #export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH
+        #sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
+        #sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
         
         if [ $PYTHON_VER \== "3.8" ]; then
             if [ $ZM_VERSION \== "1.36" ]; then
