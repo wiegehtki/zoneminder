@@ -635,7 +635,7 @@ Logging "#######################################################################
         export ZM_VERSION="1.36"
         
         apt update && sudo apt upgrade
-        apt install zoneminder
+        apt -y install zoneminder
         rm /etc/mysql/my.cnf  
         cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
         echo "sql_mode        = NO_ENGINE_SUBSTITUTION" >> /etc/mysql/my.cnf
@@ -706,8 +706,8 @@ Logging "#######################################################################
         yes | perl -MCPAN -e "install Net::MQTT::Simple"
 
 
-        apt-get install libjson-perl
-        apt-get install liblwp-protocol-https-perl
+        apt-get -y install libjson-perl
+        apt-get -y install liblwp-protocol-https-perl
         
         if [ -f ~/ip.host ]; then
             for i in ` sed s'/=/ /g' ~/ip.host | awk '{print $1}' ` ; do
