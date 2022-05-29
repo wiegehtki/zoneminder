@@ -590,7 +590,6 @@ Logging "#######################################################################
 
         Logging "SetUpApache2 $infoStep1"
         echo "localhost" >> /etc/apache2/ssl/ServerName
-        echo "l192.168.100.52" >> /etc/apache2/ssl/ServerName
         export SERVER=`cat /etc/apache2/ssl/ServerName`
         # Test wegen doppelten Einträgen UW 9.1.2021
         (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
@@ -723,13 +722,15 @@ Logging "#######################################################################
         mkdir /etc/apache2/ssl/
         openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=$ES_IP"
         echo "$ES_IP" >> /etc/apache2/ssl/ServerName
+        #echo "localhost" >> /etc/apache2/ssl/ServerName
+        export SERVER=`cat /etc/apache2/ssl/ServerName`
+        
         echo $SERVER
         (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
         chown www-data:www-data /etc/apache2/ssl/*
                 
         a2enmod ssl
-        systemctl restart apache2
-    
+            
         chmod -R +x *
         sudo -H ./install.sh --install-hook --install-es --no_install-config --no-interactive
         chmod +x /var/lib/zmeventnotification/bin/*
