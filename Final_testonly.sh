@@ -735,7 +735,7 @@ Logging "#######################################################################
         sudo -H ./install.sh --install-hook --install-es --no_install-config --no-interactive
         chmod +x /var/lib/zmeventnotification/bin/*
 
-        cp zoneminder/ini/zmeventnotification.ini /etc/zm/. -r
+        cp ~/zoneminder/ini/zmeventnotification.ini /etc/zm/. -r
         chown www-data:www-data /etc/zm/*
         chmod +x /var/lib/zmeventnotification/bin/*
 
