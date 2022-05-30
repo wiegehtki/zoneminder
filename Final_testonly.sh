@@ -719,6 +719,7 @@ Logging "#######################################################################
             exit 255
         fi
         
+        mkdir /etc/apache2/
         mkdir /etc/apache2/ssl/
         openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=$ES_IP"
         echo "$ES_IP" >> /etc/apache2/ssl/ServerName
@@ -735,7 +736,7 @@ Logging "#######################################################################
         sudo -H ./install.sh --install-hook --install-es --no_install-config --no-interactive
         chmod +x /var/lib/zmeventnotification/bin/*
 
-        cp ~/zoneminder/ini/zmeventnotification.ini /etc/zm/. -r
+        cp ~/zoneminder/ini/*.ini /etc/zm/. -r
         chown www-data:www-data /etc/zm/*
         chmod +x /var/lib/zmeventnotification/bin/*
 
