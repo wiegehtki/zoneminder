@@ -683,8 +683,10 @@ Logging "#######################################################################
         Logging "$installEventServer"
         python3 -m pip install imutils
         
+        cd ~
+        
         git clone https://github.com/zoneminder/zmeventnotification.git
-        cd zmeventnotification
+        cd ~/zmeventnotification
         # repeat these two steps each time you want to update to the latest stable
         git fetch --tags
         git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
@@ -705,7 +707,6 @@ Logging "#######################################################################
         yes | perl -MCPAN -e "install Net::MQTT::Simple"
 
 
-        apt-get -y install libjson-perl
         apt-get -y install liblwp-protocol-https-perl
         
         if [ -f ~/ip.host ]; then
@@ -735,7 +736,8 @@ Logging "#######################################################################
         chown www-data:www-data /etc/apache2/ssl/*
                 
         a2enmod ssl
-            
+        
+        cd ~/zmeventnotification
         chmod -R +x *
         sudo -H ./install.sh --install-hook --install-es --no_install-config --no-interactive
         chmod +x /var/lib/zmeventnotification/bin/*
