@@ -721,6 +721,10 @@ Logging "#######################################################################
         
         mkdir /etc/apache2/
         mkdir /etc/apache2/ssl/
+        mv /root/zoneminder/apache/default-ssl.conf    /etc/apache2/sites-enabled/default-ssl.conf
+        cp /etc/apache2/ports.conf                     /etc/apache2/ports.conf.default
+        cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
+
         openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=$ES_IP"
         echo "$ES_IP" >> /etc/apache2/ssl/ServerName
         #echo "localhost" >> /etc/apache2/ssl/ServerName
