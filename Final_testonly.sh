@@ -740,7 +740,7 @@ Logging "#######################################################################
         cd ~/zmeventnotification
         chmod -R +x *
         export INTERACTIVE="no"
-        sudo -H yes | ./install.sh --install-es --install-hook --install-config --hook-config-upgrade --no-pysudo --no-download-models
+        sudo -H yes | ./install.sh --install-es --install-hook --no-install-config --hook-config-upgrade --no-pysudo --no-download-models
         chmod +x /var/lib/zmeventnotification/bin/*
 
         cp ~/zoneminder/ini/*.ini /etc/zm/. -r
