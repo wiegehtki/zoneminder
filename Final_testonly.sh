@@ -693,7 +693,7 @@ Logging "#######################################################################
         
         Logging "InstallEventserver $infoStep1"
         yes | perl -MCPAN -e "install Crypt::MySQL"
-        yes |   
+        yes | perl -MCPAN -e "install Config::IniFiles" 
         yes | perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
 
         Logging "InstallEventserver $infoStep2"
@@ -742,6 +742,7 @@ Logging "#######################################################################
         export INTERACTIVE="no"
         sudo -H yes | ./install.sh --install-es --install-hook --no-install-config --hook-config-upgrade --no-pysudo --no-download-models
         chmod +x /var/lib/zmeventnotification/bin/*
+        yes | perl -MCPAN -e "install Config::IniFiles" #Fix
 
         cp ~/zoneminder/ini/*.ini /etc/zm/. -r
         chown www-data:www-data /etc/zm/*
