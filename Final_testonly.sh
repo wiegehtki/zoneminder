@@ -657,6 +657,9 @@ Logging "#######################################################################
       
         Logging "InstallZoneminder $infoStep1"
         hostname -I > ~/ip.host
+        
+        cp ~/zoneminder/ini/*.ini /etc/zm/. -r
+        chown www-data:www-data /etc/zm/*
 
         if [ -f ~/ip.host ]; then
             for i in ` sed s'/=/ /g' ~/ip.host | awk '{print $1}' ` ; do
@@ -744,8 +747,6 @@ Logging "#######################################################################
         chmod +x /var/lib/zmeventnotification/bin/*
         yes | perl -MCPAN -e "install Config::IniFiles" #Fix
 
-        cp ~/zoneminder/ini/*.ini /etc/zm/. -r
-        chown www-data:www-data /etc/zm/*
         chmod +x /var/lib/zmeventnotification/bin/*
 
         Logging "InstallEventserver $infoStep4"
