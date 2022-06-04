@@ -600,7 +600,7 @@ Logging "#######################################################################
             mkdir -p /config/keys
             dd if=/dev/urandom of=~/.rnd bs=256 count=1
             chmod 600 ~/.rnd
-            openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=localhost"
+            openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=192.168.100.52"
         fi
         Logging "SetUpApache2 $infoStep2"
         chmod 777 /etc/apache2/ssl
@@ -629,30 +629,37 @@ Logging "#######################################################################
 
     InstallZoneminder() {
         Logging "$installZM"
-
-        apt-get -y install libcrypt-mysql-perl \
-                           libyaml-perl \
-                           libjson-perl
-        apt-get -y install zoneminder
-        apt-get -y install libavutil-dev && \
-        apt-get -y install --no-install-recommends libvlc-dev libvlccore-dev vlc
-        apt-get -y install libavcodec-dev \
-                           libavformat-dev \
-                           libswscale-dev \
-                           openexr \
-                           libopenexr-dev
+      
+        add-apt-repository -y ppa:iconnor/zoneminder-1.36
+        export ZM_VERSION="1.36"
+        
+        apt update && sudo apt upgrade
+        apt -y install zoneminder
+        rm /etc/mysql/my.cnf  
+        cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
+        echo "sql_mode        = NO_ENGINE_SUBSTITUTION" >> /etc/mysql/my.cnf
+        
+        chmod 740 /etc/zm/zm.conf
+        chown root:www-data /etc/zm/zm.conf
+        chown -R www-data:www-data /usr/share/zoneminder/
+        a2enmod cgi rewrite expires headers
+        a2enconf zoneminder
+        
+        if [ -f /etc/php/*/cli/php.ini ]; then
+            sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/*/cli/php.ini
+        fi
+        if [ -f /etc/php/*/apache2/php.ini ]; then
+            sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/*/apache2/php.ini
+        fi
+        if [ -f /etc/php/*/fpm/php.ini ]; then
+            sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php/*/fpm/php.ini
+        fi
+      
         Logging "InstallZoneminder $infoStep1"
-        UpdatePackages
-        Logging "$infoStep2"
-        SetUpMySQL
-        SetUpMySQL /usr/share/zoneminder/db/zm_create.sql
-        Logging "InstallZoneminder $infoStep3"
-        AccessRightsZoneminder
-        Logging "InstallZoneminder $infoStep3"
-        SetUpApache2
-        cp ~/zoneminder/Anzupassen/. /etc/zm/. -r
-        chmod +x /etc/zm/*
         hostname -I > ~/ip.host
+        
+        cp ~/zoneminder/ini/*.ini /etc/zm/. -r
+        chown www-data:www-data /etc/zm/*
 
         if [ -f ~/ip.host ]; then
             for i in ` sed s'/=/ /g' ~/ip.host | awk '{print $1}' ` ; do
@@ -664,33 +671,32 @@ Logging "#######################################################################
             echo -e ${ColErr}$(date -u) $errorDetectIP ${NoColErr}
             exit 255
         fi
+        
+        Logging "$infoStep2"
 
         systemctl enable zoneminder
-        systemctl start zoneminder
+        start zoneminder
+        systemctl reload apache2
+
         Logging "$infoStepEnd"
     }
 
     #EventServer installieren
     InstallEventserver() {
         Logging "$installEventServer"
-        apt-get -y install python3-numpy
-        python3 -m pip install scipy matplotlib ipython pandas sympy nose cython pyzm
-
-        git clone https://github.com/zoneminder/zmeventnotification.git  ~/EventServer
-        #cp -r ~/zoneminder/zmeventnotification/EventServer.zip ~/.
+        python3 -m pip install imutils
+        
         cd ~
-        #chmod +x EventServer.zip
-        #unzip EventServer
-        cd ~/EventServer
-        chmod -R +x *
-        sudo -H ./install.sh --install-hook --install-es --no-install-config --no-interactive
-        cd ~
-        cp EventServer/zmeventnotification.ini /etc/zm/. -r
-        chmod +x /var/lib/zmeventnotification/bin/*
-
+        
+        git clone https://github.com/zoneminder/zmeventnotification.git
+        cd ~/zmeventnotification
+        # repeat these two steps each time you want to update to the latest stable
+        git fetch --tags
+        git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+        
         Logging "InstallEventserver $infoStep1"
         yes | perl -MCPAN -e "install Crypt::MySQL"
-        yes | perl -MCPAN -e "install Config::IniFiles"
+        yes | perl -MCPAN -e "install Config::IniFiles" 
         yes | perl -MCPAN -e "install Crypt::Eksblowfish::Bcrypt"
 
         Logging "InstallEventserver $infoStep2"
@@ -703,14 +709,54 @@ Logging "#######################################################################
         yes | perl -MCPAN -e "install LWP::Protocol::https"
         yes | perl -MCPAN -e "install Net::MQTT::Simple"
 
+
+        apt-get -y install liblwp-protocol-https-perl
+        
+        if [ -f ~/ip.host ]; then
+            for i in ` sed s'/=/ /g' ~/ip.host | awk '{print $1}' ` ; do
+                ES_IP=$i
+            done
+        else
+            ColErr="\033[1;31m"
+            NoColErr="\033[0m"
+            echo -e ${ColErr}$(date -u) $errorDetectIP ${NoColErr}
+            exit 255
+        fi
+        
+        mkdir /etc/apache2/
+        mkdir /etc/apache2/ssl/
+        mv /root/zoneminder/apache/default-ssl.conf    /etc/apache2/sites-enabled/default-ssl.conf
+        cp /etc/apache2/ports.conf                     /etc/apache2/ports.conf.default
+        cp /etc/apache2/sites-enabled/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf.default
+
+        openssl req -x509 -nodes -days 4096 -newkey rsa:2048 -out /etc/apache2/ssl/cert.crt -keyout /etc/apache2/ssl/cert.key -subj "/C=DE/ST=HE/L=Frankfurt/O=Zoneminder/OU=Zoneminder/CN=$ES_IP"
+        echo "$ES_IP" >> /etc/apache2/ssl/ServerName
+        #echo "localhost" >> /etc/apache2/ssl/ServerName
+        export SERVER=`cat /etc/apache2/ssl/ServerName`
+        
+        echo $SERVER
+        (echo "ServerName" $SERVER && cat /etc/apache2/apache2.conf) > /etc/apache2/apache2.conf.old && mv  /etc/apache2/apache2.conf.old /etc/apache2/apache2.conf
+        chown www-data:www-data /etc/apache2/ssl/*
+                
+        a2enmod ssl
+        
+        cd ~/zmeventnotification
+        chmod -R +x *
+        export INTERACTIVE="no"
+        sudo -H yes | ./install.sh --install-es --install-hook --no-install-config --hook-config-upgrade --pysudo --download-models
+        chmod +x /var/lib/zmeventnotification/bin/*
+        yes | perl -MCPAN -e "install Config::IniFiles" #Fix
+
+        chmod +x /var/lib/zmeventnotification/bin/*
+
         Logging "InstallEventserver $infoStep4"
         # Fix memory issue
-        Logging "$infoSharedMemory"
-        echo "Config" $SHMEM " - `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes" | tee -a  ~/FinalInstall.log
-        umount /dev/shm
-        mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
-        chown -R www-data:www-data /etc/apache2/ssl/*
-        a2enmod ssl
+        #Logging "$infoSharedMemory"
+        #echo "Config" $SHMEM " - `awk '/MemTotal/ {print $2}' /proc/meminfo` bytes" | tee -a  ~/FinalInstall.log
+        #umount /dev/shm
+        #mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
+        #chown -R www-data:www-data /etc/apache2/ssl/*
+        #a2enmod ssl
         systemctl restart apache2
         Logging "InstallEventserver $infoStepEnd"
     }
@@ -1075,9 +1121,9 @@ Logging "#######################################################################
         zmupdate.pl -f
 
 
-        #export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH
-        #sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
-        #sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
+        export PYTHONPATH=/usr/local/lib/python'$PYTHON_VER'/site-packages:/usr/local/lib/python'$PYTHON_VER'/site-packages/cv2/python-'$PYTHON_VER':$PYTHONPATH
+        sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_end.sh
+        sed -i '2 i export PYTHONPATH='$PYTHONPATH /var/lib/zmeventnotification/bin/zm_event_start.sh
         
         if [ $PYTHON_VER \== "3.8" ]; then
             if [ $ZM_VERSION \== "1.36" ]; then
@@ -1099,7 +1145,7 @@ Logging "#######################################################################
 
     #read -rsn1 input
     #if [ "$input" = "1" ]; then export ZM_VERSION="1.34"; add-apt-repository -y ppa:iconnor/zoneminder-1.34; else add-apt-repository -y ppa:iconnor/zoneminder-master; export ZM_VERSION="1.35"; fi
-    add-apt-repository ppa:iconnor/zoneminder-1.36
+    #add-apt-repository ppa:iconnor/zoneminder-1.36
     #add-apt-repository -y ppa:iconnor/zoneminder-master
     export ZM_VERSION="1.36"
 
@@ -1117,15 +1163,15 @@ Logging "#######################################################################
     if InstallcuDNN $1; then echo "InstallcuDNN ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorcuDNNInstall ${NoColErr}; exit 255; fi
     UpdatePackages
     InstallLamp
-    SetUpPHP
+    #SetUpPHP
     InstallZoneminder
     InstallEventserver
-    BugFixes_Init
+    #BugFixes_Init
     InstallFaceRecognition
-    AccessRightsZoneminder
+    #AccessRightsZoneminder
     InstallOpenCV
-    BugFixes_Init
-    AccessRightsZoneminder
+    #BugFixes_Init
+    #AccessRightsZoneminder
   #  if [ "$UBUNTU_VER" == "20.04" ]; then CompileFfmpeg; fi
     InstallGPUTools
     if InstallYOLO $1; then echo "Installation YOLO ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO ${NoColErr}; exit 255; fi
