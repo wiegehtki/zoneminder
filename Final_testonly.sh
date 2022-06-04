@@ -743,7 +743,7 @@ Logging "#######################################################################
         cd ~/zmeventnotification
         chmod -R +x *
         export INTERACTIVE="no"
-        sudo -H yes | ./install.sh --install-es --install-hook --no-install-config --hook-config-upgrade --no-pysudo --download-models
+        sudo -H yes | ./install.sh --install-es --install-hook --no-install-config --hook-config-upgrade --pysudo --download-models
         chmod +x /var/lib/zmeventnotification/bin/*
         yes | perl -MCPAN -e "install Config::IniFiles" #Fix
 
