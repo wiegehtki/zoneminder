@@ -39,11 +39,11 @@
         declare -r infoStep4="...Stufe 4"
         declare -r infoStep5="...Stufe 5"
         declare -r infoStepEnd="...Beendet"
-        declare -r infoZMVersion="Es wird das aktuelleste stable-Release von zoneminder installiert."
+        declare -r infoZMVersion="Es wird das Release 1.36.x von zoneminder installiert."
         #declare -r infoZMSelect="Drücken Sie ( 1 ) für Version 1.34.x oder irgendeine andere Taste für die Version 1.35.x"
 
         declare -r infoStartInstallation="Start der Installation"
-        declare -r infoEndofInstallation="Ende der Installation, bitte Installation prüfen und System neu starten..."
+        declare -r infoEndofInstallation="Ende der Installation, bitte Installation prüfen und Taste drücken um das System neu zu starten..."
         declare -r infoSelfSignedCertificates="Es werden self-signed keys in /etc/apache2/ssl/ generiert, bitte mit den eigenen Zertifikaten bei Bedarf ersetzen"
         declare -r infoSelfSignedCertificateFound="Bestehendes Zertifikat gefunden in"
         declare -r infoCompileCUDAExamples="Kompilieren der CUDA - Beispiele um DeviceQuery zu ermoeglichen"
@@ -124,11 +124,11 @@
         declare -r infoStep4="...Step 4"
         declare -r infoStep5="...Step 5"
         declare -r infoStepEnd="...completed"
-        declare -r infoZMVersion="The latest stable release of zoneminder will be installed."
+        declare -r infoZMVersion="The 1.36.x release of zoneminder will be installed."
         declare -r infoZMSelect="Press ( 1 ) for version 1.34.x or any other key for version 1.35.x"
 
         declare -r infoStartInstallation="Start der Installation"
-        declare -r infoEndofInstallation="End of installation, please check installation and restart system."
+        declare -r infoEndofInstallation="End of installation, please check installation and press any key to restart the system."
         declare -r infoSelfSignedCertificates="Self-signed keys are generated in /etc/apache2/ssl/, please replace with your own certificates if necessary."
         declare -r infoSelfSignedCertificateFound="Existing certificate found in"
         declare -r infoCompileCUDAExamples="Compiling the CUDA examples to enable DeviceQuery"
@@ -406,14 +406,14 @@ Logging "#######################################################################
               return 1
            fi
         fi
-       # else
-       #    apt -y install nvidia-cuda-toolkit
-       #    mkdir /usr/local/cuda
-       #    mkdir /usr/local/cuda/bin
-       #    ln -s /usr/local/cuda/bin/nvcc /usr/bin/nvcc
-       #    mkdir /usr/local/cuda-$CUDA_VERSION
-       #    ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
-       # fi
+       #else
+       #   apt -y install nvidia-cuda-toolkit
+       #   mkdir /usr/local/cuda
+       #   mkdir /usr/local/cuda/bin
+       #   ln -s /usr/local/cuda/bin/nvcc /usr/bin/nvcc
+       #   mkdir /usr/local/cuda-$CUDA_VERSION
+       #   ln -s /usr/local/cuda-$CUDA_VERSION /usr/local/cuda
+       #fi
 
         cd ~/$CUDA_EXAMPLES_PATH/1_Utilities/deviceQuery
         make -j$(nproc)
@@ -773,7 +773,7 @@ Logging "#######################################################################
         #python3 -m setup.py install
         #cd ~
         #/zoneminder/dlib
-       # python3 ./setup.py install
+        #python3 ./setup.py install
         #python3 -m pip install dlib
         python3 -m pip install face_recognition
         #cp -r ~/zoneminder/Bugfixes/face_train.py /usr/local/lib/python$PYTHON_VER/dist-packages/pyzm/ml/face_train.py
@@ -1094,19 +1094,19 @@ Logging "#######################################################################
     }
 
 
-#./configure --enable-cuda \
-#             --enable-cuvid \
-#             --enable-nvenc \
-#             --enable-nonfree \
-#             --enable-libnpp \
-#             --enable-opengl \
-#             --enable-vaapi \
-#             --enable-vdpau \
-#             --enable-libvorbis \
-#             --enable-libmp3lame \
-#             --enable-libx264 \
-#             --enable-libx265 \
-#             --enable-gpl
+    #./configure --enable-cuda \
+    #             --enable-cuvid \
+    #             --enable-nvenc \
+    #             --enable-nonfree \
+    #             --enable-libnpp \
+    #             --enable-opengl \
+    #             --enable-vaapi \
+    #             --enable-vdpau \
+    #             --enable-libvorbis \
+    #             --enable-libmp3lame \
+    #             --enable-libx264 \
+    #             --enable-libx265 \
+    #             --enable-gpl
 
     #Bugfixing und Finalisierung
     BugFixes_Init() {
@@ -1141,7 +1141,7 @@ Logging "#######################################################################
 
     echo -e "${ColImp}$infoZMVersion ${NoColImp}$1"
     echo ""
-#    echo -e "${ColImp}$infoZMSelect ${NoColImp}$1"
+    #echo -e "${ColImp}$infoZMSelect ${NoColImp}$1"
 
     #read -rsn1 input
     #if [ "$input" = "1" ]; then export ZM_VERSION="1.34"; add-apt-repository -y ppa:iconnor/zoneminder-1.34; else add-apt-repository -y ppa:iconnor/zoneminder-master; export ZM_VERSION="1.35"; fi
@@ -1172,11 +1172,13 @@ Logging "#######################################################################
     InstallOpenCV
     #BugFixes_Init
     #AccessRightsZoneminder
-  #  if [ "$UBUNTU_VER" == "20.04" ]; then CompileFfmpeg; fi
+    #if [ "$UBUNTU_VER" == "20.04" ]; then CompileFfmpeg; fi
     InstallGPUTools
     if InstallYOLO $1; then echo "Installation YOLO ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO ${NoColErr}; exit 255; fi
     if InstallYOLO_mark $1; then echo "Installation YOLO_mark ok" | tee -a  ~/FinalInstall.log; else ColErr="\033[1;31m"; NoColErr="\033[0m"; echo -e ${ColErr}$(date -u) $errorMakeYOLO_mark ${NoColErr}; exit 255; fi
     Logging "Main $infoEndofInstallation"
+    read -rsn1 input
+    reboot
 
     # cd ~
     # mkdir ffmpeg_sources
