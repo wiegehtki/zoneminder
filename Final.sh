@@ -1,9 +1,39 @@
 #!/usr/bin/env bash
     #Select
-    touch ~/ExportControl.log
-    export OPENCV_VER="4.5.5"
-    echo "OPENCV_VER "$OPENCV_VER  | tee -a  ~/ExportControl.log
-    echo "CUDA_VERSION "$CUDA_VERSION | tee -a  ~/ExportControl.log
+    # Es wird empfohlen root als Benutzer zu verwenden
+    Benutzer="root"
+    #export ZM_VERSION="1.35"
+    export LINUX_VERSION_NAME=`lsb_release -sr`
+    LINUX_MAJOR_VERSION="${LINUX_VERSION_NAME:0:2}"
+	
+    export ZM_VERSION="1.34"
+
+    if [[ ${LINUX_MAJOR_VERSION} == "18" ]]; then
+        export CUDA_VERSION="11.6"
+    else
+       if [[ ${LINUX_MAJOR_VERSION} == "20" ]]; then
+           export CUDA_VERSION="11.6"
+       else
+           if [[ ${LINUX_MAJOR_VERSION} == "21" ]]; then
+              export CUDA_VERSION="11.6"
+           else
+              if [[ ${LINUX_MAJOR_VERSION} == "22" ]]; then
+                  export CUDA_VERSION="11.6"
+              else
+                  echo " "
+                  ColErr="\033[1;31m"
+                  NoColErr="\033[0m"
+                  echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
+                  exit 255
+               fi
+           fi
+       fi
+    fi
+	
+    touch $PWD/ExportControl.log
+    export OPENCV_VER="4.6.0"
+    echo "OPENCV_VER "$OPENCV_VER  | tee -a  $PWD/ExportControl.log
+    echo "CUDA_VERSION "$CUDA_VERSION | tee -a  $PWD/ExportControl.log
     Language="German"
 
     if [ $Language = "German" ]; then
@@ -177,35 +207,8 @@
         declare -r installBugfixes="Apply bug fixes"
     fi
 
-    # Es wird empfohlen root als Benutzer zu verwenden
-    Benutzer="root"
-    #export ZM_VERSION="1.35"
-    export LINUX_VERSION_NAME=`lsb_release -sr`
-    LINUX_MAJOR_VERSION="${LINUX_VERSION_NAME:0:2}"
-    export ZM_VERSION="1.34"
-
-    if [[ ${LINUX_MAJOR_VERSION} == "18" ]]; then
-        export CUDA_VERSION="11.6"
-    else
-       if [[ ${LINUX_MAJOR_VERSION} == "20" ]]; then
-           export CUDA_VERSION="11.6"
-       else
-           if [[ ${LINUX_MAJOR_VERSION} == "21" ]]; then
-              export CUDA_VERSION="11.6"
-           else
-              if [[ ${LINUX_MAJOR_VERSION} == "22" ]]; then
-                  export CUDA_VERSION="11.6"
-              else
-                  echo " "
-                  ColErr="\033[1;31m"
-                  NoColErr="\033[0m"
-                  echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
-                  exit 255
-               fi
-           fi
-       fi
-    fi
-    ######################### CUDA / cuDNN - Settings ############################################################################################
+   
+     ######################### CUDA / cuDNN - Settings ############################################################################################
     if [ $CUDA_VERSION == "10.2" ]; then
         export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run;
         export CUDNN_VERSION="cudnn-linux-x86_64-8.3.2.44_cuda10.2-archive.tar.xz"
@@ -225,13 +228,39 @@
                echo $errorcuDNN
                exit 255
             fi
-        else
-            ColErr="\033[1;31m"
-            NoColErr="\033[0m"
-            echo -e ${ColErr}$(date -u) $errorCudaVersion ${NoColErr}
-            exit 255
-        fi
-    fi
+        else 
+#			if [ $CUDA_VERSION == "11.7" ]; then
+#				export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.7.1/local_installers/cuda_11.7.1_515.65.01_linux.run
+#				export CUDNN_VERSION="cudnn-linux-x86_64-8.5.0.96_cuda11-archive.tar.xz"
+#				export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.5.0.96_cuda11-archive"
+#				export cuDNN_MajorVersion="8.5.0"
+#				if [ ! -f ~/$CUDNN_VERSION ]; then
+#				   echo $errorcuDNN
+#				   exit 255
+#				fi
+#			else
+#				ColErr="\033[1;31m"
+#				NoColErr="\033[0m"
+#				echo -e ${ColErr}$(date -u) $errorCudaVersion ${NoColErr}
+#				exit 255
+#			fi
+				if [ $CUDA_VERSION == "11.7" ]; then
+					export CUDA_DOWNLOAD=https://developer.download.nvidia.com/compute/cuda/11.6.0/local_installers/cuda_11.6.0_510.39.01_linux.run
+					export CUDNN_VERSION="cudnn-linux-x86_64-8.4.0.27_cuda11.6-archive.tar.xz"
+					export CUDNN_DIRECTORY="cudnn-linux-x86_64-8.4.0.27_cuda11.6-archive"
+					export cuDNN_MajorVersion="8.4.0"
+					if [ ! -f ~/$CUDNN_VERSION ]; then
+						echo $errorcuDNN
+					exit 255
+				else
+					ColErr="\033[1;31m"
+					NoColErr="\033[0m"
+					echo -e ${ColErr}$(date -u) $errorCudaVersion ${NoColErr}
+					exit 255
+				fi
+			fi
+		fi
+	fi
 
     export CUDA_PFAD_BASHRC="/usr/local/cuda-"$CUDA_VERSION"/bin"
     export CUDA_PFAD="/usr/local/cuda-"$CUDA_VERSION
@@ -318,12 +347,16 @@
            if [[ ${LINUX_VERSION_NAME} == "21.10" ]]; then
               export UBUNTU_VER="21.10"
            else
-              echo " "
-              ColErr="\033[1;31m"
-              NoColErr="\033[0m"
-              echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
-              exit 255
-           fi
+			   if [[ ${LINUX_VERSION_NAME} == "22.04" ]]; then
+				  export UBUNTU_VER="22.04"
+			   else
+				  echo " "
+				  ColErr="\033[1;31m"
+				  NoColErr="\033[0m"
+				  echo -e ${ColErr}$(date -u) $errorLinuxDist ${NoColErr}
+				  exit 255
+			   fi
+			fi
        fi
     fi
 
@@ -356,6 +389,7 @@ Logging "#######################################################################
             Logging "$infoStep2"
             if [ "$UBUNTU_VER" == "20.04" ]; then apt-get -y install nvtop; fi
             if [ "$UBUNTU_VER" == "21.10" ]; then apt-get -y install nvtop; fi
+            if [ "$UBUNTU_VER" == "22.04" ]; then apt-get -y install nvtop; fi
         fi
         python3 -m pip install --upgrade --force-reinstall  glances[gpu]
         if [ -f /usr/local/bin/glances ]; then mv /usr/local/bin/glances /usr/bin/; fi
