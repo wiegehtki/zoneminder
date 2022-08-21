@@ -94,11 +94,15 @@
             if [[ ${LINUX_VERSION_NAME} == "21.10" ]]; then
                 export UBUNTU_VER="21.10"
             else
-                echo " "
-                ColErr="\033[1;31m"
-                NoColErr="\033[0m"
-                echo -e ${ColErr}$(date -u) $errorLinuxDistribution ${NoColErr}
-                exit 255
+                if [[ ${LINUX_VERSION_NAME} == "22.04" ]]; then
+                    export UBUNTU_VER="22.04"
+                else
+                    echo " "
+                    ColErr="\033[1;31m"
+                    NoColErr="\033[0m"
+                    echo -e ${ColErr}$(date -u) $errorLinuxDistribution ${NoColErr}
+                    exit 255
+                fi
             fi
         fi
     fi
@@ -157,14 +161,26 @@
         Logging "$installCameras"
         if [ "$UBUNTU_VER" = "18.04" ]; then apt-get -y install libdc1394-22; fi
         if [ "$UBUNTU_VER" = "20.04" ]; then apt-get -y install libdc1394-22; fi
-
-        apt-get -y install libdc1394-22-dev \
-                           libxine2-dev \
-                           libv4l-dev \
-                           v4l-utils \
-                           libraw1394-doc \
-                           libgphoto2-dev \
-                           libva-dev
+        if [ "$UBUNTU_VER" = "22.04" ]; then apt-get -y install libdc1394-utils; fi
+        
+        if [ "$UBUNTU_VER" = "22.04" ]; then
+            apt-get -y install libdc1394-dev \
+                               libxine2-dev \
+                               libv4l-dev \
+                               v4l-utils \
+                               libraw1394-doc \
+                               libgphoto2-dev \
+                               libva-dev
+        else
+            apt-get -y install libdc1394-22-dev \
+                               libxine2-dev \
+                               libv4l-dev \
+                               v4l-utils \
+                               libraw1394-doc \
+                               libgphoto2-dev \
+                               libva-dev
+        fi
+                           
         Logging "$infoStep1"
         cd /usr/include/linux
         ln -s -f ../libv4l1-videodev.h videodev.h
@@ -356,7 +372,8 @@
     fi
     if [ "$UBUNTU_VER" == "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi
     if [ "$UBUNTU_VER" == "21.10" ]; then apt-get -y install python-is-python3 python3-pip; fi
-
+    if [ "$UBUNTU_VER" == "22.04" ]; then apt-get -y install python-is-python3 python3-pip; fi
+    
     #apt-get -y install libzmq3-dev
     pip install --upgrade pip
     DeactivateNouveau
