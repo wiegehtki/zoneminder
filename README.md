@@ -91,7 +91,7 @@ Dann die erste Stufe der Installation starten, der Rechner rebootet danach autom
 
 ``` 
        cd ~
-       git clone https://github.com/wiegehtki/zoneminder.git
+       git clone https://github.com/Rafik89/zoneminder.git
        cp zoneminder/*sh .
        sudo chmod +x *sh
        ./Initial.sh      
