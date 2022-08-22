@@ -351,14 +351,15 @@
         if [ -f /usr/bin/python ]; then rm /usr/bin/python; fi
         ln -sv /usr/bin/python3.6 /usr/bin/python
         apt-get -y install python3-testresources \
-                           python3-pip
+                           python3-pip \
+                           python-pip
         InstallCompiler_v6
     fi
     if [ "$UBUNTU_VER" == "20.04" ]; then apt-get -y install python-is-python3 python3-pip; InstallCompiler_v7; fi
     if [ "$UBUNTU_VER" == "21.10" ]; then apt-get -y install python-is-python3 python3-pip; fi
 
     #apt-get -y install libzmq3-dev
-    pip install --upgrade pip
+    pip3 install --upgrade pip
     DeactivateNouveau
     Logging "$infoEndofInstallation"
     reboot
