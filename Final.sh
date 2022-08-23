@@ -365,6 +365,7 @@ Logging "#######################################################################
     InstallCuda() {
         Logging "$installCUDA"
         cd ~
+        if [ "$UBUNTU_VER" == "18.04" ]; then apt-get -y install nvidia-cuda-toolkit; fi
         #apt -y install nvidia-cuda-toolkit
         git clone https://github.com/NVIDIA/cuda-samples.git
         cp ~/zoneminder/cuda_version.out ~/.
